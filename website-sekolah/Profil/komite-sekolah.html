@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Komite Sekolah - TKJ 1 </title>
+<meta name="description" content="Komite Sekolah SMK IMELDA MEDAN" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="shortcut icon" href="../images/logo.png" />
+<style>
+  :root{
+    --navy:#0b2545;
+    --navy-dark:#071a33;
+    --red:#c0392b;
+    --red-dark:#992d22;
+    --bg-light:#f5f7fa;
+    --text-dark:#1f2937;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Segoe UI',Arial,sans-serif;color:var(--text-dark);background:var(--bg-light);line-height:1.6;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+
+  /* TOPBAR */
+  .topbar{background:var(--navy-dark);color:#fff;font-size:.85rem;}
+  .topbar-inner{max-width:1200px;margin:0 auto;padding:6px 20px;display:flex;justify-content:space-between;align-items:center;}
+  .topbar-socials a{margin-left:12px;color:#fff;opacity:.85;}
+  .topbar-socials a:hover{opacity:1;color:var(--red);}
+
+  /* HEADER */
+  .site-header{background:#fff;border-bottom:4px solid var(--red);}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;gap:16px;
+    background-image:linear-gradient(rgba(11,37,69,.04),rgba(11,37,69,.04));}
+  .logo-img{width:64px;height:64px;object-fit:contain;}
+  .school-name a{color:var(--navy);font-size:1.5rem;font-weight:700;letter-spacing:.5px;}
+  .school-tagline{color:var(--red);font-weight:600;font-size:.9rem;}
+
+  /* NAV */
+  .main-nav{background:var(--navy);position:relative;}
+  .nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;}
+  .nav-menu{display:flex;flex-wrap:wrap;}
+  .nav-menu>li{position:relative;}
+  .nav-menu>li>a{display:block;padding:14px 16px;color:#fff;font-size:.92rem;font-weight:600;transition:.2s;}
+  .nav-menu>li>a:hover{background:var(--red);}
+  .dropdown{display:none;position:absolute;top:100%;left:0;background:#fff;min-width:240px;box-shadow:0 8px 20px rgba(0,0,0,.15);z-index:50;}
+  .has-dropdown:hover>.dropdown{display:block;}
+  .dropdown li a{display:block;padding:10px 16px;color:var(--navy);font-size:.88rem;border-bottom:1px solid #eee;}
+  .dropdown li a:hover{background:var(--bg-light);color:var(--red);}
+  .dropdown .dropdown{top:0;left:100%;}
+  .dropdown li a.active-page,
+  .dropdown li a[href="komite-sekolah.html"]{color:var(--red);font-weight:700;}
+
+  /* BREADCRUMB */
+  .breadcrumb{background:#fff;border-bottom:1px solid #e5e7eb;}
+  .breadcrumb-inner{max-width:1200px;margin:0 auto;padding:14px 20px;font-size:.9rem;color:#555;}
+  .breadcrumb-inner a{color:var(--navy);font-weight:600;}
+  .breadcrumb-inner a:hover{color:var(--red);}
+  .breadcrumb-inner .sep{margin:0 6px;color:#aaa;}
+  .breadcrumb-inner .current{color:var(--red);font-weight:600;}
+
+  /* PAGE HERO */
+  .page-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dark) 100%);color:#fff;padding:50px 20px;text-align:center;position:relative;overflow:hidden;}
+  .page-hero::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:6px;background:var(--red);}
+  .page-hero h1{font-size:2rem;font-weight:800;letter-spacing:.5px;}
+  .page-hero p{margin-top:8px;color:#dbe4f0;font-size:1rem;}
+
+  /* MAIN CONTENT */
+  .main-content{max-width:1000px;margin:0 auto;padding:40px 20px 60px;}
+  .content-box{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:32px;margin-bottom:28px;border-top:4px solid var(--red);}
+  .content-box h2{color:var(--navy);font-size:1.35rem;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--bg-light);}
+  .content-box h2 i{color:var(--red);margin-right:8px;}
+  .content-box p{margin-bottom:12px;color:#374151;}
+  .content-box ul.list-check li{padding-left:26px;position:relative;margin-bottom:10px;color:#374151;}
+  .content-box ul.list-check li::before{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--red);position:absolute;left:0;top:2px;font-size:.85rem;}
+
+  /* STRUKTUR TABLE */
+  .struktur-table{width:100%;border-collapse:collapse;margin-top:10px;}
+  .struktur-table th,.struktur-table td{padding:12px 14px;border:1px solid #e5e7eb;text-align:left;font-size:.92rem;}
+  .struktur-table th{background:var(--navy);color:#fff;font-weight:600;}
+  .struktur-table tr:nth-child(even){background:var(--bg-light);}
+
+  /* ORG CHART SIMPLE */
+  .org-chart{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:16px;}
+  .org-node{background:var(--navy);color:#fff;padding:10px 20px;border-radius:6px;font-weight:600;font-size:.9rem;text-align:center;position:relative;}
+  .org-node.secondary{background:var(--red);}
+  .org-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .org-connector{width:2px;height:16px;background:#c9d3e0;}
+
+  /* CTA BOX */
+  .cta-box{background:var(--red);color:#fff;border-radius:10px;padding:26px 32px;text-align:center;}
+  .cta-box h3{font-size:1.15rem;margin-bottom:6px;}
+  .cta-box p{color:#fde9e6;font-size:.9rem;}
+
+  /* FOOTER */
+  .site-footer{background:var(--navy-dark);color:#cfd8e6;padding:40px 20px 0;}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:30px;justify-content:space-between;padding-bottom:30px;}
+  .footer-logo-area{max-width:360px;}
+  .footer-logo{width:56px;height:56px;margin-bottom:10px;}
+  .footer-school-name a{color:#fff;font-size:1.15rem;font-weight:700;}
+  .footer-tagline{color:var(--red);font-weight:600;margin:6px 0 12px;font-size:.9rem;}
+  .footer-address{font-size:.85rem;color:#b7c2d4;line-height:1.7;}
+  .footer-socials a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(255,255,255,.08);border-radius:50%;margin-right:8px;color:#fff;}
+  .footer-socials a:hover{background:var(--red);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.1);text-align:center;padding:16px 20px;font-size:.82rem;color:#9aa7bd;}
+  .footer-bottom a{color:var(--red);}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-date" id="today-date"></span>
+    <div class="topbar-socials">
+      <a href="https://www.facebook.com/smkimeldamedan" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/elevenclass_tkjone?igsh=MWRidDhmdWV1ZjhnbA==" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com/@smkteknikimelda5904" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <img src="../images/logo.png" alt="Logo SMK IMELDA MEDAN" class="logo-img" />
+    </div>
+    <div class="header-title">
+      <h1 class="school-name"><a href="#../index.html">TKJ 1 - SMK IMELDA MEDAN</a></h1>
+    </div>
+  </div>
+</header>
+
+<!-- ===== BREADCRUMB ===== -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">Beranda</a>
+    <span class="sep">/</span>
+    <span class="current">Komite Kelas</span>
+  </div>
+</div>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero">
+  <h1>Komite Kelas TKJ 1 </h1>
+  <p>SMK Imelda Medan &mdash; Mitra Sekolah, Orang Tua, dan Masyarakat</p>
+</section>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main-content">
+
+  <!-- Pengantar -->
+  <div class="content-box">
+    <h2><i class="fas fa-info-circle"></i>Tentang Komite Sekolah</h2>
+    <p>[Isi paragraf pengantar tentang Komite Sekolah SMK Imelda Medan di sini. Jelaskan secara singkat peran komite sekolah sebagai lembaga mandiri yang mewadahi peran serta orang tua/wali peserta didik, tokoh masyarakat, dan pemangku kepentingan dalam mendukung peningkatan mutu, pemerataan, dan efisiensi pengelolaan pendidikan di satuan pendidikan.]</p>
+    <p>Komite Sekolah dibentuk berdasarkan [Dasar Hukum/SK Pembentukan, mis. Peraturan Menteri Pendidikan dan Kebudayaan Nomor 75 Tahun 2016] dan berlaku untuk periode kepengurusan [Tahun Awal] &ndash; [Tahun Akhir].</p>
+  </div>
+
+  <!-- Tugas dan Fungsi -->
+  <div class="content-box">
+    <h2><i class="fas fa-tasks"></i>Tugas dan Fungsi</h2>
+    <ul class="list-check">
+      <li>Memberikan pertimbangan dalam penentuan dan pelaksanaan kebijakan pendidikan di sekolah.</li>
+      <li>Menggalang dana dan sumber daya pendidikan lainnya dari masyarakat, baik perorangan maupun organisasi.</li>
+      <li>Mengawasi pelayanan pendidikan di sekolah sesuai dengan ketentuan peraturan perundang-undangan.</li>
+      <li>Menindaklanjuti keluhan, saran, kritik, dan aspirasi masyarakat terhadap sekolah.</li>
+      <li>[Tambahkan poin tugas/fungsi lainnya sesuai kebijakan sekolah]</li>
+    </ul>
+  </div>
+
+  <!-- Struktur Kepengurusan -->
+  <div class="content-box">
+    <h2><i class="fas fa-sitemap"></i>Struktur Kepengurusan</h2>
+    <div class="org-chart">
+      <div class="org-node">Trytian Variansyah<br><small>Ketua Kelas</small></div>
+      <div class="org-connector"></div>
+      <div class="org-row">
+        <div class="org-node secondary">Ingky Aldewa<br><small>Wakil Ketua</small></div>
+        <div class="org-node secondary">Intan Chairiza <br><small>Sekretaris</small></div>
+        <div class="org-node secondary">Defi Efinisyah Bunga Hasibua<br><small>Bendahara</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Susunan Pengurus Table -->
+  <div class="content-box">
+    <h2><i class="fas fa-users"></i>Susunan Pengurus Komite Kelas TKJ 1</h2>
+    <table class="struktur-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Jabatan</th>
+          <th>Unsur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Trytian Variansyah</td>
+          <td>Ketua</td>
+          <td>[Orang Tua / Tokoh Masyarakat]</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Ingky Aldewa</td>
+          <td>Wakil Ketua</td>
+          <td>[Orang Tua / Tokoh Masyarakat]</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Intan Chairiza</td>
+          <td>Sekretaris</td>
+          <td>[Orang Tua / Pihak Sekolah]</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Angel Airin</td>
+          <td>wakil sekretaris</td>
+          <td>[Orang Tua / Pihak Sekolah]</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Defi Efinisyah Bunga Hasibua</td>
+          <td>Bendahara</td>
+          <td>[Unsur]</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Rini dania putri</td>
+          <td>Wakil Bendahara</td>
+          <td>[Unsur]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Program Kerja -->
+  <div class="content-box">
+    <h2><i class="fas fa-clipboard-list"></i>Program Kerja Komite Sekolah</h2>
+    <ul class="list-check">
+      <li>[Program kerja 1, mis. Rapat koordinasi rutin dengan pihak sekolah]</li>
+      <li>[Program kerja 2, mis. Penggalangan dana pengembangan sarana prasarana]</li>
+      <li>[Program kerja 3, mis. Sosialisasi program sekolah kepada orang tua/wali]</li>
+      <li>[Program kerja 4]</li>
+    </ul>
+  </div>
+
+  <!-- Kontak Komite -->
+  <div class="content-box">
+    <h2><i class="fas fa-envelope"></i>Hubungi Komite Sekolah</h2>
+    <p>Untuk informasi, saran, atau aspirasi terkait Komite Sekolah, silakan hubungi:</p>
+    <p><i class="fas fa-phone" style="color:var(--red);margin-right:8px;"></i>[Nomor Telepon/WhatsApp Komite]</p>
+    <p><i class="fas fa-envelope" style="color:var(--red);margin-right:8px;"></i>[Alamat Email Komite]</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>Bersama Membangun Pendidikan yang Lebih Baik</h3>
+    <p>Komite Sekolah SMK Imelda Medan terbuka untuk masukan dan kerja sama dari seluruh orang tua/wali dan masyarakat.</p>
+  </div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo-area">
+      <img src="../images/logo.png" alt="Logo SMK IMELDA MEDAN" class="footer-logo" />
+      <h2 class="footer-school-name"><a href="../index.html">SMK IMELDA MEDAN</a></h2>
+      <p class="footer-tagline">Terakreditasi A</p>
+      <p class="footer-address">
+        Jl. Bilal No. 52, Pulo Brayan Darat I,<br />
+        Kec. Medan Timur, Medan 20239<br />
+        NPSN: 10210536
+      </p>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.facebook.com/smkimeldamedan" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/elevenclass_tkjone?igsh=MWRidDhmdWV1ZjhnbA==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com/@smkteknikimelda5904" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; Copyright - SMK Imelda Medan [TAHUN] | Design By: <a href="#">[NAMA DESAINER]</a> | All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('today-date').textContent = new Date().toLocaleDateString('id-ID', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+</script>
+</body>
+</html>

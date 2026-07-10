@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="../images/logo.png">
+<title>Informasi Tenaga Kependidikan - TKJ 1</title>
+
+<style>
+  :root {
+    --navy: #143745;
+    --navy-light: #1c4a5c;
+    --gold: #b5872f;
+    --gold-light: #d9ab4f;
+    --cream: #f6f4ef;
+    --ink: #313131;
+    --line: #e2e2e2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Work Sans', Arial, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+  }
+
+  /* ===================== HEADER ===================== */
+  header.site-header {
+    background-color: var(--navy);
+    background-image:
+      linear-gradient(rgba(20,55,69,0.72), rgba(20,55,69,0.78)),
+      url('https://enrollment-api.ui.ac.id/uploads/20250922072406_Edited-9722.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    text-align: center;
+    position: relative;
+  }
+  header.site-header .header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 52px 16px 44px;
+  }
+  header.site-header img.logo {
+    height: 68px;
+    margin-bottom: 12px;
+  }
+  header.site-header .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+  }
+  header.site-header h1.site-title {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  header.site-header p.site-description {
+    margin: 6px 0 0;
+    font-size: 14.5px;
+    opacity: 0.88;
+  }
+
+  /* ===================== TOMBOL KEMBALI ===================== */
+  .back-button-wrap {
+    background: var(--navy);
+    padding: 14px 16px;
+    text-align: left;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .back-button-wrap .back-button-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: background 0.2s ease;
+  }
+  .back-button:hover { background: rgba(255,255,255,0.22); }
+  .back-button svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* ===================== BREADCRUMB ===================== */
+  .breadcrumb {
+    background: var(--navy);
+    color: #fff;
+    text-align: center;
+    padding: 26px 16px 34px;
+  }
+  .breadcrumb h2 { margin: 0; font-weight: 700; font-size: 22px; }
+  .breadcrumb .crumb-path {
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.65);
+  }
+  .breadcrumb .crumb-path a { color: rgba(255,255,255,0.85); text-decoration: none; }
+  .breadcrumb .crumb-path a:hover { text-decoration: underline; }
+
+  main {
+    max-width: 1100px;
+    margin: -28px auto 24px;
+    padding: 0 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .content-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(20,55,69,0.10);
+  }
+  .content-box h2.page-heading {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 22px;
+  }
+  .content-box h3.section-heading {
+    margin-top: 34px;
+    margin-bottom: 6px;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 10px;
+    font-size: 17px;
+  }
+  .content-box .section-sub {
+    margin: 0 0 16px;
+    padding-left: 14px;
+    font-size: 13.5px;
+    color: #6d6d6d;
+  }
+  .content-box p {
+    text-align: justify;
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+
+  /* ===================== RINGKASAN STATISTIK ===================== */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 18px 0 6px;
+  }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .stat-card .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: #7a7a7a;
+    margin-top: 2px;
+  }
+
+  /* ===================== FILTER ===================== */
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0 20px;
+  }
+  .filter-pill {
+    border: 1px solid var(--line);
+    background: #fafafa;
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 20px;
+    cursor: default;
+  }
+  .filter-pill.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+
+  /* ===================== KARTU GURU ===================== */
+  .teacher-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
+    margin: 0 0 8px;
+  }
+  .teacher-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+    background: var(--cream);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    position: relative;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .teacher-card:hover {
+    box-shadow: 0 6px 16px rgba(20,55,69,0.10);
+    transform: translateY(-2px);
+  }
+  .teacher-card .avatar {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    overflow: hidden;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .teacher-card .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .teacher-card .teacher-info { flex: 1; min-width: 0; }
+  .teacher-card h4 {
+    margin: 0 0 3px;
+    color: var(--navy);
+    font-size: 16px;
+  }
+  .teacher-card .teacher-role {
+    display: block;
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .teacher-card p {
+    font-size: 13.5px;
+    margin: 0 0 4px;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .teacher-card .teacher-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .teacher-card .meta-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+    background: #eef1f2;
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .teacher-card .badge-wali {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--navy);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .teacher-grid .add-card {
+    border: 1.5px dashed #c7c7c7;
+    border-radius: 8px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 96px;
+    color: #9a9a9a;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    padding: 18px;
+  }
+
+  /* ===================== TABEL ===================== */
+  .content-box table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  .content-box table.data-table th,
+  .content-box table.data-table td {
+    border: 1px solid var(--line);
+    padding: 9px 10px;
+    text-align: left;
+  }
+  .content-box table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .content-box table.data-table tbody tr:nth-child(even) { background: #fafafa; }
+
+  /* ===================== UNDUHAN ===================== */
+  .content-box .download-list {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .content-box .download-list li { margin: 0; }
+  .content-box .download-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy);
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    transition: background 0.2s ease;
+  }
+  .content-box .download-list a:hover { background: var(--navy-light); }
+  .content-box .download-list svg { width: 14px; height: 14px; fill: currentColor; }
+
+  .placeholder { color: #9a9a9a; font-style: italic; }
+
+  footer {
+    background: var(--navy);
+    color: #fff;
+    text-align: center;
+    padding: 22px 0;
+    margin-top: 24px;
+    font-size: 13px;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .social-links a:hover {
+    background: #fff;
+    color: var(--navy);
+    transform: translateY(-2px);
+  }
+  .social-links svg { width: 18px; height: 18px; fill: currentColor; }
+
+  @media (max-width: 560px) {
+    .content-box { padding: 22px 16px; }
+    header.site-header h1.site-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <img class="logo" src="../images/logo.png" alt="Logo Sekolah">
+    <span class="eyebrow">Sumber Daya Sekolah</span>
+    <h1 class="site-title">SMK IMELDA MEDAN</h1>
+    <p class="site-description">Tenaga Kependidikan &mdash; Staf Pendukung Layanan Sekolah</p>
+  </div>
+</header>
+
+<!-- ===================== TOMBOL KEMBALI ===================== -->
+<div class="back-button-wrap">
+  <div class="back-button-inner">
+    <a class="back-button" href="../index.html">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+      Kembali
+    </a>
+  </div>
+</div>
+
+<!-- ===================== JUDUL HALAMAN ===================== -->
+<div class="breadcrumb">
+  <h2>Informasi Tenaga Kependidikan</h2>
+  <p class="crumb-path"><a href="../index.html">Beranda</a> / Informasi Tenaga Kependidikan</p>
+</div>
+
+<!-- ===================== KONTEN UTAMA ===================== -->
+<main>
+  <div class="content-box">
+
+    <h2 class="page-heading">Informasi Tenaga Kependidikan SMK Imelda Medan</h2>
+    <p class="placeholder">[Tuliskan pengantar singkat mengenai tenaga kependidikan di sini, mencakup gambaran umum staf tata usaha, pustakawan, laboran/teknisi, hingga petugas keamanan dan kebersihan yang mendukung operasional sekolah sehari-hari.]</p>
+
+    <!-- Ringkasan statistik -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value placeholder">[0]</div>
+        <div class="stat-label">Staf Tata Usaha</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value placeholder">[0]</div>
+        <div class="stat-label">Pustakawan &amp; Laboran</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value placeholder">[0]</div>
+        <div class="stat-label">Keamanan &amp; Kebersihan</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value placeholder">[0]</div>
+        <div class="stat-label">Total Tenaga Kependidikan</div>
+      </div>
+    </div>
+
+    <h3 class="section-heading">Staf Tata Usaha &amp; Administrasi</h3>
+    <p class="section-sub placeholder">[Deskripsi singkat cakupan tugas, misalnya administrasi akademik, kepegawaian, keuangan, dan kearsipan sekolah.]</p>
+
+    <div class="filter-row">
+      <span class="filter-pill active">Semua staf tata usaha</span>
+      <span class="filter-pill placeholder">[Administrasi Akademik]</span>
+      <span class="filter-pill placeholder">[Keuangan]</span>
+      <span class="filter-pill placeholder">[Kepegawaian]</span>
+    </div>
+
+    <div class="teacher-grid">
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/96x96.png?text=Foto" alt="Foto Staf"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Staf 1, Gelar]</h4>
+          <span class="teacher-role placeholder">[Jabatan, misalnya: Kepala Tata Usaha]</span>
+          <p class="placeholder">[Pendidikan: jenjang &amp; jurusan]</p>
+          <div class="teacher-meta">
+            <span class="meta-tag placeholder">[Unit/Bidang Tugas]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <span class="badge-wali">[Unit/Lokasi]</span>
+        <div class="avatar"><img src="https://via.placeholder.com/96x96.png?text=Foto" alt="Foto Staf"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Staf 2, Gelar]</h4>
+          <span class="teacher-role placeholder">[Jabatan, misalnya: Staf Administrasi Akademik]</span>
+          <p class="placeholder">[Pendidikan: jenjang &amp; jurusan]</p>
+          <div class="teacher-meta">
+            <span class="meta-tag placeholder">[Unit/Bidang Tugas]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/96x96.png?text=Foto" alt="Foto Staf"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Staf 3, Gelar]</h4>
+          <span class="teacher-role placeholder">[Jabatan, misalnya: Staf Keuangan]</span>
+          <p class="placeholder">[Pendidikan: jenjang &amp; jurusan]</p>
+          <div class="teacher-meta">
+            <span class="meta-tag placeholder">[Unit/Bidang Tugas]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="add-card">+ Tambahkan data staf tata usaha lainnya di sini<br>(salin blok .teacher-card)</div>
+    </div>
+
+    <h3 class="section-heading">Pustakawan, Laboran &amp; Teknisi</h3>
+    <p class="section-sub placeholder">[Deskripsi singkat cakupan tugas, misalnya pengelolaan perpustakaan, laboratorium komputer/jaringan, dan pemeliharaan sarana praktik.]</p>
+
+    <div class="teacher-grid">
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/96x96.png?text=Foto" alt="Foto Staf"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Staf 4, Gelar]</h4>
+          <span class="teacher-role placeholder">[Jabatan, misalnya: Pustakawan]</span>
+          <p class="placeholder">[Pendidikan: jenjang &amp; jurusan]</p>
+          <div class="teacher-meta">
+            <span class="meta-tag placeholder">[Unit/Bidang Tugas]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/96x96.png?text=Foto" alt="Foto Staf"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Staf 5, Gelar]</h4>
+          <span class="teacher-role placeholder">[Jabatan, misalnya: Laboran TKJ]</span>
+          <p class="placeholder">[Pendidikan: jenjang &amp; jurusan]</p>
+          <div class="teacher-meta">
+            <span class="meta-tag placeholder">[Unit/Bidang Tugas]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="add-card">+ Tambahkan data pustakawan/laboran lainnya di sini<br>(salin blok .teacher-card)</div>
+    </div>
+
+    <h3 class="section-heading">Keamanan &amp; Kebersihan</h3>
+    <p class="section-sub placeholder">[Deskripsi singkat cakupan tugas, misalnya menjaga keamanan lingkungan sekolah dan kebersihan fasilitas.]</p>
+
+    <div class="teacher-grid">
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/96x96.png?text=Foto" alt="Foto Staf"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Staf 6]</h4>
+          <span class="teacher-role placeholder">[Jabatan, misalnya: Petugas Keamanan]</span>
+          <p class="placeholder">[Masa kerja / catatan tugas]</p>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/96x96.png?text=Foto" alt="Foto Staf"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Staf 7]</h4>
+          <span class="teacher-role placeholder">[Jabatan, misalnya: Petugas Kebersihan]</span>
+          <p class="placeholder">[Masa kerja / catatan tugas]</p>
+        </div>
+      </div>
+
+      <div class="add-card">+ Tambahkan data staf keamanan/kebersihan lainnya di sini<br>(salin blok .teacher-card)</div>
+    </div>
+
+    <h3 class="section-heading">Ringkasan Data Tenaga Kependidikan</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Jabatan</th>
+          <th>Unit / Bidang</th>
+          <th>Pendidikan</th>
+          <th>Masa Kerja</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="placeholder">[Nama Staf]</td>
+          <td class="placeholder">[Jabatan]</td>
+          <td class="placeholder">[Unit/Bidang]</td>
+          <td class="placeholder">[Pendidikan]</td>
+          <td class="placeholder">[Tahun mulai]</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="placeholder">[Nama Staf]</td>
+          <td class="placeholder">[Jabatan]</td>
+          <td class="placeholder">[Unit/Bidang]</td>
+          <td class="placeholder">[Pendidikan]</td>
+          <td class="placeholder">[Tahun mulai]</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="placeholder">[Nama Staf]</td>
+          <td class="placeholder">[Jabatan]</td>
+          <td class="placeholder">[Unit/Bidang]</td>
+          <td class="placeholder">[Pendidikan]</td>
+          <td class="placeholder">[Tahun mulai]</td>
+        </tr>
+        <!-- Salin baris <tr> di atas untuk menambah data staf lain -->
+      </tbody>
+    </table>
+
+    <!-- Unduhan dokumen terkait tenaga kependidikan -->
+    <h3 class="section-heading">Unduh Dokumen Terkait</h3>
+    <ul class="download-list">
+      <li>
+        <a href="#" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-7 2h14v2H5v-2z"/></svg>
+          [Nama File, misalnya: Daftar Tenaga Kependidikan.pdf]
+        </a>
+      </li>
+      <li>
+        <a href="#" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-7 2h14v2H5v-2z"/></svg>
+          [Nama File, misalnya: Struktur Organisasi Tenaga Kependidikan.pdf]
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="social-links">
+    <a href="#" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.06 2.2.27 3.03.6.85.34 1.57.79 2.27 1.49.7.7 1.15 1.42 1.49 2.27.33.83.54 1.86.6 3.03.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.17-.27 2.2-.6 3.03-.34.85-.79 1.57-1.49 2.27-.7.7-1.42 1.15-2.27 1.49-.83.33-1.86.54-3.03.6-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.17-.06-2.2-.27-3.03-.6-.85-.34-1.57-.79-2.27-1.49-.7-.7-1.15-1.42-1.49-2.27-.33-.83-.54-1.86-.6-3.03C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.06-1.17.27-2.2.6-3.03.34-.85.79-1.57 1.49-2.27.7-.7 1.42-1.15 2.27-1.49.83-.33 1.86-.54 3.03-.6C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1 .05-1.74.22-2.28.43-.57.22-.99.49-1.42.92-.43.43-.7.85-.92 1.42-.21.54-.38 1.28-.43 2.28C2.13 9.96 2.13 10.33 2.13 12s0 3.52.07 4.76c.05 1 .22 1.74.43 2.28.22.57.49.99.92 1.42.43.43.85.7 1.42.92.54.21 1.28.38 2.28.43 1.24.07 1.61.07 4.76.07s3.52 0 4.76-.07c1-.05 1.74-.22 2.28-.43.57-.22.99-.49 1.42-.92.43-.43.7-.85.92-1.42.21-.54.38-1.28.43-2.28.07-1.24.07-1.61.07-4.76s0-3.52-.07-4.76c-.05-1-.22-1.74-.43-2.28-.22-.57-.49-.99-.92-1.42a3.6 3.6 0 0 0-1.42-.92c-.54-.21-1.28-.38-2.28-.43C15.52 4 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm5.85-3.4a1.08 1.08 0 1 1-2.16 0 1.08 1.08 0 0 1 2.16 0z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24"><path d="M16.5 2h-3v13.6a2.9 2.9 0 1 1-2.05-2.77V9.7a6 6 0 1 0 5.05 5.92V8.32a6.9 6.9 0 0 0 4.2 1.43V6.6a4.07 4.07 0 0 1-4.2-3.6V2z"/></svg>
+    </a>
+  </div>
+  <p>&copy; Copyright - SMK Imelda Medan [Tahun] | All Rights reserved.</p>
+</footer>
+
+</body>
+</html>

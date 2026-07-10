@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="../images/logo.png">
+<title>Hymne - TKJ 1 </title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Work Sans', Arial, sans-serif;
+    color: #313131;
+    background: #eee;
+  }
+  header.site-header {
+    background-color: #143745;
+    background-image: url('https://enrollment-api.ui.ac.id/uploads/20250922072406_Edited-9722.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    position: relative;
+  }
+  /* Lapisan gelap transparan agar teks tetap terbaca di atas foto */
+  header.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 55, 69, 0.65);
+  }
+  header.site-header .header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 40px 16px;
+  }
+  header.site-header img.logo {
+    height: 70px;
+    margin-bottom: 8px;
+  }
+  header.site-header h1.site-title {
+    margin: 0;
+    font-size: 28px;
+  }
+  header.site-header p.site-description {
+    margin: 4px 0 0;
+    font-size: 14px;
+    opacity: 0.85;
+  }
+  nav.main-nav {
+    background: #1c4a5c;
+  }
+  nav.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  nav.main-nav ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+  nav.main-nav ul li a:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .breadcrumb {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+  }
+  .breadcrumb h2 {
+    margin: 0;
+    font-weight: 600;
+  }
+  main {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+  .content-box {
+    background: #fff;
+    padding: 24px;
+    padding-right: 64px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .content-box h2.page-heading {
+    margin-top: 0;
+  }
+  .content-box img.feature-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 16px;
+  }
+  .content-box p {
+    text-align: justify;
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+  .content-box ol, .content-box ul {
+    margin: 0 0 16px;
+    padding-left: 22px;
+    line-height: 1.7;
+  }
+  .content-box .video-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* rasio 16:9 */
+    margin-bottom: 16px;
+  }
+  .content-box .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .content-box table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  .content-box table.data-table th,
+  .content-box table.data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  .content-box table.data-table th {
+    background: #143745;
+    color: #fff;
+  }
+  footer {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 24px;
+    font-size: 13px;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  }
+  .social-links a:hover {
+    background: #fff;
+    color: #143745;
+    transform: translateY(-2px);
+  }
+  .placeholder {
+    color: #999;
+    font-style: italic;
+  }
+
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #143745;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 18px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .back-button:hover {
+    background: #1c4a5c;
+  }
+
+  /* ===== Tambahan khusus halaman Hymne ===== */
+  .lyrics-box {
+    background: #f7f9fa;
+    border-left: 4px solid #143745;
+    padding: 18px 22px;
+    margin: 0 0 20px;
+    border-radius: 2px;
+  }
+  .lyrics-box p {
+    text-align: left;
+    margin: 0 0 12px;
+    line-height: 1.9;
+  }
+  .lyrics-box p:last-child {
+    margin-bottom: 0;
+  }
+  .audio-wrap {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .audio-wrap audio {
+    width: 100%;
+  }
+  .section-title {
+    color: #143745;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 28px 0 12px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <img class="logo" src="../images/logo.png" alt="Logo Sekolah">
+    <h1 class="site-title">TKJ 1 - SMK IMELDA MEDAN</h1>
+    <p class="site-description">Program Unggulan Teknik Komputer dan Jaringan</p>
+  </div>
+</header>
+
+<!-- ===================== JUDUL HALAMAN ===================== -->
+<div class="breadcrumb">
+  <h2>Hymne</h2>
+</div>
+
+<!-- ===================== KONTEN UTAMA ===================== -->
+<main>
+  <div class="content-box">
+
+    <a href="../index.html" class="back-button">&larr; Kembali</a>
+
+    <h2 class="page-heading">Hymne [Nama Sekolah]</h2>
+    <p class="placeholder">[Paragraf pengantar singkat tentang hymne sekolah, misalnya sejarah penciptaan, makna, dan kapan hymne ini biasa dikumandangkan]</p>
+
+    <!-- Gambar/poster hymne (opsional) -->
+    <img class="feature-img" src="" alt="[Poster/Ilustrasi Hymne Sekolah]">
+
+    <p class="section-title">Lirik Hymne</p>
+    <div class="lyrics-box">
+      <p class="placeholder">[Bait 1 baris 1]<br>
+      [Bait 1 baris 2]<br>
+      [Bait 1 baris 3]<br>
+      [Bait 1 baris 4]</p>
+
+      <p class="placeholder">[Bait 2 baris 1]<br>
+      [Bait 2 baris 2]<br>
+      [Bait 2 baris 3]<br>
+      [Bait 2 baris 4]</p>
+
+      <p class="placeholder">[Reff/Penutup baris 1]<br>
+      [Reff/Penutup baris 2]</p>
+    </div>
+
+    <p class="section-title">Informasi Pencipta</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Keterangan</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pencipta Lirik</td>
+          <td class="placeholder">[Nama pencipta lirik]</td>
+        </tr>
+        <tr>
+          <td>Pencipta Melodi</td>
+          <td class="placeholder">[Nama pencipta melodi]</td>
+        </tr>
+        <tr>
+          <td>Tahun Diciptakan</td>
+          <td class="placeholder">[Tahun]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="section-title">Video Hymne</p>
+    <div class="video-wrap">
+      <iframe src="" title="Video Hymne Sekolah" allowfullscreen></iframe>
+    </div>
+
+    <p class="section-title">Audio Hymne</p>
+    <div class="audio-wrap">
+      <audio controls src="">
+        Peramban Anda tidak mendukung pemutar audio.
+      </audio>
+    </div>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="social-links">
+    <a href="https://www.facebook.com/smkimeldamedan" target="_blank" rel="noopener" aria-label="Facebook">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+    <a href="https://www.instagram.com/elevenclass_tkjone?igsh=MWRidDhmdWV1ZjhnbA==" target="_blank" rel="noopener" aria-label="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a href="https://www.youtube.com/@smkteknikimelda5904" target="_blank" rel="noopener" aria-label="YouTube">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+  </div>
+  <p>&copy; Copyright - [Nama Tim/Sekolah] [Tahun] | All Rights reserved.</p>
+</footer>
+
+</body>
+</html>

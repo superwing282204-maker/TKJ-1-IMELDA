@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="../images/logo.png">
+<title>Informasi Guru - TKJ 1</title>
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Work Sans', Arial, sans-serif;
+    color: #313131;
+    background: #eee;
+  }
+  header.site-header {
+    background-color: #143745;
+    background-image: url('https://enrollment-api.ui.ac.id/uploads/20250922072406_Edited-9722.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    position: relative;
+  }
+  header.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 55, 69, 0.65);
+  }
+  header.site-header .header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 40px 16px;
+  }
+  header.site-header img.logo {
+    height: 70px;
+    margin-bottom: 8px;
+  }
+  header.site-header h1.site-title {
+    margin: 0;
+    font-size: 28px;
+  }
+  header.site-header p.site-description {
+    margin: 4px 0 0;
+    font-size: 14px;
+    opacity: 0.85;
+  }
+  .breadcrumb {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+  }
+  .breadcrumb h2 {
+    margin: 0;
+    font-weight: 600;
+  }
+  main {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+  .content-box {
+    background: #fff;
+    padding: 24px;
+    padding-right: 64px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .content-box h2.page-heading {
+    margin-top: 0;
+  }
+  .content-box h3.section-heading {
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: #143745;
+    border-left: 4px solid #143745;
+    padding-left: 10px;
+  }
+  .content-box img.feature-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 16px;
+  }
+  .content-box p {
+    text-align: justify;
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+  .content-box ol, .content-box ul {
+    margin: 0 0 16px;
+    padding-left: 22px;
+    line-height: 1.7;
+  }
+
+  /* Filter kelompok guru */
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 20px;
+  }
+  .filter-pill {
+    border: 1px solid #ddd;
+    background: #fafafa;
+    color: #143745;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 20px;
+  }
+  .filter-pill.active {
+    background: #143745;
+    border-color: #143745;
+    color: #fff;
+  }
+
+  /* Kartu profil guru (mengikuti pola meaning-card) */
+  .teacher-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin: 0 0 16px;
+  }
+  .teacher-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 18px;
+    background: #fafafa;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    position: relative;
+  }
+  .teacher-card .avatar {
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #143745;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    overflow: hidden;
+  }
+  .teacher-card .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .teacher-card .teacher-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .teacher-card h4 {
+    margin: 0 0 3px;
+    color: #143745;
+    font-size: 16px;
+  }
+  .teacher-card .teacher-role {
+    display: block;
+    font-size: 13px;
+    color: #b5872f;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .teacher-card p {
+    font-size: 13.5px;
+    margin: 0;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .teacher-card .badge-wali {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #143745;
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  .content-box table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  .content-box table.data-table th,
+  .content-box table.data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  .content-box table.data-table th {
+    background: #143745;
+    color: #fff;
+  }
+  .content-box .download-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .content-box .download-list li {
+    margin-bottom: 8px;
+  }
+  .content-box .download-list a {
+    display: inline-block;
+    background: #143745;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .content-box .download-list a:hover {
+    background: #1c4a5c;
+  }
+  footer {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 24px;
+    font-size: 13px;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .social-links a:hover {
+    background: #fff;
+    color: #143745;
+    transform: translateY(-2px);
+  }
+  .social-links svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  .placeholder {
+    color: #999;
+    font-style: italic;
+  }
+  .back-button-wrap {
+    background: #143745;
+    padding: 14px 16px;
+    text-align: left;
+  }
+  .back-button-wrap .back-button-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .back-button:hover {
+    background: rgba(255,255,255,0.22);
+  }
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <img class="logo" src="../images/logo.png" alt="Logo Sekolah">
+    <h1 class="site-title">TKJ 1 - SMK IMELDA MEDAN</h1>
+    <p class="site-description">Program Unggulan Teknik Komputer dan Jaringan</p>
+  </div>
+</header>
+
+<!-- ===================== TOMBOL KEMBALI ===================== -->
+<div class="back-button-wrap">
+  <div class="back-button-inner">
+    <a class="back-button" href="javascript:history.back()">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+      Kembali
+    </a>
+  </div>
+</div>
+
+<!-- ===================== JUDUL HALAMAN ===================== -->
+<div class="breadcrumb">
+  <h2>Informasi Guru</h2>
+</div>
+
+<!-- ===================== KONTEN UTAMA ===================== -->
+<main>
+  <div class="content-box">
+
+    <h2 class="page-heading">Informasi Guru Jurusan Teknik Komputer dan Jaringan (TKJ)</h2>
+    <p>Halaman ini menyajikan informasi tenaga pengajar yang mendukung Program Keahlian Teknik Komputer dan Jaringan di SMK Imelda Medan, mulai dari guru mata pelajaran kejuruan hingga guru mata pelajaran umum, lengkap dengan latar belakang pendidikan dan sertifikasi yang dimiliki.</p>
+
+    <h3 class="section-heading">Guru Kejuruan TKJ</h3>
+    <p>Mengampu materi inti jaringan, administrasi sistem, dan keamanan siber, dengan latar belakang sertifikasi industri yang relevan.</p>
+
+    <div class="filter-row">
+      <span class="filter-pill active">Semua guru kejuruan</span>
+      <span class="filter-pill">Jaringan &amp; infrastruktur</span>
+      <span class="filter-pill">Administrasi sistem</span>
+      <span class="filter-pill">Keamanan siber</span>
+    </div>
+
+    <div class="teacher-grid">
+      <div class="teacher-card">
+        <div class="avatar"><img src="../images/guru1.png" alt="Foto Guru RA"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">Erfina Wati Simamora, S.Kom</h4>
+          <span class="teacher-role placeholder">Teknik Komputer dan Jaringan</span>
+          <p class="placeholder">Pendidikan: S3 Teknik Informatika &middot;</p>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=DP" alt="Foto Guru DP"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Guru 2, S.T.]</h4>
+          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Administrasi Sistem Jaringan]</span>
+          <p class="placeholder">[Pendidikan: S1 Sistem Komputer &middot; Sertifikasi: CompTIA Network+]</p>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <span class="badge-wali">Wali Kelas X</span>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=FH" alt="Foto Guru FH"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Guru 3, S.Kom.]</h4>
+          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Dasar-Dasar TKJ &amp; Sistem Komputer]</span>
+          <p class="placeholder">[Pendidikan: S1 Teknik Komputer &middot; Sertifikasi: CompTIA A+]</p>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=SN" alt="Foto Guru SN"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Guru 4, M.Kom.]</h4>
+          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Keamanan Jaringan]</span>
+          <p class="placeholder">[Pendidikan: S2 Ilmu Komputer &middot; Sertifikasi: CompTIA Security+, CEH]</p>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <span class="badge-wali">Wali Kelas XI</span>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=BW" alt="Foto Guru BW"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Guru 5, S.T.]</h4>
+          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Teknologi Layanan Jaringan &amp; PKL]</span>
+          <p class="placeholder">[Pendidikan: S1 Teknik Elektro &middot; Sertifikasi: MTCNA, MTCRE]</p>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=AL" alt="Foto Guru AL"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Guru 6, S.Kom.]</h4>
+          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Pemrograman Dasar &amp; Basis Data]</span>
+          <p class="placeholder">[Pendidikan: S1 Teknik Informatika &middot; Sertifikasi: Oracle Database Foundations]</p>
+        </div>
+      </div>
+      <!-- Salin blok .teacher-card di atas untuk menambah guru lain -->
+    </div>
+
+    <h3 class="section-heading">Guru Mata Pelajaran Umum</h3>
+    <p>Mendampingi siswa pada mata pelajaran umum yang menjadi dasar kompetensi akademik dan karakter.</p>
+
+    <div class="teacher-grid">
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=TW" alt="Foto Guru TW"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Guru 7, S.Pd.]</h4>
+          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Matematika]</span>
+          <p class="placeholder">[Pendidikan: S1 Pendidikan Matematika]</p>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=RH" alt="Foto Guru RH"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Guru 8, S.Pd.]</h4>
+          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Bahasa Inggris]</span>
+          <p class="placeholder">[Pendidikan: S1 Pendidikan Bahasa Inggris]</p>
+        </div>
+      </div>
+
+      <div class="teacher-card">
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=AS" alt="Foto Guru AS"></div>
+        <div class="teacher-info">
+          <h4 class="placeholder">[Nama Guru 9, S.Pd.]</h4>
+          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Bahasa Indonesia &amp; PPKn]</span>
+          <p class="placeholder">[Pendidikan: S1 Pendidikan Bahasa Indonesia]</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-heading">Ringkasan Data Guru</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Guru</th>
+          <th>Jabatan / Mapel</th>
+          <th>Pendidikan</th>
+          <th>Sertifikasi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="placeholder">[Nama Guru 1]</td>
+          <td class="placeholder">[Jabatan / Mapel]</td>
+          <td class="placeholder">[Pendidikan]</td>
+          <td class="placeholder">[Sertifikasi]</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="placeholder">[Nama Guru 2]</td>
+          <td class="placeholder">[Jabatan / Mapel]</td>
+          <td class="placeholder">[Pendidikan]</td>
+          <td class="placeholder">[Sertifikasi]</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="placeholder">[Nama Guru 3]</td>
+          <td class="placeholder">[Jabatan / Mapel]</td>
+          <td class="placeholder">[Pendidikan]</td>
+          <td class="placeholder">[Sertifikasi]</td>
+        </tr>
+        <!-- Salin baris <tr> di atas untuk menambah data guru lain -->
+      </tbody>
+    </table>
+
+    <!-- Unduhan dokumen terkait guru -->
+    <h3 class="section-heading">Unduh Dokumen Terkait</h3>
+    <ul class="download-list">
+      <li><a href="#" target="_blank">[Nama File, misalnya: Daftar Guru TKJ (PDF).pdf]</a></li>
+      <li><a href="#" target="_blank">[Nama File, misalnya: Struktur Organisasi Guru.pdf]</a></li>
+    </ul>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="social-links">
+    <a href="#" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.06 2.2.27 3.03.6.85.34 1.57.79 2.27 1.49.7.7 1.15 1.42 1.49 2.27.33.83.54 1.86.6 3.03.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.17-.27 2.2-.6 3.03-.34.85-.79 1.57-1.49 2.27-.7.7-1.42 1.15-2.27 1.49-.83.33-1.86.54-3.03.6-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.17-.06-2.2-.27-3.03-.6-.85-.34-1.57-.79-2.27-1.49-.7-.7-1.15-1.42-1.49-2.27-.33-.83-.54-1.86-.6-3.03C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.06-1.17.27-2.2.6-3.03.34-.85.79-1.57 1.49-2.27.7-.7 1.42-1.15 2.27-1.49.83-.33 1.86-.54 3.03-.6C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1 .05-1.74.22-2.28.43-.57.22-.99.49-1.42.92-.43.43-.7.85-.92 1.42-.21.54-.38 1.28-.43 2.28C2.13 9.96 2.13 10.33 2.13 12s0 3.52.07 4.76c.05 1 .22 1.74.43 2.28.22.57.49.99.92 1.42.43.43.85.7 1.42.92.54.21 1.28.38 2.28.43 1.24.07 1.61.07 4.76.07s3.52 0 4.76-.07c1-.05 1.74-.22 2.28-.43.57-.22.99-.49 1.42-.92.43-.43.7-.85.92-1.42.21-.54.38-1.28.43-2.28.07-1.24.07-1.61.07-4.76s0-3.52-.07-4.76c-.05-1-.22-1.74-.43-2.28-.22-.57-.49-.99-.92-1.42a3.6 3.6 0 0 0-1.42-.92c-.54-.21-1.28-.38-2.28-.43C15.52 4 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm5.85-3.4a1.08 1.08 0 1 1-2.16 0 1.08 1.08 0 0 1 2.16 0z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24"><path d="M16.5 2h-3v13.6a2.9 2.9 0 1 1-2.05-2.77V9.7a6 6 0 1 0 5.05 5.92V8.32a6.9 6.9 0 0 0 4.2 1.43V6.6a4.07 4.07 0 0 1-4.2-3.6V2z"/></svg>
+    </a>
+  </div>
+  <p>&copy; Copyright - SMK Imelda Medan [Tahun] | All Rights reserved.</p>
+</footer>
+
+</body>
+</html>

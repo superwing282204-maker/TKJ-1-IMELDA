@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="../images/logo.png">
+<title>Prakata Kepala Sekolah - TKJ 1</title>
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Work Sans', Arial, sans-serif;
+    color: #313131;
+    background: #eee;
+  }
+  header.site-header {
+    background-color: #143745;
+    background-image: url('https://enrollment-api.ui.ac.id/uploads/20250922072406_Edited-9722.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    position: relative;
+  }
+  /* Lapisan gelap transparan agar teks tetap terbaca di atas foto */
+  header.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 55, 69, 0.65);
+  }
+  header.site-header .header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 40px 16px;
+  }
+  header.site-header img.logo {
+    height: 70px;
+    margin-bottom: 8px;
+  }
+  header.site-header h1.site-title {
+    margin: 0;
+    font-size: 28px;
+  }
+  header.site-header p.site-description {
+    margin: 4px 0 0;
+    font-size: 14px;
+    opacity: 0.85;
+  }
+  nav.main-nav {
+    background: #1c4a5c;
+  }
+  nav.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  nav.main-nav ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+  nav.main-nav ul li a:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .breadcrumb {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+  }
+  .breadcrumb h2 {
+    margin: 0;
+    font-weight: 600;
+  }
+  main {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .content-box {
+    flex: 2;
+    min-width: 280px;
+    background: #fff;
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .content-box img.kepsek-photo {
+    max-width: 234px;
+    height: auto;
+    display: block;
+    margin-bottom: 16px;
+  }
+  .content-box p {
+    text-align: justify;
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+  .content-box p.signature-name {
+    text-align: left;
+    font-weight: 700;
+  }
+  .sidebar {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .widget {
+    background: #fff;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .widget h3 {
+    margin: 0 0 12px;
+    font-size: 15px;
+    border-bottom: 2px solid #143745;
+    padding-bottom: 8px;
+  }
+  .widget input[type="search"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .widget ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .widget ul li {
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 13px;
+  }
+  .widget ul li a {
+    color: #143745;
+    text-decoration: none;
+  }
+  footer {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 24px;
+    font-size: 13px;
+  }
+  .placeholder {
+    color: #999;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <img class="logo" src="../images/logo.png" alt="Logo SMK Imelda Medan">
+    <h1 class="site-title">TKJ 1 - SMK IMELDA MEDAN</h1>
+    <p class="site-description">Program Unggulan Teknik Komputer dan Jaringan</p>
+  </div>
+</header>
+
+<!-- ===================== NAVIGASI ===================== -->
+<nav class="main-nav">
+  <ul>
+    <li><a href="../index.html">Beranda</a></li>
+    <li><a href="../profil/prakata-kepala-sekolah.html">Profil</a></li>
+    <li><a href="../profil/teknik-komputer-jaringan.html">Kurikulum</a></li>
+    <li><a href="../profil/program-sekolah.html">Program Sekolah</a></li>
+    <li><a href="../profil/gtk.html">GTK</a></li>
+    <li><a href="../profil/kesiswaan.html">Kesiswaan</a></li>
+    <li><a href="../profil/kontak.html">Kontak</a></li>
+    <!-- Tambahkan menu lain sesuai kebutuhan -->
+  </ul>
+</nav>
+
+<!-- ===================== JUDUL HALAMAN ===================== -->
+<div class="breadcrumb">
+  <h2>Prakata Kepala Sekolah</h2>
+</div>
+
+<!-- ===================== KONTEN UTAMA ===================== -->
+<main>
+  <div class="content-box">
+
+    <!-- Foto Kepala Sekolah -->
+    <img class="kepsek-photo" src="https://s3.schoolmedia.id/01-cms-website/smkimeldamedan.sch.id/kepsek/ggcch1763714658.jpeg" alt="Foto Kepala Sekolah">
+
+    <!-- Isi sambutan/prakata -->
+    <p class="placeholder">Bismillahirohmannirrohim</p>
+    <p class="placeholder">Assalamualaikum Warahmatullah Wabarakatuh</p>
+    <p class="placeholder">Kami mengucapkan selamat datang di Website kami SMK Imelda Medan yang saya tujukan untuk seluruh unsur
+      pimpinan, guru, karyawan dan siswa masyarakat guna dapat mengakses seluruh informasi tentang segala profil, aktifitas/kegiatan serta fasilitas sekolah kami.</p>
+    <p class="placeholder">Kami selaku pimpinan sekolah mengucapkan terima kasih kepada tim pembuat Website ini yang telah berusaha untuk dapat lebih memperkenalkan segala perihal yang dimiliki oleh sekolah.
+      Dan tentunya Website sekolah kami masih terdapat banyak kekurangan, oleh karena itu kepada seluruh civitas akademika dan masyarakat umum dapat memberikan saran dan kritik yang membangun demi kemajuan Website ini lebih lanjut.</p>
+    <p class="placeholder">Saya berharap Website ini dapat dijadikan sarana interaksi yang positif baik antar warga sekolah maupun masyarakat pada umumnya
+      sehingga informasi dapat tersampaikan dengan baik. Semoga Allah SWT memberikan kekuatan bagi kita semua untuk mencerdaskan anak-anak bangsa.</p>
+    <p class="placeholder">Wassalamualaikum Wr. Wb.</p>
+
+    <p>Kepala SMK Imelda Medan</p>
+    <p>&nbsp;</p>
+    <p class="signature-name">Dr. Hendra Sahputra Batubara, S.Pd., M.Pd.T</p>
+
+  </div>
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+
+    <div class="widget">
+      <h3>Cari</h3>
+      <input type="search" placeholder="Cari...">
+    </div>
+
+    <div class="widget">
+      <h3>Kategori</h3>
+      <ul>
+        <li><a href="https://www.smkn1-cmi.sch.id/category/alumni/">Alumni</a></li>
+        <li><a href="#">[Kategori 2]</a></li>
+        <li><a href="#">[Kategori 3]</a></li>
+      </ul>
+    </div>
+
+    <div class="widget">
+      <h3>Berita Terbaru</h3>
+      <ul>
+        <li><a href="#">[Judul berita 1]</a></li>
+        <li><a href="#">[Judul berita 2]</a></li>
+        <li><a href="#">[Judul berita 3]</a></li>
+      </ul>
+    </div>
+
+  </aside>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <p>&copy; Copyright - Tim ICT SMK Imelda Medan 2026 | All Rights reserved.</p>
+</footer>
+
+</body>
+</html>

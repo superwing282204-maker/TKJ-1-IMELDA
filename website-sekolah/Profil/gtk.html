@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="../images/logo.png">
+<title>GTK - TKJ 1 </title>
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Work Sans', Arial, sans-serif;
+    color: #313131;
+    background: #eee;
+  }
+
+  /* ===== HEADER ===== */
+  header.site-header {
+    background-color: #143745;
+    background-image: url('https://enrollment-api.ui.ac.id/uploads/20250922072406_Edited-9722.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    position: relative;
+  }
+  header.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 55, 69, 0.65);
+  }
+  header.site-header .header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 40px 16px;
+  }
+  header.site-header img.logo {
+    height: 70px;
+    margin-bottom: 8px;
+  }
+  header.site-header h1.site-title {
+    margin: 0;
+    font-size: 28px;
+  }
+  header.site-header p.site-description {
+    margin: 4px 0 0;
+    font-size: 14px;
+    opacity: 0.85;
+  }
+
+  /* ===== NAV ===== */
+  nav.main-nav { background: #1c4a5c; }
+  nav.main-nav ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  nav.main-nav ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+  nav.main-nav ul li a:hover,
+  nav.main-nav ul li a.active {
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* ===== BREADCRUMB ===== */
+  .breadcrumb {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+  }
+  .breadcrumb h2 { margin: 0; font-weight: 600; }
+
+  /* ===== MAIN ===== */
+  main {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+
+  /* ===== CONTENT BOX ===== */
+  .content-box {
+    background: #fff;
+    padding: 28px 32px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+  }
+  .content-box h2.page-heading {
+    margin-top: 0;
+    color: #143745;
+    font-size: 22px;
+  }
+  .content-box h3.section-heading {
+    margin-top: 32px;
+    margin-bottom: 18px;
+    color: #143745;
+    border-left: 4px solid #143745;
+    padding-left: 10px;
+    font-size: 16px;
+  }
+  .content-box p {
+    line-height: 1.75;
+    margin: 0 0 14px;
+    font-size: 14px;
+    text-align: justify;
+  }
+
+  /* ===== STATISTIK GTK ===== */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .stat-card {
+    background: #143745;
+    color: #fff;
+    border-radius: 6px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-card .stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card .stat-label {
+    font-size: 12px;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== KARTU GURU ===== */
+  .gtk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 8px;
+  }
+  .gtk-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fafafa;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .gtk-card:hover {
+    box-shadow: 0 4px 14px rgba(20,55,69,0.15);
+    transform: translateY(-3px);
+  }
+  .gtk-card .card-photo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: top;
+    background: #d0dde2;
+    display: block;
+  }
+  /* Foto placeholder jika kosong */
+  .gtk-card .card-photo-placeholder {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #1c4a5c 0%, #143745 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gtk-card .card-photo-placeholder svg {
+    width: 64px;
+    height: 64px;
+    fill: rgba(255,255,255,0.35);
+  }
+  .gtk-card .card-body {
+    padding: 14px 14px 16px;
+  }
+  .gtk-card .card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #143745;
+    margin: 0 0 4px;
+    line-height: 1.3;
+  }
+  .gtk-card .card-nip {
+    font-size: 11px;
+    color: #888;
+    margin: 0 0 8px;
+  }
+  .gtk-card .card-mapel {
+    font-size: 12px;
+    color: #555;
+    margin: 0 0 10px;
+    line-height: 1.4;
+  }
+  .gtk-card .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-pns { background: #e3f2fd; color: #1565c0; }
+  .badge-gtty { background: #e8f5e9; color: #2e7d32; }
+  .badge-honorer { background: #fff8e1; color: #f57f17; }
+  .badge-s1 { background: #f3e5f5; color: #6a1b9a; }
+  .badge-s2 { background: #fce4ec; color: #880e4f; }
+  .badge-d3 { background: #e0f7fa; color: #006064; }
+  .badge-wali { background: #143745; color: #fff; }
+
+  /* ===== TABEL GTK ===== */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 8px;
+  }
+  table.gtk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 600px;
+  }
+  table.gtk-table th {
+    background: #143745;
+    color: #fff;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+  table.gtk-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    color: #333;
+  }
+  table.gtk-table tr:last-child td { border-bottom: none; }
+  table.gtk-table tr:nth-child(even) td { background: #f8f9fa; }
+  table.gtk-table td .thumb {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #d0dde2;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  table.gtk-table td .thumb-placeholder {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1c4a5c;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-right: 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .nama-wrap {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* ===== STRUKTUR ORGANISASI ===== */
+  .struktur-wrap {
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .struktur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    min-width: 500px;
+  }
+  .s-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    position: relative;
+    margin-bottom: 0;
+  }
+  .s-box {
+    background: #143745;
+    color: #fff;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 13px;
+    text-align: center;
+    min-width: 140px;
+    position: relative;
+  }
+  .s-box .s-jabatan {
+    font-size: 10px;
+    opacity: 0.75;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .s-box .s-nama {
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .s-box.secondary {
+    background: #1c4a5c;
+  }
+  .s-box.tertiary {
+    background: #fff;
+    color: #143745;
+    border: 1.5px solid #143745;
+  }
+  /* Konektor vertikal */
+  .s-connector-v {
+    width: 2px;
+    height: 28px;
+    background: #143745;
+    margin: 0 auto;
+  }
+  /* Konektor horizontal + percabangan */
+  .s-connector-h-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .s-branch {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+  }
+  .s-branch-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .s-branch-line .h-line {
+    width: 100%;
+    height: 2px;
+    background: #143745;
+  }
+  .s-branch-line .v-line {
+    width: 2px;
+    height: 24px;
+    background: #143745;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 0;
+    font-size: 13px;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .social-links a:hover {
+    background: #fff;
+    color: #143745;
+    transform: translateY(-2px);
+  }
+  .social-links svg { width: 18px; height: 18px; fill: currentColor; }
+
+  @media (max-width: 680px) {
+    .content-box { padding: 18px 14px; }
+    .gtk-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <img class="logo" src="../images/logo.png" alt="Logo SMK Imelda Medan">
+    <h1 class="site-title">TKJ 1 - SMK IMELDA MEDAN</h1>
+    <p class="site-description">Program Unggulan Teknik Komputer dan Jaringan</p>
+  </div>
+</header>
+
+<!-- ===== NAV ===== -->
+<nav class="main-nav">
+  <ul>
+    <li><a href="../index.html">Beranda</a></li>
+    <li><a href="../profil/prakata-kepala-sekolah.html">Profil</a></li>
+    <li><a href="../profil/teknik-komputer-jaringan.html">Kurikulum</a></li>
+    <li><a href="../profil/program-sekolah.html">Program Sekolah</a></li>
+    <li><a href="../profil/gtk.html" class="active">GTK</a></li>
+    <li><a href="../profil/kesiswaan.html">Kesiswaan</a></li>
+    <li><a href="../profil/kontak.html">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- ===== BREADCRUMB ===== -->
+<div class="breadcrumb">
+  <h2>Guru dan Tenaga Kependidikan</h2>
+</div>
+
+<!-- ===== MAIN ===== -->
+<main>
+
+  <!-- PENDAHULUAN + STATISTIK -->
+  <div class="content-box">
+    <h2 class="page-heading">GTK Program Keahlian TKJ 1</h2>
+    <p>
+      Program Keahlian Teknik Komputer dan Jaringan (TKJ 1) SMK Imelda Medan didukung oleh tenaga pendidik dan kependidikan yang berkompeten di bidangnya. Seluruh guru telah memenuhi kualifikasi akademik minimal S1 sesuai bidang studi yang diampu, serta aktif mengikuti pengembangan keprofesian berkelanjutan (PKB) guna meningkatkan mutu pembelajaran.
+    </p>
+    <p>
+      Berikut adalah data Guru dan Tenaga Kependidikan (GTK) yang bertugas pada program keahlian TKJ 1 tahun pelajaran 2024/2025.
+    </p>
+
+    <!-- Statistik -->
+    <h3 class="section-heading">Rekapitulasi GTK</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Total GTK</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">9</div>
+        <div class="stat-label">Guru Mapel</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Guru Produktif</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Tenaga Kependidikan</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Lulusan S2</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">9</div>
+        <div class="stat-label">Lulusan S1</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#888;margin-top:10px;">* Data per Tahun Pelajaran 2024/2025. Sesuaikan angka di atas dengan data riil sekolah.</p>
+
+    <!-- Struktur Organisasi -->
+    <h3 class="section-heading">Struktur Organisasi GTK</h3>
+    <div class="struktur-wrap">
+      <div class="struktur">
+
+        <!-- Kepala Sekolah -->
+        <div class="s-row">
+          <div class="s-box">
+            <div class="s-jabatan">Kepala Sekolah</div>
+            <div class="s-nama">[Nama Kepala Sekolah]</div>
+          </div>
+        </div>
+        <div class="s-connector-v"></div>
+
+        <!-- Waka Kurikulum -->
+        <div class="s-row">
+          <div class="s-box secondary">
+            <div class="s-jabatan">Waka Kurikulum</div>
+            <div class="s-nama">[Nama Waka Kurikulum]</div>
+          </div>
+        </div>
+        <div class="s-connector-v"></div>
+
+        <!-- Ketua Program -->
+        <div class="s-row">
+          <div class="s-box secondary">
+            <div class="s-jabatan">Ketua Program TKJ 1</div>
+            <div class="s-nama">[Nama Ketua Program]</div>
+          </div>
+        </div>
+        <div class="s-connector-v"></div>
+
+        <!-- Level bawah: 3 kotak -->
+        <div class="s-row" style="gap:16px;">
+          <div class="s-box tertiary">
+            <div class="s-jabatan">Guru Normatif &amp; Adaptif</div>
+            <div class="s-nama">Tim Guru NA</div>
+          </div>
+          <div class="s-box tertiary">
+            <div class="s-jabatan">Guru Produktif TKJ</div>
+            <div class="s-nama">Tim Guru Produktif</div>
+          </div>
+          <div class="s-box tertiary">
+            <div class="s-jabatan">Tenaga Kependidikan</div>
+            <div class="s-nama">Staff TU / Laboran</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p style="font-size:12px;color:#888;margin-top:12px;">* Ganti nama-nama placeholder di atas dengan nama pejabat yang sebenarnya.</p>
+  </div>
+
+  <!-- KARTU GURU PRODUKTIF -->
+  <div class="content-box">
+    <h3 class="section-heading" style="margin-top:0">Guru Produktif TKJ</h3>
+    <p>Guru produktif bertanggung jawab pada mata pelajaran kejuruan Teknik Komputer dan Jaringan, mulai dari dasar-dasar TKJ, administrasi sistem jaringan, hingga keamanan jaringan.</p>
+
+    <div class="gtk-grid">
+
+      <div class="gtk-card">
+        <div class="card-photo-placeholder">
+          <!-- Ikon orang default -->
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+        </div>
+        <div class="card-body">
+          <p class="card-name">[Nama Guru Produktif 1]</p>
+          <p class="card-nip">NIP/NUPTK: [Nomor]</p>
+          <p class="card-mapel">Administrasi Sistem Jaringan · Keamanan Jaringan</p>
+          <div class="badge-row">
+            <span class="badge badge-gtty">GTY</span>
+            <span class="badge badge-s1">S1 Informatika</span>
+            <span class="badge badge-wali">Wali Kelas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gtk-card">
+        <div class="card-photo-placeholder">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+        </div>
+        <div class="card-body">
+          <p class="card-name">[Nama Guru Produktif 2]</p>
+          <p class="card-nip">NIP/NUPTK: [Nomor]</p>
+          <p class="card-mapel">Dasar-Dasar TKJ · Teknologi Layanan Jaringan</p>
+          <div class="badge-row">
+            <span class="badge badge-gtty">GTY</span>
+            <span class="badge badge-s1">S1 Teknik Informatika</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TABEL SEMUA GTK -->
+  <div class="content-box">
+    <h3 class="section-heading" style="margin-top:0">Data Lengkap Guru dan Tenaga Kependidikan</h3>
+    <p>Daftar seluruh guru dan tenaga kependidikan yang bertugas melayani siswa program TKJ 1, beserta mata pelajaran yang diampu dan kualifikasi pendidikan.</p>
+
+    <div class="table-wrap">
+      <table class="gtk-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>NIP / NUPTK</th>
+            <th>Jabatan / Mata Pelajaran</th>
+            <th>Pendidikan</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">KS</div>
+                <span>[Nama Kepala Sekolah]</span>
+              </div>
+            </td>
+            <td>[NIP]</td>
+            <td>Kepala Sekolah</td>
+            <td><span class="badge badge-s2">S2</span></td>
+            <td><span class="badge badge-pns">PNS</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">WK</div>
+                <span>[Nama Waka Kurikulum]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Waka Kurikulum / Matematika</td>
+            <td><span class="badge badge-s2">S2</span></td>
+            <td><span class="badge badge-gtty">GTY</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">KP</div>
+                <span>[Nama Ketua Program TKJ]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Ketua Program / Guru Produktif TKJ</td>
+            <td><span class="badge badge-s1">S1</span></td>
+            <td><span class="badge badge-gtty">GTY</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">G4</div>
+                <span>[Nama Guru]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Pendidikan Agama Islam &amp; BP</td>
+            <td><span class="badge badge-s1">S1</span></td>
+            <td><span class="badge badge-gtty">GTY</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">G5</div>
+                <span>[Nama Guru]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Bahasa Indonesia</td>
+            <td><span class="badge badge-s1">S1</span></td>
+            <td><span class="badge badge-gtty">GTY</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">G6</div>
+                <span>[Nama Guru]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Bahasa Inggris</td>
+            <td><span class="badge badge-s1">S1</span></td>
+            <td><span class="badge badge-gtty">GTY</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">G7</div>
+                <span>[Nama Guru]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Fisika</td>
+            <td><span class="badge badge-s1">S1</span></td>
+            <td><span class="badge badge-honorer">Honorer</span></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">G8</div>
+                <span>[Nama Guru]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>PPKN</td>
+            <td><span class="badge badge-s1">S1</span></td>
+            <td><span class="badge badge-gtty">GTY</span></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">G9</div>
+                <span>[Nama Guru]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Sejarah Indonesia</td>
+            <td><span class="badge badge-s2">S2</span></td>
+            <td><span class="badge badge-gtty">GTY</span></td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">G10</div>
+                <span>[Nama Guru]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Penjaskes</td>
+            <td><span class="badge badge-s1">S1</span></td>
+            <td><span class="badge badge-honorer">Honorer</span></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">GP</div>
+                <span>[Nama Guru Produktif 2]</span>
+              </div>
+            </td>
+            <td>[NUPTK]</td>
+            <td>Produktif TKJ – Teknologi Layanan Jaringan</td>
+            <td><span class="badge badge-s1">S1</span></td>
+            <td><span class="badge badge-gtty">GTY</span></td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>
+              <div class="nama-wrap">
+                <div class="thumb-placeholder">TU</div>
+                <span>[Nama Staf TU / Laboran]</span>
+              </div>
+            </td>
+            <td>–</td>
+            <td>Tenaga Kependidikan / Laboran TKJ</td>
+            <td><span class="badge badge-d3">D3</span></td>
+            <td><span class="badge badge-honorer">Honorer</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#888;margin-top:10px;">
+      Keterangan: <strong>GTY</strong> = Guru Tetap Yayasan &nbsp;|&nbsp; <strong>PNS</strong> = Pegawai Negeri Sipil &nbsp;|&nbsp; <strong>Honorer</strong> = Guru/Staff Tidak Tetap
+    </p>
+  </div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="social-links">
+    <a href="#" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.06 2.2.27 3.03.6.85.34 1.57.79 2.27 1.49.7.7 1.15 1.42 1.49 2.27.33.83.54 1.86.6 3.03.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.17-.27 2.2-.6 3.03-.34.85-.79 1.57-1.49 2.27-.7.7-1.42 1.15-2.27 1.49-.83.33-1.86.54-3.03.6-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.17-.06-2.2-.27-3.03-.6-.85-.34-1.57-.79-2.27-1.49-.7-.7-1.15-1.42-1.49-2.27-.33-.83-.54-1.86-.6-3.03C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.06-1.17.27-2.2.6-3.03.34-.85.79-1.57 1.49-2.27.7-.7 1.42-1.15 2.27-1.49.83-.33 1.86-.54 3.03-.6C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1 .05-1.74.22-2.28.43-.57.22-.99.49-1.42.92-.43.43-.7.85-.92 1.42-.21.54-.38 1.28-.43 2.28C2.13 9.96 2.13 10.33 2.13 12s0 3.52.07 4.76c.05 1 .22 1.74.43 2.28.22.57.49.99.92 1.42.43.43.85.7 1.42.92.54.21 1.28.38 2.28.43 1.24.07 1.61.07 4.76.07s3.52 0 4.76-.07c1-.05 1.74-.22 2.28-.43.57-.22.99-.49 1.42-.92.43-.43.7-.85.92-1.42.21-.54.38-1.28.43-2.28.07-1.24.07-1.61.07-4.76s0-3.52-.07-4.76c-.05-1-.22-1.74-.43-2.28-.22-.57-.49-.99-.92-1.42a3.6 3.6 0 0 0-1.42-.92c-.54-.21-1.28-.38-2.28-.43C15.52 4 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm5.85-3.4a1.08 1.08 0 1 1-2.16 0 1.08 1.08 0 0 1 2.16 0z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24"><path d="M16.5 2h-3v13.6a2.9 2.9 0 1 1-2.05-2.77V9.7a6 6 0 1 0 5.05 5.92V8.32a6.9 6.9 0 0 0 4.2 1.43V6.6a4.07 4.07 0 0 1-4.2-3.6V2z"/></svg>
+    </a>
+  </div>
+  <p>&copy; Copyright - TKJ 1 SMK Imelda Medan 2025 | All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

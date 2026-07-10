@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalender Akademik — TKJ 1 </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="../images/logo.png">
+<style>
+  :root{
+    --paper: #F1EEE3;
+    --paper-2: #E8E4D5;
+    --ink: #202A3B;
+    --ink-soft: #4B5468;
+    --line: #C6C0AC;
+    --line-soft: #D9D4C3;
+    --chalk-green: #385C4E;
+    --chalk-green-soft: #E3EAE4;
+    --stamp-red: #A7392F;
+    --stamp-red-soft: #F4E1DD;
+    --gold: #B8892B;
+    --gold-soft: #F2E7CE;
+    --plum: #644468;
+    --plum-soft: #EAE1EB;
+    --radius: 3px;
+    --shadow: 0 1px 0 rgba(32,42,59,0.08);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(56,92,78,0.06), transparent 60%),
+      var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    padding:0 0 80px;
+  }
+
+  a{color:inherit;}
+
+  /* ---------- Letterhead ---------- */
+  /* ---------------- Site nav (header) ---------------- */
+  .site-header{
+    background:var(--ink);
+  }
+  .site-nav{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+  .site-nav ul{
+    list-style:none;
+    display:flex;
+    gap:4px;
+    margin:0;
+    padding:0;
+  }
+  .site-nav li{margin:0;}
+  .site-nav a{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:#C9CCD6;
+    padding:14px 16px;
+    border-bottom:2px solid transparent;
+    transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .site-nav a:hover{
+    color:var(--paper);
+    background:rgba(255,255,255,0.05);
+  }
+  .site-nav a.active{
+    color:var(--paper);
+    border-bottom-color:var(--gold);
+  }
+
+  .letterhead{
+    max-width:1180px;
+    margin:0 auto;
+    padding:44px 28px 22px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    border-bottom:3px double var(--ink);
+    flex-wrap:wrap;
+  }
+  .letterhead .lockup{display:flex; align-items:center; gap:16px;}
+  .crest{
+    width:52px; height:52px; border-radius:50%;
+    border:2px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-weight:700; font-size:20px;
+    flex-shrink:0;
+    background:var(--paper-2);
+    overflow:hidden;
+  }
+  .crest img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .lockup h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(24px, 3.4vw, 34px);
+    margin:0 0 2px;
+    letter-spacing:0.2px;
+  }
+  .lockup p{
+    margin:0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .ta-badge{
+    font-family:'IBM Plex Mono', monospace;
+    border:1.5px solid var(--ink);
+    border-radius:50%;
+    width:96px; height:96px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    transform:rotate(-6deg);
+    color:var(--stamp-red);
+    border-color:var(--stamp-red);
+    text-align:center;
+    line-height:1.15;
+    flex-shrink:0;
+  }
+  .ta-badge b{font-size:15px; letter-spacing:0.5px;}
+  .ta-badge span{font-size:8.5px; letter-spacing:1.5px; text-transform:uppercase; margin-top:2px;}
+
+  .live-clock{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:2px;
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--ink-soft);
+    margin-right:6px;
+  }
+  .live-clock .lc-date{
+    font-size:11.5px;
+    letter-spacing:0.4px;
+    color:var(--ink);
+  }
+  .live-clock .lc-time{
+    font-size:20px;
+    font-weight:600;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .live-clock .lc-time .live-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--stamp-red);
+    box-shadow:0 0 0 0 rgba(167,57,47,0.55);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(167,57,47,0.55);}
+    70%{box-shadow:0 0 0 6px rgba(167,57,47,0);}
+    100%{box-shadow:0 0 0 0 rgba(167,57,47,0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .live-clock .lc-time .live-dot{animation:none;}
+  }
+
+  .next-event{
+    background:var(--paper-2);
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    margin-bottom:18px;
+  }
+  .next-event .ne-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    display:flex; align-items:center; gap:6px;
+    margin-bottom:6px;
+  }
+  .next-event .ne-label .live-dot{
+    width:6px; height:6px; border-radius:50%; background:var(--chalk-green);
+    animation:pulse 2s infinite;
+  }
+  .next-event h4{
+    margin:0 0 8px;
+    font-family:'Fraunces', serif;
+    font-size:16px;
+    font-weight:600;
+  }
+  .next-event .countdown{
+    display:flex;
+    gap:10px;
+  }
+  .next-event .countdown div{
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .next-event .countdown .num{
+    font-size:19px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .next-event .countdown .lbl{
+    font-size:9px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .day-cell.today{position:relative;}
+  .day-cell.today::after{
+    content:'';
+    position:absolute;
+    inset:1px;
+    border:1px solid var(--stamp-red);
+    border-radius:50%;
+    pointer-events:none;
+  }
+
+  /* ---------- Tabs (Semester) ---------- */
+  .toolbar{
+    max-width:1180px;
+    margin:26px auto 0;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .tabs{display:flex; gap:2px; background:var(--paper-2); padding:3px; border-radius:5px; border:1px solid var(--line-soft);}
+  .tab{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:9px 16px;
+    border:none;
+    background:transparent;
+    color:var(--ink-soft);
+    cursor:pointer;
+    border-radius:3px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .tab:hover{color:var(--ink);}
+  .tab.active{background:var(--ink); color:var(--paper);}
+
+  .home-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.5px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:9px 15px;
+    border-radius:20px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    cursor:pointer;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .home-btn:hover{opacity:0.85;}
+  .home-btn:active{transform:scale(0.97);}
+  .home-btn svg{width:13px; height:13px; flex-shrink:0;}
+
+  .month-card.flash{
+    animation:flash-highlight 1.4s ease;
+  }
+  @keyframes flash-highlight{
+    0%{box-shadow:0 0 0 2px var(--stamp-red); }
+    100%{box-shadow:var(--shadow);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .month-card.flash{animation:none;}
+  }
+
+  .chips{display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.3px;
+    padding:7px 12px 7px 10px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    background:var(--paper);
+    cursor:pointer;
+    display:flex; align-items:center; gap:6px;
+    color:var(--ink-soft);
+    transition:all .15s ease;
+  }
+  .chip .dot{width:7px; height:7px; border-radius:50%; flex-shrink:0;}
+  .chip.active{color:var(--ink); border-color:var(--ink); background:var(--paper-2);}
+
+  /* ---------- Layout ---------- */
+  .layout{
+    max-width:1180px;
+    margin:26px auto 0;
+    padding:0 28px;
+    display:grid;
+    grid-template-columns:1.55fr 1fr;
+    gap:28px;
+    align-items:start;
+  }
+  @media (max-width:920px){
+    .layout{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Calendar grid of months ---------- */
+  .months{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+  }
+  @media (max-width:560px){ .months{grid-template-columns:1fr;} }
+
+  .month-card{
+    background:var(--paper);
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    padding:14px 14px 12px;
+    box-shadow:var(--shadow);
+  }
+  .month-card h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:16px;
+    margin:0 0 10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px solid var(--line-soft);
+    padding-bottom:8px;
+  }
+  .month-card h3 small{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:400;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    letter-spacing:1px;
+  }
+  .dow-row{
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    margin-bottom:4px;
+  }
+  .dow-row span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9.5px;
+    color:var(--ink-soft);
+    text-align:center;
+    letter-spacing:0.5px;
+  }
+  .day-grid{
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    row-gap:3px;
+  }
+  .day-cell{
+    aspect-ratio:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--ink);
+    position:relative;
+    border-radius:2px;
+    cursor:default;
+  }
+  .day-cell.empty{visibility:hidden;}
+  .day-cell.weekend{color:var(--stamp-red);}
+  .day-cell .dots{display:flex; gap:2px; position:absolute; bottom:2px;}
+  .day-cell .dots span{width:4px; height:4px; border-radius:50%;}
+  .day-cell.today .num{
+    background:var(--ink); color:var(--paper);
+    width:18px; height:18px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .day-cell[title]:hover{background:var(--paper-2);}
+
+  /* ---------- Ledger (event list) ---------- */
+  .ledger{
+    background:var(--paper);
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px 20px 8px;
+    position:sticky;
+    top:20px;
+  }
+  .ledger h2{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .ledger .sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    letter-spacing:0.4px;
+    margin-bottom:16px;
+    display:block;
+  }
+  .entry{
+    display:grid;
+    grid-template-columns:52px 1fr;
+    gap:12px;
+    padding:13px 0;
+    border-top:1px dashed var(--line);
+  }
+  .entry:first-of-type{border-top:none;}
+  .stamp{
+    width:48px; height:48px;
+    border-radius:50%;
+    border:1.5px solid currentColor;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:8.5px;
+    font-weight:600;
+    letter-spacing:0.5px;
+    text-align:center;
+    line-height:1.1;
+    transform:rotate(-4deg);
+    flex-shrink:0;
+  }
+  .entry .body h4{
+    margin:0 0 3px;
+    font-size:14px;
+    font-weight:600;
+    line-height:1.35;
+  }
+  .entry .body .date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .entry.hidden{display:none;}
+  .empty-note{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    padding:20px 0;
+    text-align:center;
+  }
+
+  /* ---------- Admin form (kelola agenda) ---------- */
+  .admin-box{
+    background:var(--paper);
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px 20px 18px;
+    margin-bottom:20px;
+  }
+  .admin-box h2{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .admin-box .sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    letter-spacing:0.4px;
+    margin-bottom:14px;
+    display:block;
+  }
+  .admin-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .admin-grid .full{grid-column:1 / -1;}
+  .admin-box label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    display:block;
+    margin-bottom:4px;
+  }
+  .admin-box input[type="text"],
+  .admin-box input[type="date"],
+  .admin-box select{
+    width:100%;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13px;
+    padding:8px 9px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:var(--paper-2);
+    color:var(--ink);
+  }
+  .admin-box input:focus,
+  .admin-box select:focus{
+    outline:none;
+    border-color:var(--ink);
+  }
+  .admin-actions{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-top:4px;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.4px;
+    padding:9px 16px;
+    border-radius:20px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    cursor:pointer;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .btn:hover{opacity:0.85;}
+  .btn:active{transform:scale(0.97);}
+  .btn.secondary{
+    background:transparent;
+    color:var(--ink);
+  }
+  .form-msg{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--stamp-red);
+    min-height:14px;
+  }
+  .entry-actions{
+    display:flex;
+    gap:6px;
+    margin-top:6px;
+  }
+  .entry-actions button{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    padding:4px 9px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .entry-actions button:hover{color:var(--ink); border-color:var(--ink);}
+  .entry-actions button.del:hover{color:var(--stamp-red); border-color:var(--stamp-red);}
+  .storage-note{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    color:var(--ink-soft);
+    background:var(--paper-2);
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    padding:9px 12px;
+    margin-bottom:18px;
+    line-height:1.5;
+  }
+
+  footer{
+    max-width:1180px;
+    margin:40px auto 0;
+    padding:16px 28px 0;
+    border-top:1px solid var(--line-soft);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    letter-spacing:0.3px;
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="site-nav">
+      <ul>
+        <li><a href="../index.html">Beranda</a></li>
+        <li><a href="kalender-akademik.html" class="active">Kalender Akademik</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="letterhead">
+    <div class="lockup">
+      <div class="crest">
+        <img src="../images/logo.png" alt="Logo SMK Imelda Medan">
+      </div>
+      <div>
+        <h1>Kalender Akademik - TKJ 1</h1>
+        <p>SMK IMELDA MEDAN</p>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <div class="live-clock">
+        <span class="lc-date" id="lcDate">—</span>
+        <span class="lc-time" id="lcTime"><span class="live-dot"></span>—</span>
+      </div>
+      <div class="ta-badge"><b>2024/<br>2027</b><span>Tahun Akademik</span></div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button class="home-btn" id="homeBtn" title="Kembali ke hari ini">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        Home
+      </button>
+      <div class="tabs" id="semesterTabs">
+        <button class="tab active" data-sem="ganjil">Semester Ganjil</button>
+        <button class="tab" data-sem="genap">Semester Genap</button>
+        <button class="tab" data-sem="all">Satu Tahun Penuh</button>
+      </div>
+    </div>
+    <div class="chips" id="categoryChips"></div>
+  </div>
+
+  <div class="layout">
+    <div class="months" id="monthsWrap"></div>
+
+    <div>
+      <div class="admin-box">
+        <h2>Kelola Agenda</h2>
+        <span class="sub">Isi lalu klik simpan — kalender &amp; daftar di sebelah kiri langsung update</span>
+        <form id="agendaForm">
+          <input type="hidden" id="editId" value="">
+          <div class="admin-grid">
+            <div class="full">
+              <label for="fTitle">Nama Agenda</label>
+              <input type="text" id="fTitle" placeholder="cth. Ujian Tengah Semester Ganjil" required>
+            </div>
+            <div>
+              <label for="fStart">Tanggal Mulai</label>
+              <input type="date" id="fStart" required>
+            </div>
+            <div>
+              <label for="fEnd">Tanggal Selesai</label>
+              <input type="date" id="fEnd" required>
+            </div>
+            <div class="full">
+              <label for="fCat">Kategori</label>
+              <select id="fCat"></select>
+            </div>
+          </div>
+          <div class="admin-actions">
+            <button type="submit" class="btn" id="submitBtn">Tambah Agenda</button>
+            <button type="button" class="btn secondary" id="cancelEditBtn" style="display:none;">Batal Edit</button>
+            <span class="form-msg" id="formMsg"></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="storage-note">
+        Data agenda tersimpan otomatis di browser ini (localStorage). Jika dibuka dari perangkat/browser lain, data tidak akan sama — untuk agenda yang tampil sama ke semua pengunjung situs, data ini perlu dipindahkan ke server/database.
+      </div>
+
+      <div class="ledger">
+        <h2>Agenda Penting</h2>
+        <span class="sub" id="ledgerSub">Menampilkan semester ganjil</span>
+        <div class="next-event" id="nextEvent" style="display:none;">
+          <div class="ne-label"><span class="live-dot"></span>Agenda berikutnya</div>
+          <h4 id="neTitle">—</h4>
+          <div class="countdown" id="neCountdown"></div>
+        </div>
+        <div id="entries"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Kalender bersifat contoh / template — sesuaikan tanggal &amp; nama institusi dengan kalender akademik resmi kampus Anda.
+  </footer>
+
+<script>
+/* ---------------- DATA ---------------- */
+const CATEGORIES = {
+  perkuliahan: { label:'Perkuliahan', color:'#385C4E', soft:'#E3EAE4', stampText:'KULIAH' },
+  ujian:       { label:'Ujian',       color:'#A7392F', soft:'#F4E1DD', stampText:'UJIAN' },
+  libur:       { label:'Libur',       color:'#B8892B', soft:'#F2E7CE', stampText:'LIBUR' },
+  pendaftaran: { label:'Pendaftaran', color:'#2F6B93', soft:'#DEEAF1', stampText:'DAFTAR' },
+  wisuda:      { label:'Wisuda',      color:'#644468', soft:'#EAE1EB', stampText:'ISTIMEWA' },
+};
+
+// month index: 0 = Januari ... 11 = Desember
+// Data agenda kosong secara default — isi lewat form "Kelola Agenda" di halaman.
+// Tersimpan otomatis di localStorage browser (key STORAGE_KEY).
+const STORAGE_KEY = 'tkj1_agenda_events_v1';
+
+function loadEvents(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  }catch(e){
+    console.error('Gagal memuat agenda dari localStorage:', e);
+    return [];
+  }
+}
+
+function saveEvents(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(EVENTS));
+  }catch(e){
+    console.error('Gagal menyimpan agenda ke localStorage:', e);
+  }
+}
+
+let EVENTS = loadEvents();
+
+// Semester ditentukan otomatis dari bulan tanggal mulai: Jul–Des = ganjil, Jan–Jun = genap
+function detectSemFromDate(dateStr){
+  const m = toDate(dateStr).getMonth(); // 0-11
+  return (m >= 6) ? 'ganjil' : 'genap';
+}
+
+const MONTHS_ID = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const DOW = ['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
+
+// Academic year months: Jul2026 - Jun2027
+const CAL_MONTHS = [];
+for(let i=6;i<12;i++) CAL_MONTHS.push({y:2026, m:i, sem:'ganjil'});
+for(let i=0;i<6;i++) CAL_MONTHS.push({y:2027, m:i, sem:'genap'});
+
+function detectCurrentSem(){
+  const now = new Date();
+  const found = CAL_MONTHS.find(mm => mm.y===now.getFullYear() && mm.m===now.getMonth());
+  return found ? found.sem : 'ganjil';
+}
+
+let activeSem = detectCurrentSem();
+let activeCats = new Set(Object.keys(CATEGORIES));
+
+/* ---------------- helpers ---------------- */
+function toDate(str){ const [y,m,d]=str.split('-').map(Number); return new Date(y, m-1, d); }
+function fmtRange(ev){
+  const s = toDate(ev.start), e = toDate(ev.end);
+  const sameDay = ev.start === ev.end;
+  const opt = { day:'numeric', month:'long', year:'numeric' };
+  if(sameDay) return s.toLocaleDateString('id-ID', opt);
+  const sameMonth = s.getMonth()===e.getMonth() && s.getFullYear()===e.getFullYear();
+  if(sameMonth) return `${s.getDate()}–${e.toLocaleDateString('id-ID',opt)}`;
+  return `${s.toLocaleDateString('id-ID',opt)} – ${e.toLocaleDateString('id-ID',opt)}`;
+}
+function eventsOnDay(y,m,d){
+  const day = new Date(y,m,d).getTime();
+  return EVENTS.filter(ev=>{
+    const s = toDate(ev.start).getTime(), e = toDate(ev.end).getTime();
+    return day>=s && day<=e;
+  });
+}
+function isToday(y,m,d){
+  const t = new Date();
+  return t.getFullYear()===y && t.getMonth()===m && t.getDate()===d;
+}
+
+/* ---------------- populate category select in form ---------------- */
+function populateCatSelect(){
+  const sel = document.getElementById('fCat');
+  sel.innerHTML = Object.entries(CATEGORIES).map(([key,cat])=>`<option value="${key}">${cat.label}</option>`).join('');
+}
+
+/* ---------------- agenda form: tambah / edit / hapus ---------------- */
+function resetForm(){
+  document.getElementById('agendaForm').reset();
+  document.getElementById('editId').value = '';
+  document.getElementById('submitBtn').textContent = 'Tambah Agenda';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+  document.getElementById('formMsg').textContent = '';
+}
+
+function startEditEvent(id){
+  const ev = EVENTS.find(e=>e.id===id);
+  if(!ev) return;
+  document.getElementById('editId').value = ev.id;
+  document.getElementById('fTitle').value = ev.title;
+  document.getElementById('fStart').value = ev.start;
+  document.getElementById('fEnd').value = ev.end;
+  document.getElementById('fCat').value = ev.cat;
+  document.getElementById('submitBtn').textContent = 'Simpan Perubahan';
+  document.getElementById('cancelEditBtn').style.display = 'inline-block';
+  document.getElementById('formMsg').textContent = '';
+  document.querySelector('.admin-box').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function deleteEvent(id){
+  if(!confirm('Hapus agenda ini?')) return;
+  EVENTS = EVENTS.filter(e=>e.id!==id);
+  saveEvents();
+  renderMonths();
+  renderLedger();
+  updateNextEvent();
+}
+
+document.getElementById('agendaForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('formMsg');
+  const title = document.getElementById('fTitle').value.trim();
+  const start = document.getElementById('fStart').value;
+  const end = document.getElementById('fEnd').value;
+  const cat = document.getElementById('fCat').value;
+  const editId = document.getElementById('editId').value;
+
+  if(!title || !start || !end){ msg.textContent = 'Lengkapi semua kolom.'; return; }
+  if(toDate(end) < toDate(start)){ msg.textContent = 'Tanggal selesai tidak boleh sebelum tanggal mulai.'; return; }
+
+  const sem = detectSemFromDate(start);
+
+  if(editId){
+    const ev = EVENTS.find(e=>e.id===editId);
+    if(ev){ Object.assign(ev, {title, start, end, cat, sem}); }
+  } else {
+    EVENTS.push({ id:'ev_'+Date.now()+'_'+Math.floor(Math.random()*1000), title, start, end, cat, sem });
+  }
+
+  saveEvents();
+  resetForm();
+  renderMonths();
+  renderLedger();
+  updateNextEvent();
+});
+
+document.getElementById('cancelEditBtn').addEventListener('click', resetForm);
+
+/* ---------------- render chips ---------------- */
+function renderChips(){
+  const wrap = document.getElementById('categoryChips');
+  wrap.innerHTML = '';
+  Object.entries(CATEGORIES).forEach(([key,cat])=>{
+    const chip = document.createElement('button');
+    chip.className = 'chip active';
+    chip.innerHTML = `<span class="dot" style="background:${cat.color}"></span>${cat.label}`;
+    chip.addEventListener('click', ()=>{
+      if(activeCats.has(key)){ activeCats.delete(key); chip.classList.remove('active'); }
+      else { activeCats.add(key); chip.classList.add('active'); }
+      renderLedger();
+    });
+    wrap.appendChild(chip);
+  });
+}
+
+/* ---------------- render months ---------------- */
+function renderMonths(){
+  const wrap = document.getElementById('monthsWrap');
+  wrap.innerHTML = '';
+  const monthsToShow = activeSem==='all' ? CAL_MONTHS : CAL_MONTHS.filter(mm=>mm.sem===activeSem);
+
+  monthsToShow.forEach(({y,m})=>{
+    const card = document.createElement('div');
+    card.className = 'month-card';
+    card.dataset.y = y;
+    card.dataset.m = m;
+
+    const firstDow = (new Date(y,m,1).getDay() + 6) % 7; // Monday = 0
+    const daysInMonth = new Date(y,m+1,0).getDate();
+
+    let dowRow = `<div class="dow-row">${DOW.map(d=>`<span>${d}</span>`).join('')}</div>`;
+    let grid = `<div class="day-grid">`;
+    for(let i=0;i<firstDow;i++) grid += `<div class="day-cell empty"></div>`;
+    for(let d=1; d<=daysInMonth; d++){
+      const dow = (firstDow + d - 1) % 7;
+      const weekend = dow===5 || dow===6;
+      const evs = eventsOnDay(y,m,d);
+      const dots = evs.slice(0,3).map(ev=>`<span style="background:${CATEGORIES[ev.cat].color}"></span>`).join('');
+      const titleAttr = evs.length ? evs.map(e=>e.title).join(' • ') : '';
+      const todayCls = isToday(y,m,d) ? 'today' : '';
+      grid += `<div class="day-cell ${weekend?'weekend':''} ${todayCls}" ${titleAttr?`title="${titleAttr}"`:''}>
+                  <span class="num">${d}</span>
+                  <div class="dots">${dots}</div>
+                </div>`;
+    }
+    grid += `</div>`;
+
+    card.innerHTML = `<h3>${MONTHS_ID[m]} <small>${y}</small></h3>${dowRow}${grid}`;
+    wrap.appendChild(card);
+  });
+}
+
+/* ---------------- render ledger ---------------- */
+function renderLedger(){
+  const wrap = document.getElementById('entries');
+  const sub = document.getElementById('ledgerSub');
+  sub.textContent = activeSem==='all' ? 'Menampilkan satu tahun akademik penuh' :
+    (activeSem==='ganjil' ? 'Menampilkan semester ganjil' : 'Menampilkan semester genap');
+
+  const list = EVENTS
+    .filter(ev => activeSem==='all' || ev.sem===activeSem)
+    .filter(ev => activeCats.has(ev.cat))
+    .sort((a,b)=> toDate(a.start) - toDate(b.start));
+
+  wrap.innerHTML = '';
+  if(list.length===0){
+    wrap.innerHTML = `<div class="empty-note">Belum ada agenda. Tambahkan lewat form "Kelola Agenda" di atas.</div>`;
+    return;
+  }
+  list.forEach(ev=>{
+    const cat = CATEGORIES[ev.cat];
+    const row = document.createElement('div');
+    row.className = 'entry';
+    row.innerHTML = `
+      <div class="stamp" style="color:${cat.color}">${cat.stampText}</div>
+      <div class="body">
+        <h4>${ev.title}</h4>
+        <div class="date">${fmtRange(ev)}</div>
+        <div class="entry-actions">
+          <button type="button" class="edit">Edit</button>
+          <button type="button" class="del">Hapus</button>
+        </div>
+      </div>`;
+    row.querySelector('.edit').addEventListener('click', ()=>startEditEvent(ev.id));
+    row.querySelector('.del').addEventListener('click', ()=>deleteEvent(ev.id));
+    wrap.appendChild(row);
+  });
+}
+
+/* ---------------- tabs ---------------- */
+document.getElementById('semesterTabs').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.tab');
+  if(!btn) return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  activeSem = btn.dataset.sem;
+  renderMonths();
+  renderLedger();
+});
+
+/* ---------------- live clock ---------------- */
+function updateClock(){
+  const now = new Date();
+  const dateOpt = { weekday:'long', day:'numeric', month:'long', year:'numeric' };
+  document.getElementById('lcDate').textContent = now.toLocaleDateString('id-ID', dateOpt);
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  const ss = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('lcTime').innerHTML = `<span class="live-dot"></span>${hh}:${mm}:${ss} WIB`;
+}
+
+/* ---------------- next event countdown ---------------- */
+function findNextEvent(){
+  const now = new Date();
+  const upcoming = EVENTS
+    .filter(ev => toDate(ev.end) >= now || (toDate(ev.start) <= now && toDate(ev.end) >= now))
+    .sort((a,b)=> toDate(a.start) - toDate(b.start));
+  // prefer an event currently ongoing, else the nearest future one
+  const ongoing = upcoming.find(ev => toDate(ev.start) <= now && toDate(ev.end) >= now);
+  return ongoing || upcoming[0] || null;
+}
+
+function updateNextEvent(){
+  const box = document.getElementById('nextEvent');
+  const ev = findNextEvent();
+  if(!ev){ box.style.display='none'; return; }
+  box.style.display='block';
+  const cat = CATEGORIES[ev.cat];
+  document.getElementById('neTitle').innerHTML = `${ev.title} <span style="color:${cat.color}; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.5px; text-transform:uppercase;">· ${cat.label}</span>`;
+
+  const now = new Date();
+  const target = toDate(ev.start) > now ? toDate(ev.start) : toDate(ev.end);
+  const ongoing = toDate(ev.start) <= now && toDate(ev.end) >= now;
+  let diff = Math.max(0, target.getTime() - now.getTime());
+
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+
+  const label = ongoing ? 'berakhir dalam' : 'dimulai dalam';
+  document.getElementById('neCountdown').innerHTML = `
+    <div><div class="num">${d}</div><div class="lbl">Hari</div></div>
+    <div><div class="num">${String(h).padStart(2,'0')}</div><div class="lbl">Jam</div></div>
+    <div><div class="num">${String(m).padStart(2,'0')}</div><div class="lbl">Menit</div></div>
+    <div><div class="num">${String(s).padStart(2,'0')}</div><div class="lbl">Detik</div></div>
+  `;
+  document.querySelector('.next-event .ne-label').innerHTML = `<span class="live-dot"></span>${ongoing ? 'Sedang berlangsung · ' + label : 'Agenda berikutnya · ' + label}`;
+}
+
+/* ---------------- home button ---------------- */
+function goHome(){
+  // reset semester ke bulan berjalan
+  activeSem = detectCurrentSem();
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.classList.toggle('active', t.dataset.sem === activeSem);
+  });
+
+  // reset semua filter kategori
+  activeCats = new Set(Object.keys(CATEGORIES));
+  document.querySelectorAll('.chip').forEach(c=>c.classList.add('active'));
+
+  renderMonths();
+  renderLedger();
+
+  // scroll & tandai kartu bulan hari ini
+  requestAnimationFrame(()=>{
+    const now = new Date();
+    const cards = document.querySelectorAll('.month-card');
+    cards.forEach(card=>{
+      if(card.dataset.y == now.getFullYear() && card.dataset.m == now.getMonth()){
+        card.scrollIntoView({ behavior:'smooth', block:'center' });
+        card.classList.remove('flash');
+        void card.offsetWidth; // restart animasi
+        card.classList.add('flash');
+      }
+    });
+  });
+}
+document.getElementById('homeBtn').addEventListener('click', goHome);
+
+/* ---------------- init ---------------- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.classList.toggle('active', t.dataset.sem === activeSem);
+});
+populateCatSelect();
+renderChips();
+renderMonths();
+renderLedger();
+updateClock();
+updateNextEvent();
+
+setInterval(updateClock, 1000);
+setInterval(updateNextEvent, 1000);
+
+// re-render calendar automatically when the real date rolls over (midnight)
+let lastSeenDay = new Date().toDateString();
+setInterval(()=>{
+  const today = new Date().toDateString();
+  if(today !== lastSeenDay){
+    lastSeenDay = today;
+    renderMonths();
+    renderLedger();
+  }
+}, 30000);
+</script>
+</body>
+</html>

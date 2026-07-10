@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="../images/logo.png">
+<title>Logo Sekolah - TKJ 1</title>
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Work Sans', Arial, sans-serif;
+    color: #313131;
+    background: #eee;
+  }
+  header.site-header {
+    background-color: #143745;
+    background-image: url('https://enrollment-api.ui.ac.id/uploads/20250922072406_Edited-9722.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    position: relative;
+  }
+  header.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 55, 69, 0.65);
+  }
+  header.site-header .header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 40px 16px;
+  }
+  header.site-header img.logo {
+    height: 70px;
+    margin-bottom: 8px;
+  }
+  header.site-header h1.site-title {
+    margin: 0;
+    font-size: 28px;
+  }
+  header.site-header p.site-description {
+    margin: 4px 0 0;
+    font-size: 14px;
+    opacity: 0.85;
+  }
+  .breadcrumb {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+  }
+  .breadcrumb h2 {
+    margin: 0;
+    font-weight: 600;
+  }
+  main {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+  .content-box {
+    background: #fff;
+    padding: 24px;
+    padding-right: 64px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .content-box h2.page-heading {
+    margin-top: 0;
+  }
+  .content-box h3.section-heading {
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: #143745;
+    border-left: 4px solid #143745;
+    padding-left: 10px;
+  }
+  .content-box img.feature-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 16px;
+  }
+  .content-box p {
+    text-align: justify;
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+  .content-box ol, .content-box ul {
+    margin: 0 0 16px;
+    padding-left: 22px;
+    line-height: 1.7;
+  }
+
+  /* Panel logo utama */
+  .logo-showcase {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 24px;
+    margin: 0 0 20px;
+  }
+  .logo-showcase .logo-img-wrap {
+    flex: 0 0 220px;
+    text-align: center;
+  }
+  .logo-showcase .logo-img-wrap img {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+  }
+  .logo-showcase .logo-caption {
+    flex: 1;
+    min-width: 240px;
+  }
+  .logo-showcase .logo-caption h3 {
+    margin: 0 0 8px;
+    color: #143745;
+  }
+
+  /* Kartu arti warna / elemen logo */
+  .meaning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin: 0 0 16px;
+  }
+  .meaning-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 16px;
+    background: #fafafa;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .meaning-card .swatch {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    margin-top: 2px;
+  }
+  .meaning-card h4 {
+    margin: 0 0 6px;
+    color: #143745;
+    font-size: 16px;
+  }
+  .meaning-card p {
+    font-size: 14px;
+    margin: 0;
+    text-align: left;
+  }
+
+  .content-box table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  .content-box table.data-table th,
+  .content-box table.data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  .content-box table.data-table th {
+    background: #143745;
+    color: #fff;
+  }
+  .content-box .download-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .content-box .download-list li {
+    margin-bottom: 8px;
+  }
+  .content-box .download-list a {
+    display: inline-block;
+    background: #143745;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .content-box .download-list a:hover {
+    background: #1c4a5c;
+  }
+  footer {
+    background: #143745;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 24px;
+    font-size: 13px;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .social-links a:hover {
+    background: #fff;
+    color: #143745;
+    transform: translateY(-2px);
+  }
+  .social-links svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  .placeholder {
+    color: #999;
+    font-style: italic;
+  }
+  .back-button-wrap {
+    background: #143745;
+    padding: 14px 16px;
+    text-align: left;
+  }
+  .back-button-wrap .back-button-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .back-button:hover {
+    background: rgba(255,255,255,0.22);
+  }
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <img class="logo" src="../images/logo.png" alt="Logo Sekolah">
+    <h1 class="site-title">TKJ 1 - SMK IMELDA MEDAN</h1>
+    <p class="site-description">Program Unggulan Teknik Komputer dan Jaringan</p>
+  </div>
+</header>
+
+<!-- ===================== TOMBOL KEMBALI ===================== -->
+<div class="back-button-wrap">
+  <div class="back-button-inner">
+    <a class="back-button" href="../index.html">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+      Kembali
+    </a>
+  </div>
+</div>
+
+<!-- ===================== JUDUL HALAMAN ===================== -->
+<div class="breadcrumb">
+  <h2>Logo Sekolah</h2>
+</div>
+
+<!-- ===================== KONTEN UTAMA ===================== -->
+<main>
+  <div class="content-box">
+
+    <h2 class="page-heading">[Judul Halaman - misalnya: Logo dan Filosofi SMK Imelda Medan]</h2>
+    <p class="placeholder">[Paragraf pembuka - jelaskan secara singkat bahwa logo sekolah merupakan identitas visual yang mencerminkan visi, misi, dan nilai-nilai yang dijunjung sekolah]</p>
+
+    <!-- Panel logo utama -->
+    <div class="logo-showcase">
+      <div class="logo-img-wrap">
+        <img src="../images/logo.png" alt="Logo Sekolah">
+      </div>
+      <div class="logo-caption">
+        <h3 class="placeholder">[Nama Resmi Sekolah]</h3>
+        <p class="placeholder">[Deskripsi singkat logo - bentuk, warna dominan, dan kesan umum yang ingin disampaikan melalui logo ini]</p>
+      </div>
+    </div>
+
+    <h3 class="section-heading">Sejarah & Filosofi Logo</h3>
+    <p class="placeholder">[Jelaskan sejarah terbentuknya logo, siapa yang merancang, tahun penetapan, dan filosofi umum di balik desainnya]</p>
+
+    <h3 class="section-heading">Arti Elemen dan Warna Logo</h3>
+    <p class="placeholder">[Pengantar singkat sebelum penjelasan detail arti setiap elemen dan warna pada logo]</p>
+
+    <!-- Kartu arti elemen/warna logo -->
+    <div class="meaning-grid">
+      <div class="meaning-card">
+        <div class="swatch" style="background:#143745;"></div>
+        <div>
+          <h4 class="placeholder">[Nama Warna 1, misalnya: Biru Tua]</h4>
+          <p class="placeholder">[Arti/makna warna ini bagi sekolah]</p>
+        </div>
+      </div>
+      <div class="meaning-card">
+        <div class="swatch" style="background:#f2c14e;"></div>
+        <div>
+          <h4 class="placeholder">[Nama Warna 2, misalnya: Kuning Emas]</h4>
+          <p class="placeholder">[Arti/makna warna ini bagi sekolah]</p>
+        </div>
+      </div>
+      <div class="meaning-card">
+        <div class="swatch" style="background:#fff; border:1px solid #999;"></div>
+        <div>
+          <h4 class="placeholder">[Nama Elemen 1, misalnya: Bentuk Perisai]</h4>
+          <p class="placeholder">[Arti/makna bentuk atau simbol ini bagi sekolah]</p>
+        </div>
+      </div>
+      <div class="meaning-card">
+        <div class="swatch" style="background:#8bc34a;"></div>
+        <div>
+          <h4 class="placeholder">[Nama Elemen 2, misalnya: Buku Terbuka]</h4>
+          <p class="placeholder">[Arti/makna elemen ini bagi sekolah]</p>
+        </div>
+      </div>
+      <!-- Salin blok .meaning-card di atas untuk menambah elemen/warna lain -->
+    </div>
+
+    <h3 class="section-heading">Ketentuan Penggunaan Logo</h3>
+    <p class="placeholder">[Jelaskan aturan penggunaan logo resmi sekolah, misalnya ukuran minimum, ruang kosong di sekitar logo, dan larangan mengubah warna atau proporsi]</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Ketentuan</th>
+          <th>Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="placeholder">1</td>
+          <td class="placeholder">[Contoh: Proporsi Logo]</td>
+          <td class="placeholder">[Keterangan aturan]</td>
+        </tr>
+        <tr>
+          <td class="placeholder">2</td>
+          <td class="placeholder">[Contoh: Warna Resmi]</td>
+          <td class="placeholder">[Keterangan aturan]</td>
+        </tr>
+        <tr>
+          <td class="placeholder">3</td>
+          <td class="placeholder">[Contoh: Ruang Kosong Minimum]</td>
+          <td class="placeholder">[Keterangan aturan]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Unduhan file logo resmi -->
+    <h3 class="section-heading">Unduh Logo Resmi</h3>
+    <ul class="download-list">
+      <li><a href="#" target="_blank">[Nama File, misalnya: Logo Sekolah (PNG).zip]</a></li>
+      <li><a href="#" target="_blank">[Nama File, misalnya: Logo Sekolah (Vector/AI).zip]</a></li>
+      <li><a href="#" target="_blank">[Nama File, misalnya: Pedoman Penggunaan Logo.pdf]</a></li>
+    </ul>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="social-links">
+    <a href="#" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.06 2.2.27 3.03.6.85.34 1.57.79 2.27 1.49.7.7 1.15 1.42 1.49 2.27.33.83.54 1.86.6 3.03.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.17-.27 2.2-.6 3.03-.34.85-.79 1.57-1.49 2.27-.7.7-1.42 1.15-2.27 1.49-.83.33-1.86.54-3.03.6-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.17-.06-2.2-.27-3.03-.6-.85-.34-1.57-.79-2.27-1.49-.7-.7-1.15-1.42-1.49-2.27-.33-.83-.54-1.86-.6-3.03C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.06-1.17.27-2.2.6-3.03.34-.85.79-1.57 1.49-2.27.7-.7 1.42-1.15 2.27-1.49.83-.33 1.86-.54 3.03-.6C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1 .05-1.74.22-2.28.43-.57.22-.99.49-1.42.92-.43.43-.7.85-.92 1.42-.21.54-.38 1.28-.43 2.28C2.13 9.96 2.13 10.33 2.13 12s0 3.52.07 4.76c.05 1 .22 1.74.43 2.28.22.57.49.99.92 1.42.43.43.85.7 1.42.92.54.21 1.28.38 2.28.43 1.24.07 1.61.07 4.76.07s3.52 0 4.76-.07c1-.05 1.74-.22 2.28-.43.57-.22.99-.49 1.42-.92.43-.43.7-.85.92-1.42.21-.54.38-1.28.43-2.28.07-1.24.07-1.61.07-4.76s0-3.52-.07-4.76c-.05-1-.22-1.74-.43-2.28-.22-.57-.49-.99-.92-1.42a3.6 3.6 0 0 0-1.42-.92c-.54-.21-1.28-.38-2.28-.43C15.52 4 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm5.85-3.4a1.08 1.08 0 1 1-2.16 0 1.08 1.08 0 0 1 2.16 0z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24"><path d="M16.5 2h-3v13.6a2.9 2.9 0 1 1-2.05-2.77V9.7a6 6 0 1 0 5.05 5.92V8.32a6.9 6.9 0 0 0 4.2 1.43V6.6a4.07 4.07 0 0 1-4.2-3.6V2z"/></svg>
+    </a>
+  </div>
+  <p>&copy; Copyright - [Nama Tim/Sekolah] [Tahun] | All Rights reserved.</p>
+</footer>
+
+</body>
+</html>

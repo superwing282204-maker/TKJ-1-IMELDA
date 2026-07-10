@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kurikulum - TKJ 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="../images/logo.png">
+<style>
+  :root{
+    --red:#fc0926;
+    --red-dark:#bf041a;
+    --ink:#1D2939;
+    --body:#475467;
+    --muted:#98A2B3;
+    --line:#E9EAEC;
+    --bg-soft:#F9FAFB;
+    --white:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'DM Sans',sans-serif;
+    color:var(--body);
+    background:var(--white);
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Montserrat',sans-serif;
+    color:var(--ink);
+    line-height:1.3;
+    margin:0;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+
+  /* Hero */
+  .hero{
+    background:var(--ink);
+    color:#fff;
+    padding:72px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-120px;
+    top:-120px;
+    width:360px;
+    height:360px;
+    border:2px solid rgba(255,255,255,0.08);
+    border-radius:50%;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#ffb3ba;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:2px;
+    background:var(--red);
+    display:inline-block;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:38px;
+    font-weight:900;
+    max-width:680px;
+    margin-bottom:18px;
+  }
+  .hero p{
+    color:#c9cdd6;
+    font-size:17px;
+    max-width:620px;
+    margin-bottom:32px;
+  }
+  .hero-stats{
+    display:flex;
+    gap:36px;
+    flex-wrap:wrap;
+    border-top:1px solid rgba(255,255,255,0.12);
+    padding-top:28px;
+  }
+  .hero-stats div{min-width:120px;}
+  .hero-stats strong{
+    display:block;
+    font-family:'Montserrat',sans-serif;
+    font-size:26px;
+    font-weight:900;
+    color:#fff;
+  }
+  .hero-stats span{
+    font-size:13px;
+    color:#98a2b3;
+  }
+
+  /* Section headings */
+  .section{padding:60px 0;}
+  .section.alt{background:var(--bg-soft);}
+  .section-head{max-width:640px;margin-bottom:36px;}
+  .section-head .kicker{
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--red);
+    margin-bottom:10px;
+    display:block;
+  }
+  .section-head h2{font-size:26px;font-weight:900;}
+  .section-head p{margin-top:10px;font-size:15px;}
+
+  /* Timeline (jenjang kelas) */
+  .timeline{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .tl-item{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:20px;
+  }
+  .tl-rail{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .tl-dot{
+    width:40px;height:40px;
+    border-radius:50%;
+    background:var(--white);
+    border:2px solid var(--red);
+    color:var(--red);
+    font-family:'Montserrat',sans-serif;
+    font-weight:900;
+    font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .tl-line{
+    width:2px;
+    flex:1;
+    background:var(--line);
+    margin:4px 0;
+  }
+  .tl-content{padding-bottom:40px;}
+  .tl-content h3{font-size:19px;font-weight:800;margin-bottom:4px;}
+  .tl-content .tl-tag{
+    font-size:12.5px;
+    color:var(--muted);
+    font-weight:500;
+    margin-bottom:14px;
+    display:block;
+  }
+  .tl-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px;
+  }
+  .tl-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:14px;
+    color:var(--body);
+  }
+  .tl-card b{color:var(--ink);font-weight:700;display:block;margin-bottom:3px;font-size:14.5px;}
+
+  .subj-label{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink);
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    margin:18px 0 10px;
+  }
+  .subj-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .subj-tag{
+    background:var(--bg-soft);
+    border:1px solid var(--line);
+    color:var(--ink);
+    font-size:13px;
+    font-weight:500;
+    padding:7px 13px;
+    border-radius:20px;
+  }
+
+  /* Kompetensi grid */
+  .comp-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+  }
+  .comp-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px 22px;
+  }
+  .comp-card .icon{
+    width:42px;height:42px;
+    border-radius:10px;
+    background:#fdeaec;
+    color:var(--red);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Montserrat',sans-serif;
+    font-weight:900;
+    font-size:15px;
+    margin-bottom:16px;
+  }
+  .comp-card h3{font-size:16px;font-weight:800;margin-bottom:8px;}
+  .comp-card p{font-size:13.5px;margin:0;}
+
+  /* Sertifikasi row */
+  .cert-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px;
+  }
+  .cert-pill{
+    border:1px solid var(--line);
+    background:var(--white);
+    border-radius:10px;
+    padding:16px;
+    text-align:center;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .cert-pill span{
+    display:block;
+    font-size:11.5px;
+    font-weight:500;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* CTA */
+  .cta{
+    background:var(--red);
+    border-radius:18px;
+    padding:44px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:24px;
+    flex-wrap:wrap;
+    color:#fff;
+  }
+  .cta h2{color:#fff;font-size:22px;font-weight:900;max-width:420px;}
+  .cta p{color:#ffe3e5;font-size:14px;margin-top:8px;max-width:420px;}
+  .cta a{
+    background:#fff;
+    color:var(--red);
+    font-weight:700;
+    font-size:14px;
+    text-decoration:none;
+    padding:13px 26px;
+    border-radius:8px;
+    white-space:nowrap;
+  }
+
+  footer{
+    padding:28px 0 40px;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  @media(max-width:640px){
+    .hero h1{font-size:28px;}
+    .cta{flex-direction:column;align-items:flex-start;}
+  }
+
+  .back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'DM Sans',sans-serif;
+    font-size:13.5px;
+    font-weight:700;
+    color:#fff;
+    text-decoration:none;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.18);
+    padding:9px 16px;
+    border-radius:8px;
+    margin-bottom:28px;
+    transition:background 0.15s ease;
+  }
+  .back-btn:hover{background:rgba(255,255,255,0.16);}
+  .back-btn svg{flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <a href="../index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Kembali
+    </a>
+    <span class="eyebrow">Info kurikulum</span>
+    <h1>Kurikulum SMK Jurusan Teknik Komputer dan Jaringan (TKJ)</h1>
+    <p>Struktur pembelajaran 3 tahun yang membekali siswa dengan kompetensi jaringan, keamanan siber, dan administrasi sistem — mulai dari dasar komputer hingga siap sertifikasi industri.</p>
+    <div class="hero-stats">
+      <div><strong>3 tahun</strong><span>Masa pendidikan</span></div>
+      <div><strong>4 area</strong><span>Kompetensi inti</span></div>
+      <div><strong>2x</strong><span>Praktik Kerja Lapangan</span></div>
+      <div><strong>5+</strong><span>Peluang sertifikasi</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Tahapan belajar</span>
+      <h2>Perjalanan belajar per tingkat</h2>
+      <p>Materi disusun berjenjang, dari fondasi komputer dan jaringan di kelas X hingga proyek jaringan siap kerja di kelas XII.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-rail">
+          <div class="tl-dot">X</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-content">
+          <h3>Kelas X — Fondasi Komputer dan Jaringan</h3>
+          <span class="tl-tag">Dasar perangkat keras, sistem operasi, dan konsep jaringan</span>
+          <div class="tl-grid">
+            <div class="tl-card"><b>Perakitan komputer</b>Instalasi dan perawatan perangkat keras dasar.</div>
+            <div class="tl-card"><b>Sistem operasi</b>Instalasi dan konfigurasi OS desktop dan server dasar.</div>
+            <div class="tl-card"><b>Konsep jaringan</b>Topologi, protokol, dan model OSI/TCP-IP.</div>
+            <div class="tl-card"><b>Dasar pemrograman</b>Logika dasar dan pengantar bahasa pemrograman.</div>
+          </div>
+          <div class="subj-label">Mata pelajaran kejuruan</div>
+          <div class="subj-list">
+            <span class="subj-tag">Dasar-Dasar Teknik Komputer dan Jaringan</span>
+            <span class="subj-tag">Komputer dan Jaringan Dasar</span>
+            <span class="subj-tag">Pemrograman Dasar</span>
+            <span class="subj-tag">Sistem Komputer</span>
+            <span class="subj-tag">Simulasi dan Komunikasi Digital</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-rail">
+          <div class="tl-dot">XI</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-content">
+          <h3>Kelas XI — Administrasi dan Keamanan Jaringan</h3>
+          <span class="tl-tag">Konfigurasi perangkat aktif dan pengelolaan sistem</span>
+          <div class="tl-grid">
+            <div class="tl-card"><b>Administrasi server</b>Konfigurasi DNS, DHCP, web, dan mail server.</div>
+            <div class="tl-card"><b>Routing dan switching</b>Konfigurasi router dan switch (Cisco/MikroTik).</div>
+            <div class="tl-card"><b>Keamanan jaringan</b>Firewall, VPN, dan praktik keamanan dasar.</div>
+            <div class="tl-card"><b>Praktik Kerja Lapangan I</b>Magang di industri untuk pengalaman lapangan.</div>
+          </div>
+          <div class="subj-label">Mata pelajaran kejuruan</div>
+          <div class="subj-list">
+            <span class="subj-tag">Teknologi Jaringan Kabel</span>
+            <span class="subj-tag">Teknologi Jaringan Nirkabel (WLAN)</span>
+            <span class="subj-tag">Administrasi Infrastruktur Jaringan</span>
+            <span class="subj-tag">Administrasi Sistem Jaringan</span>
+            <span class="subj-tag">Teknologi Layanan Jaringan</span>
+            <span class="subj-tag">Praktik Kerja Lapangan (PKL)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-rail">
+          <div class="tl-dot">XII</div>
+        </div>
+        <div class="tl-content">
+          <h3>Kelas XII — Proyek dan Kesiapan Kerja</h3>
+          <span class="tl-tag">Integrasi sistem, proyek akhir, dan persiapan karir</span>
+          <div class="tl-grid">
+            <div class="tl-card"><b>Perancangan WAN</b>Desain dan implementasi jaringan skala luas.</div>
+            <div class="tl-card"><b>Cloud dan virtualisasi</b>Pengantar layanan cloud dan mesin virtual.</div>
+            <div class="tl-card"><b>Proyek akhir (tugas akhir)</b>Studi kasus jaringan nyata sebagai syarat kelulusan.</div>
+            <div class="tl-card"><b>Praktik Kerja Lapangan II</b>Magang lanjutan sekaligus persiapan sertifikasi.</div>
+          </div>
+          <div class="subj-label">Mata pelajaran kejuruan</div>
+          <div class="subj-list">
+            <span class="subj-tag">Administrasi Infrastruktur Jaringan (Lanjutan)</span>
+            <span class="subj-tag">Administrasi Sistem Jaringan (Lanjutan)</span>
+            <span class="subj-tag">Teknologi Layanan Jaringan (Lanjutan)</span>
+            <span class="subj-tag">Produk Kreatif dan Kewirausahaan</span>
+            <span class="subj-tag">Praktik Kerja Lapangan (PKL) Lanjutan</span>
+            <span class="subj-tag">Proyek Tugas Akhir</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subj-label" style="margin-top:36px;">Mata pelajaran umum (berlaku kelas X–XII)</div>
+    <div class="subj-list">
+      <span class="subj-tag">Pendidikan Agama dan Budi Pekerti</span>
+      <span class="subj-tag">Pendidikan Pancasila</span>
+      <span class="subj-tag">Bahasa Indonesia</span>
+      <span class="subj-tag">Matematika</span>
+      <span class="subj-tag">Bahasa Inggris</span>
+      <span class="subj-tag">Pendidikan Jasmani, Olahraga, dan Kesehatan</span>
+      <span class="subj-tag">Sejarah</span>
+      <span class="subj-tag">Seni Budaya</span>
+      <span class="subj-tag">Projek Penguatan Profil Pelajar Pancasila</span>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Area kompetensi</span>
+      <h2>Empat pilar kompetensi utama</h2>
+      <p>Selain mata pelajaran per tingkat, kurikulum TKJ dibangun di atas empat pilar keahlian yang berjalan lintas tahun ajaran.</p>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="icon">01</div>
+        <h3>Instalasi dan jaringan</h3>
+        <p>Pemasangan, konfigurasi, dan pemeliharaan perangkat jaringan seperti router, switch, dan server.</p>
+      </div>
+      <div class="comp-card">
+        <div class="icon">02</div>
+        <h3>Administrasi sistem</h3>
+        <p>Pengelolaan akses pengguna, layanan jaringan, dan pemantauan performa sistem.</p>
+      </div>
+      <div class="comp-card">
+        <div class="icon">03</div>
+        <h3>Keamanan siber dasar</h3>
+        <p>Identifikasi ancaman, konfigurasi firewall, dan praktik keamanan data yang aman.</p>
+      </div>
+      <div class="comp-card">
+        <div class="icon">04</div>
+        <h3>Pemrograman dan basis data</h3>
+        <p>Logika pemrograman dasar dan pengelolaan basis data untuk mendukung sistem jaringan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Sertifikasi pendukung</span>
+      <h2>Sertifikasi yang relevan bagi lulusan TKJ</h2>
+      <p>Kurikulum dirancang selaras dengan kebutuhan sertifikasi industri berikut, agar lulusan lebih siap bersaing di dunia kerja.</p>
+    </div>
+    <div class="cert-row">
+      <div class="cert-pill">CCNA<span>Cisco Networking</span></div>
+      <div class="cert-pill">MTCNA<span>MikroTik Network</span></div>
+      <div class="cert-pill">CompTIA Network+<span>Jaringan dasar</span></div>
+      <div class="cert-pill">CompTIA Security+<span>Keamanan dasar</span></div>
+      <div class="cert-pill">CEH<span>Ethical Hacking</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <h2>Ingin memperdalam materi TKJ di luar sekolah?</h2>
+        <p>Lanjutkan dengan kursus jaringan dan keamanan siber bersama coach praktisi berpengalaman di Course-Net.</p>
+      </div>
+      <a href="https://course-net.com/course/kursus-jaringan-komputer/">Lihat kursus jaringan</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Course-Net Indonesia — Info kurikulum SMK Teknik Komputer dan Jaringan
+</footer>
+
+</body>
+</html>

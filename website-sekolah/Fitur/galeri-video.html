@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galeri Video — TKJ 1 - SMK IMELDA MEDAN</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="../images/logo.png">
+<style>
+  :root{
+    --navy: #0a3d62;
+    --navy-deep: #072b47;
+    --gold: #d99a2b;
+    --paper: #f6f7f9;
+    --ink: #1c2733;
+    --slate: #6b7686;
+    --line: #e3e6ea;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;}
+
+  /* Header */
+  .site-head{
+    background: linear-gradient(160deg, var(--navy-deep), var(--navy) 65%);
+    color:#fff;
+    padding: 56px 24px 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .site-head::after{
+    content:"";
+    position:absolute; right:-60px; top:-60px;
+    width:260px; height:260px; border-radius:50%;
+    border:1px solid rgba(217,154,43,.35);
+  }
+  .site-head::before{
+    content:"";
+    position:absolute; right:20px; bottom:-90px;
+    width:200px; height:200px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.12);
+  }
+  .head-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2;}
+
+  /* Tombol kembali */
+  .back-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.28);
+    color:#fff; font-family:'Inter',sans-serif; font-size:13px; font-weight:500;
+    padding:9px 16px 9px 12px; border-radius:999px; cursor:pointer;
+    text-decoration:none; margin-bottom:22px; transition:.18s;
+  }
+  .back-btn:hover{background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.45);}
+  .back-btn svg{width:16px; height:16px; flex-shrink:0;}
+
+  .eyebrow{
+    font-family:'Poppins',sans-serif; font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; font-size:12px; color:var(--gold); margin:0 0 10px;
+  }
+  h1{
+    font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(32px,5vw,48px);
+    margin:0 0 12px; line-height:1.1;
+  }
+  .head-desc{max-width:560px; color:rgba(255,255,255,.78); font-size:15px; line-height:1.6; margin:0 0 22px;}
+  .motto-rule{display:flex; align-items:center; gap:12px; color:rgba(255,255,255,.85); font-size:13px;}
+  .motto-rule span.line{width:36px; height:2px; background:var(--gold); display:inline-block;}
+
+  /* Filter bar */
+  .filter-bar{
+    max-width:1100px; margin:-30px auto 0; padding:0 24px;
+    position:relative; z-index:3;
+  }
+  .filter-inner{
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:14px 18px; display:flex; flex-wrap:wrap; gap:8px;
+    box-shadow: 0 12px 30px -18px rgba(7,43,71,.35);
+  }
+  .chip{
+    border:1px solid var(--line); background:#fff; color:var(--slate);
+    font-family:'Inter',sans-serif; font-size:13px; font-weight:500;
+    padding:8px 16px; border-radius:999px; cursor:pointer; transition:.18s;
+  }
+  .chip:hover{border-color:var(--navy);}
+  .chip.active{background:var(--navy); border-color:var(--navy); color:#fff;}
+
+  /* Gallery */
+  .gallery-wrap{max-width:1100px; margin:36px auto 80px; padding:0 24px;}
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .g-item{
+    position:relative; border-radius:12px; overflow:hidden; cursor:pointer;
+    background:#dfe4ea; aspect-ratio:16/9;
+    box-shadow: 0 10px 24px -16px rgba(7,43,71,.4);
+  }
+  .g-item img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease;}
+  .g-item:hover img{transform:scale(1.06);}
+  .g-item .cap{
+    position:absolute; left:0; right:0; bottom:0;
+    padding:16px 14px 12px;
+    background:linear-gradient(0deg, rgba(7,43,71,.94), rgba(7,43,71,0));
+    color:#fff; font-size:13px; line-height:1.35; font-weight:500;
+  }
+  .g-item .tag{
+    position:absolute; top:10px; left:10px;
+    background:rgba(255,255,255,.92); color:var(--navy);
+    font-family:'Poppins',sans-serif; font-weight:600; font-size:10.5px;
+    letter-spacing:.04em; text-transform:uppercase;
+    padding:4px 9px; border-radius:999px; z-index:2;
+  }
+  .g-item .duration{
+    position:absolute; top:10px; right:10px;
+    background:rgba(7,11,17,.7); color:#fff;
+    font-size:11px; font-weight:600; letter-spacing:.02em;
+    padding:4px 8px; border-radius:6px; z-index:2;
+  }
+  .play-btn{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:56px; height:56px; border-radius:50%;
+    background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center;
+    transition:.2s; z-index:2;
+  }
+  .play-btn::before{
+    content:""; display:block; width:0; height:0;
+    border-top:10px solid transparent; border-bottom:10px solid transparent;
+    border-left:16px solid var(--navy); margin-left:4px;
+  }
+  .g-item:hover .play-btn{background:var(--gold); transform:translate(-50%,-50%) scale(1.08);}
+  .g-item:hover .play-btn::before{border-left-color:#fff;}
+
+  .more-card{
+    aspect-ratio:16/9; border-radius:12px; border:1.5px dashed var(--line);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    color:var(--slate); font-size:12.5px; padding:14px; line-height:1.5;
+    background:#fff;
+  }
+  .more-card b{display:block; color:var(--navy); font-family:'Poppins',sans-serif; font-size:20px; margin-bottom:6px;}
+
+  @media (max-width:900px){ .gallery{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .gallery{grid-template-columns:1fr;} }
+
+  /* Modal player */
+  .vmodal{
+    position:fixed; inset:0; background:rgba(7,11,17,.93);
+    display:none; align-items:center; justify-content:center; z-index:50;
+    padding:40px 20px;
+  }
+  .vmodal.active{display:flex;}
+  .vmodal-inner{width:100%; max-width:920px;}
+  .vmodal-frame{
+    position:relative; width:100%; aspect-ratio:16/9; background:#000;
+    border-radius:10px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.5);
+  }
+  .vmodal-frame video, .vmodal-frame iframe{
+    width:100%; height:100%; border:0; display:block;
+  }
+  .vmodal .v-cap{color:rgba(255,255,255,.85); text-align:center; font-size:13.5px; margin:16px auto 0; max-width:700px;}
+  .vmodal .lb-close, .vmodal .lb-nav{
+    position:absolute; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25);
+    color:#fff; width:42px; height:42px; border-radius:50%; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:18px; z-index:5;
+  }
+  .vmodal .lb-close{top:-56px; right:0;}
+  .vmodal .lb-prev{left:-56px; top:50%; transform:translateY(-50%);}
+  .vmodal .lb-next{right:-56px; top:50%; transform:translateY(-50%);}
+  .vmodal .lb-close:hover, .vmodal .lb-nav:hover{background:rgba(255,255,255,.22);}
+  @media (max-width:760px){
+    .vmodal .lb-prev{left:0; top:-56px; transform:none;}
+    .vmodal .lb-next{right:0; top:-56px; transform:none;}
+    .vmodal .lb-close{top:-56px; right:0; left:auto;}
+  }
+
+  footer{text-align:center; padding:26px 20px 40px; color:var(--slate); font-size:12.5px;}
+</style>
+</head>
+<body>
+
+  <header class="site-head">
+    <div class="head-inner">
+      <a href="../index.html" class="back-btn" id="backBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        Kembali
+      </a>
+      <p class="eyebrow">Dokumentasi Kegiatan</p>
+      <h1>Galeri Video</h1>
+      <p class="head-desc">Rekaman kegiatan, prestasi, dan momen keseharian keluarga besar TKJ 1 dalam bentuk video.</p>
+      <div class="motto-rule"><span class="line"></span> Teladan Jayamahe</div>
+    </div>
+  </header>
+
+  <div class="filter-bar">
+    <div class="filter-inner" id="filterBar">
+      <button class="chip active" data-filter="all">Semua</button>
+      <button class="chip" data-filter="kegiatan">Kegiatan</button>
+      <button class="chip" data-filter="prestasi">Prestasi</button>
+      <button class="chip" data-filter="kunjungan">Kunjungan</button>
+      <button class="chip" data-filter="civitas">Civitas</button>
+    </div>
+  </div>
+
+  <div class="gallery-wrap">
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <div class="vmodal" id="vmodal">
+    <div class="vmodal-inner">
+      <div class="vmodal-frame" id="vmodalFrame">
+        <div class="lb-close" id="lbClose">✕</div>
+        <div class="lb-nav lb-prev" id="lbPrev">‹</div>
+        <div class="lb-nav lb-next" id="lbNext">›</div>
+      </div>
+      <p class="v-cap" id="vCap"></p>
+    </div>
+  </div>
+
+  <footer>© TKJ 1 - SMK IMELDA MEDAN — Galeri Video disusun untuk keperluan dokumentasi Kelas</footer>
+
+<script>
+/* =========================================================================
+   DATA VIDEO
+   Dua jenis sumber video didukung:
+
+   1) Video lokal (file mp4 di folder Anda sendiri):
+      { type:"local", src:"../videos/nama-file.mp4", poster:"../images/thumbnail.jpg",
+        cat:"kegiatan", cap:"Judul video", duration:"02:14" }
+
+      PENTING: file mp4 yang disebut di "src" HARUS benar-benar ada
+      di folder tersebut di server/hosting Anda. Kalau file belum
+      diupload atau path-nya salah, video tidak akan bisa diputar
+      (biasanya muncul kotak hitam/kosong saat modal dibuka).
+
+   2) Video YouTube (cukup ID video-nya, contoh dari URL
+      youtube.com/watch?v=XXXXXXXX atau youtu.be/XXXXXXXX):
+      { type:"youtube", id:"XXXXXXXX", poster:"https://img.youtube.com/vi/XXXXXXXX/hqdefault.jpg",
+        cat:"prestasi", cap:"Judul video" }
+
+      PENTING: untuk YouTube, isi field "id" (bukan "src") hanya
+      dengan kode videonya saja, dan pastikan "type" ditulis "youtube".
+
+   Tambahkan/edit video cukup dengan menambah satu object di array `videos` ini.
+   ========================================================================= */
+const videos = [
+  {
+    type:"local",
+    src:"../images/vidio/vid1.mp4",
+    poster:"../images/fotvid1.png",
+    cat:"kegiatan",
+    cap:"Penatapan Circle TKJ 1",
+    duration:"00:19"
+  },
+  {
+    type:"local",
+    src:"../images/vidio/vid2.mp4",
+    poster:"../images/ss3.png",
+    cat:"kegiatan",
+    cap:"Gabungan video Penatapan Circle TKJ 1",
+    duration:"00:34"
+  },
+  {
+    type:"youtube",
+    id:"cL7fxbq32S4",
+    poster:"https://img.youtube.com/vi/cL7fxbq32S4/hqdefault.jpg",
+    cat:"kunjungan",
+    cap:"Kunjungan istimewa dari UIW SOLUTIONS Co., Ltd. Japan",
+    duration:"04:12"
+  },
+  {
+    type:"local",
+    src:"../videos/wiramuda.mp4",
+    poster:"../images/fotosebelumpkl.jpeg",
+    cat:"kegiatan",
+    cap:"Pameran P5: WiraMuda (Wirausaha Muda Mandiri dan Berdaya)",
+    duration:"03:47"
+  },
+  {
+    type:"local",
+    src:"../videos/oxbroad-2025.mp4",
+    poster:"../images/prestasi.jpeg",
+    cat:"prestasi",
+    cap:"United Kingdom Oxbroad 2025",
+    duration:"05:30"
+  },
+  {
+    type:"local",
+    src:"../videos/civitas-sekolah.mp4",
+    poster:"../images/juan.jpeg",
+    cat:"civitas",
+    cap:"Profil Tenaga Pendidik & Kependidikan",
+    duration:"02:58"
+  },
+];
+
+const galleryEl = document.getElementById('gallery');
+const MORE_CARD = `<div class="more-card"><span><b>+</b>Tambahkan video baru dengan mengisi array <code>videos</code> di bagian atas kode &mdash; kartu ini otomatis akan bergeser ke akhir.</span></div>`;
+
+function render(filter){
+  galleryEl.innerHTML = '';
+  const filtered = videos.filter(v => filter==='all' || v.cat===filter);
+  filtered.forEach((v, i) => {
+    const div = document.createElement('div');
+    div.className = 'g-item';
+    div.innerHTML = `
+      <span class="tag">${labelFor(v.cat)}</span>
+      ${v.duration ? `<span class="duration">${v.duration}</span>` : ''}
+      <img src="${v.poster}" alt="${v.cap}" loading="lazy">
+      <div class="play-btn"></div>
+      <div class="cap">${v.cap}</div>
+    `;
+    div.addEventListener('click', () => openModal(filtered, i));
+    galleryEl.appendChild(div);
+  });
+  galleryEl.insertAdjacentHTML('beforeend', MORE_CARD);
+}
+
+function labelFor(cat){
+  return {kegiatan:'Kegiatan', prestasi:'Prestasi', kunjungan:'Kunjungan', civitas:'Civitas'}[cat] || cat;
+}
+
+document.getElementById('filterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.chip');
+  if(!btn) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  render(btn.dataset.filter);
+});
+
+/* Modal player */
+let currentSet = [], currentIndex = 0;
+const vmodal = document.getElementById('vmodal');
+const vFrame = document.getElementById('vmodalFrame');
+const vCap = document.getElementById('vCap');
+
+function openModal(set, index){
+  currentSet = set; currentIndex = index;
+  loadCurrent();
+  vmodal.classList.add('active');
+}
+function loadCurrent(){
+  const v = currentSet[currentIndex];
+  const old = vFrame.querySelector('video, iframe');
+  if(old) old.remove();
+
+  let media;
+  if(v.type === 'youtube'){
+    media = document.createElement('iframe');
+    media.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&rel=0`;
+    media.allow = 'autoplay; encrypted-media; picture-in-picture';
+    media.allowFullscreen = true;
+  } else {
+    media = document.createElement('video');
+    media.src = v.src;
+    media.controls = true;
+    media.autoplay = true;
+    media.poster = v.poster || '';
+  }
+  vFrame.appendChild(media);
+  vCap.textContent = v.cap;
+}
+function closeModal(){
+  vmodal.classList.remove('active');
+  const old = vFrame.querySelector('video, iframe');
+  if(old) old.remove(); // hentikan pemutaran saat modal ditutup
+}
+document.getElementById('lbClose').addEventListener('click', closeModal);
+vmodal.addEventListener('click', e => { if(e.target === vmodal) closeModal(); });
+document.getElementById('lbPrev').addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + currentSet.length) % currentSet.length;
+  loadCurrent();
+});
+document.getElementById('lbNext').addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % currentSet.length;
+  loadCurrent();
+});
+document.addEventListener('keydown', e => {
+  if(!vmodal.classList.contains('active')) return;
+  if(e.key === 'Escape') closeModal();
+  if(e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+  if(e.key === 'ArrowRight') document.getElementById('lbNext').click();
+});
+
+/* Tombol kembali: gunakan history back jika ada, fallback ke href index.html */
+document.getElementById('backBtn').addEventListener('click', function(e){
+  if(window.history.length > 1){
+    e.preventDefault();
+    window.history.back();
+  }
+  // jika tidak ada riwayat, biarkan link default ke ../index.html berjalan
+});
+
+render('all');
+</script>
+</body>
+</html>

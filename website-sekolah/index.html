@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beranda - TKJ 1</title>
+  <meta name="description" content="SMK IMELDA MEDAN" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="shortcut icon" href="./images/logo.png">
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-date" id="today-date"></span>
+    <div class="topbar-right">
+      <div class="topbar-socials">
+        <a href="https://www.facebook.com/smkimeldamedan" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/elevenclass_tkjone?igsh=MWRidDhmdWV1ZjhnbA==" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@smkteknikimelda5904" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+      <span class="topbar-clock" id="topbar-clock"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <img src="./images/logo.png" alt="Logo SMK IMELDA MEDAN" class="logo-img" />
+    </div>
+    <div class="header-title">
+      <h1 class="school-name"><a href="#TKJ1">TKJ 1</a></h1>
+      <p class="school-tagline">SMK IMELDA MEDAN</p>
+    </div>
+  </div>
+</header>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="main-nav" id="main-nav">
+  <div class="nav-inner">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Buka menu">&#9776;</button>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="index.html">Beranda</a></li>
+
+      <li class="has-dropdown">
+        <a href="#">Profil <i class="fas fa-chevron-down"></i></a>
+        <ul class="dropdown">
+          <li><a href="profil/sejarah.html">Sejarah Singkat</a></li>
+          <li><a href="profil/prakata-kepala-sekolah.html">Prakata Kepala Sekolah</a></li>
+          <li><a href="profil/pengembangan-sekolah.html">Pengembangan Sekolah</a></li>
+          <li><a href="profil/visi-misi.html">Visi dan Misi</a></li>
+          <li><a href="profil/logo-sekolah.html">Logo Sekolah</a></li>
+          <li><a href="profil/komite-sekolah.html">Komite Sekolah</a></li>
+          <li><a href="profil/struktur-organisasi.html">Struktur Organisasi</a></li>
+          <li><a href="profil/hymne.html">Hymne</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#">Kurikulum <i class="fas fa-chevron-down"></i></a>
+        <ul class="dropdown">
+          <li><a href="kurikulum/kurikulum.html">Info Kurikulum</a></li>
+          <li class="has-dropdown">
+            <a href="#kurikulum/program-keahlian.html">Program Keahlian <i class="fas fa-chevron-right"></i></a>
+            <ul class="dropdown submenu">
+              <li><a href="profil/teknik-komputer-jaringan.html">Teknik Komputer dan Jaringan</a></li>
+            </ul>
+          </li>
+          <li><a href="kurikulum/kalender-akademik.html">Kalender Akademik</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#">Program Sekolah <i class="fas fa-chevron-down"></i></a>
+        <ul class="dropdown">
+          <li class="has-dropdown">
+            <a href="#">Kegiatan Sekolah <i class="fas fa-chevron-right"></i></a>
+            <ul class="dropdown submenu">
+              <li><a href="program/penjelasan.html">Liburan</a></li>
+              <li><a href="program/ekstrakulikuler.html">Ekstrakulikuler</a></li>
+              <li><a href="program/laporan-kegiatan.html">Laporan Kegiatan</a></li>
+            </ul>
+          </li>
+          <li><a href="program/program-kerja.html">Program Kelas</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#">GTK <i class="fas fa-chevron-down"></i></a>
+        <ul class="dropdown">
+          <li><a href="gtk/informasi-guru.html">Informasi Guru</a></li>
+          <li><a href="gtk/informasi-tenaga-kependidikan.html">Informasi Tenaga Kependidikan</a></li>
+          <li><a href="gtk/prestasi-guru.html">Prestasi Guru</a></li>
+          <li><a href="gtk/tugas-fungsi.html">Tugas dan Fungsi</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#">Kesiswaan <i class="fas fa-chevron-down"></i></a>
+        <ul class="dropdown">
+          <li><a href="kesiswaan/prestasi-siswa.html">Prestasi Siswa</a></li>
+          <li><a href="kesiswaan/informasi-peserta-didik.html">Informasi Peserta Didik</a></li>
+          <li><a href="kesiswaan/ekstrakulikuler.html">Ekstrakulikuler</a></li>
+          <li><a href="kesiswaan/osis.html">OSIS</a></li>
+          <li><a href="kesiswaan/beasiswa.html">Beasiswa</a></li>
+          <li><a href="kesiswaan/pemetaan-lulusan.html">Informasi Pemetaan Lulusan</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#">Sarana Prasarana <i class="fas fa-chevron-down"></i></a>
+        <ul class="dropdown">
+          <li><a href="sarpras/peta-sekolah.html">Peta Sekolah (Site Plan)</a></li>
+          <li><a href="sarpras/sarana-infrastruktur.html">Sarana Infrastruktur</a></li>
+          <li><a href="sarpras/sarana-pembelajaran.html">Sarana Pembelajaran</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#">Hubungan Industri <i class="fas fa-chevron-down"></i></a>
+        <ul class="dropdown">
+          <li><a href="hubin/bursa-kerja.html">Bursa Kerja</a></li>
+          <li><a href="hubin/career-center.html">Career Center</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#">Fitur <i class="fas fa-chevron-down"></i></a>
+        <ul class="dropdown"> 
+          <li class="has-dropdown">
+            <a href="#">Galeri <i class="fas fa-chevron-right"></i></a>
+            <ul class="dropdown submenu">
+              <li><a href="./fitur/galeri.html">Galeri Foto</a></li>
+              <li><a href="./fitur/galeri-video.html">Galeri Video</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li><a href="#wali-kelas.html">Wali Kelas</a></li>
+      <li><a href="kurikulum/program-keahlian.html">Jurusan</a></li>
+      <li><a href="ppdb.html" class="nav-highlight">Penjelasan</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HERO SLIDER ===== -->
+<section class="hero-slider" id="hero">
+  <div class="slides-wrapper" id="slides-wrapper">
+    <!-- Slide 1 -->
+    <div class="slide active">
+      <img src="./images/fotosebelumpkl.jpeg" alt="Slider 1" class="slide-img" />
+      <div class="slide-caption">
+        <h2>Educational Goals</h2>
+        <p>Siswa SMKN 1 Cimahi Raih Juara 1 Nasional pada
+Mechanical Fair Sekolah Vokasi UGM 2026</p>
+        <a href="#" class="btn-slide">Selengkapnya</a>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="slide">
+      <img src="images/foto.jpeg" alt="Slider 2" class="slide-img" />
+      <div class="slide-caption">
+        <h2>[JUDUL SLIDE 2]</h2>
+        <p>[Deskripsi singkat slide 2]</p>
+        <a href="#" class="btn-slide">Selengkapnya</a>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="slide">
+      <img src="./images/fotobukberXI.jpeg" alt="Slider 3" class="slide-img" />
+      <div class="slide-caption">
+        <h2>[JUDUL SLIDE 3]</h2>
+        <p>[Deskripsi singkat slide 3]</p>
+        <a href="#" class="btn-slide">Selengkapnya</a>
+      </div>
+    </div>
+  </div>
+  <button class="slider-btn prev" id="slider-prev">&#10094;</button>
+  <button class="slider-btn next" id="slider-next">&#10095;</button>
+  <div class="slider-dots" id="slider-dots"></div>
+</section>
+
+<!-- ===== BREAKING NEWS / TOP TAGS ===== -->
+<div class="breaking-news-bar">
+  <span class="breaking-label">Top Tags:</span>
+  <div class="breaking-tags">
+    <a href="#">Tag 1</a>
+    <a href="#">Tag 2</a>
+    <a href="#">Tag 3</a>
+    <a href="#">Tag 4</a>
+    <a href="#">Tag 5</a>
+  </div>
+</div>
+
+<!-- ===== BERITA TERBARU HEADLINE ===== -->
+<section class="berita-headline">
+  <div class="container">
+    <div class="berita-scroll-bar">
+      <span class="berita-scroll-label">Berita Terbaru</span>
+      <div class="berita-scroll-items" id="berita-scroll">
+        <a href="berita-sekolah/berita-sekolah-1.html">[Liburan Dengan Teman Kelas..]</a>
+        <a href="#">[Judul Berita 2]</a>
+        <a href="#">[Judul Berita 3]</a>
+        <a href="#">[Judul Berita 4]</a>
+        <a href="#">[Judul Berita 5]</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main-content">
+  <div class="container">
+    <div class="content-grid">
+
+      <!-- ===== POSTS AREA ===== -->
+      <div class="posts-area">
+
+        <!-- Tab: Terbaru / Populer / Trending -->
+        <div class="posts-tabs">
+          <button class="tab-btn active" data-tab="terbaru">Terbaru</button>
+          <button class="tab-btn" data-tab="populer">Populer</button>
+          <button class="tab-btn" data-tab="trending">Trending</button>
+        </div>
+
+        <!-- Tab Terbaru -->
+        <div class="tab-content active" id="tab-terbaru">
+          <div class="posts-grid-small">
+            <!-- Post item 1 -->
+            <article class="post-card-small">
+              <a href="#"><img src="https://static.e-ujian.id/website/4171/1747751105-foto-kepsek-dengan-lulusan.jpg" alt="berita sekolah" /></a>
+              <div class="post-card-small-meta">
+                <span class="post-cat"><a href="#">berita sekolah</a></span>
+                <h5><a href="#">Pelepasan Mahasiswa Program Penguatan Profesional Kependidikan (P3K) UPI Semester Genap 2025/2026 di SMKN 1 Cimahi</a></h5>
+              </div>
+            </article>
+            <!-- Post item 2 -->
+            <article class="post-card-small">
+              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <div class="post-card-small-meta">
+                <span class="post-cat"><a href="#">[Kategori]</a></span>
+                <h5><a href="#">[Judul Berita 2 — Isi dengan judul berita terbaru Anda]</a></h5>
+              </div>
+            </article>
+            <!-- Post item 3 -->
+            <article class="post-card-small">
+              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <div class="post-card-small-meta">
+                <span class="post-cat"><a href="#">[Kategori]</a></span>
+                <h5><a href="#">[Judul Berita 3 — Isi dengan judul berita terbaru Anda]</a></h5>
+              </div>
+            </article>
+            <!-- Post item 4 -->
+            <article class="post-card-small">
+              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <div class="post-card-small-meta">
+                <span class="post-cat"><a href="#">[Kategori]</a></span>
+                <h5><a href="#">[Judul Berita 4 — Isi dengan judul berita terbaru Anda]</a></h5>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Tab Populer (tersembunyi) -->
+        <div class="tab-content" id="tab-populer">
+          <div class="posts-grid-small">
+            <article class="post-card-small">
+              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <div class="post-card-small-meta">
+                <span class="post-cat"><a href="#">[Kategori]</a></span>
+                <h5><a href="#">[Judul Berita Populer 1]</a></h5>
+              </div>
+            </article>
+            <article class="post-card-small">
+              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <div class="post-card-small-meta">
+                <span class="post-cat"><a href="#">[Kategori]</a></span>
+                <h5><a href="#">[Judul Berita Populer 2]</a></h5>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Tab Trending (tersembunyi) -->
+        <div class="tab-content" id="tab-trending">
+          <div class="posts-grid-small">
+            <article class="post-card-small">
+              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <div class="post-card-small-meta">
+                <span class="post-cat"><a href="#">[Kategori]</a></span>
+                <h5><a href="#">[Judul Berita Trending 1]</a></h5>
+              </div>
+            </article>
+            <article class="post-card-small">
+              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <div class="post-card-small-meta">
+                <span class="post-cat"><a href="#">[Kategori]</a></span>
+                <h5><a href="#">[Judul Berita Trending 2]</a></h5>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- DAFTAR BERITA UTAMA -->
+        <div class="posts-grid-cards">
+
+          <!-- Article 1 -->
+          <article class="post-card-item">
+            <div class="post-card-thumb">
+              <a href="berita-sekolah/berita-sekolah-1.html">
+                <img src="./images/penatapan.jpeg" alt="Healing bareng temen temen sircle" />
+              </a>
+              <div class="post-card-badges">
+                <a href="#healing" class="badge-cat">Healing</a>
+                <span class="badge-time">27 Juli 2026</span>
+              </div>
+            </div>
+            <div class="post-card-body">
+              <h4><a href="berita-sekolah/berita-sekolah-1.html">Kami Pergi Berlibur Ke Si kabung kabung dan kami melakukan..</a></h4>
+            </div>
+          </article>
+
+          <!-- Article 2 -->
+          <article class="post-card-item">
+            <div class="post-card-thumb">
+              <a href="#">
+                <img src="images/post-placeholder.jpg" alt="[Judul Berita]" />
+              </a>
+              <div class="post-card-badges">
+                <a href="#" class="badge-cat">[Kategori 1]</a>
+                <span class="badge-time">[Tanggal, Tahun]</span>
+              </div>
+            </div>
+            <div class="post-card-body">
+              <h4><a href="#">[Judul Berita Lengkap 2 — Ganti dengan judul berita Anda]</a></h4>
+            </div>
+          </article>
+
+          <!-- Article 3 -->
+          <article class="post-card-item">
+            <div class="post-card-thumb">
+              <a href="#">
+                <img src="images/post-placeholder.jpg" alt="[Judul Berita]" />
+              </a>
+              <div class="post-card-badges">
+                <a href="#" class="badge-cat">[Kategori 1]</a>
+                <span class="badge-time">[Tanggal, Tahun]</span>
+              </div>
+            </div>
+            <div class="post-card-body">
+              <h4><a href="#">[Judul Berita Lengkap 3 — Ganti dengan judul berita Anda]</a></h4>
+            </div>
+          </article>
+
+          <!-- Article 4 -->
+          <article class="post-card-item">
+            <div class="post-card-thumb">
+              <a href="#">
+                <img src="images/post-placeholder.jpg" alt="[Judul Berita]" />
+              </a>
+              <div class="post-card-badges">
+                <a href="#" class="badge-cat">[Kategori 1]</a>
+                <span class="badge-time">[Tanggal, Tahun]</span>
+              </div>
+            </div>
+            <div class="post-card-body">
+              <h4><a href="#">[Judul Berita Lengkap 4 — Ganti dengan judul berita Anda]</a></h4>
+            </div>
+          </article>
+
+          <!-- Article 5 -->
+          <article class="post-card-item">
+            <div class="post-card-thumb">
+              <a href="#">
+                <img src="images/post-placeholder.jpg" alt="[Judul Berita]" />
+              </a>
+              <div class="post-card-badges">
+                <a href="#" class="badge-cat">[Kategori 1]</a>
+                <span class="badge-time">[Tanggal, Tahun]</span>
+              </div>
+            </div>
+            <div class="post-card-body">
+              <h4><a href="#">[Judul Berita Lengkap 5 — Ganti dengan judul berita Anda]</a></h4>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <span class="page-current">1</span>
+          <a href="#" class="page-link">2</a>
+          <span class="page-dots">…</span>
+          <a href="#" class="page-link">10</a>
+          <a href="#" class="page-next">&#8250;</a>
+        </div>
+
+      </div><!-- end posts-area -->
+
+      <!-- ===== SIDEBAR ===== -->
+      <aside class="sidebar">
+
+        <!-- Info Terpopuler Widget -->
+        <div class="widget widget-populer">
+          <h3 class="widget-title-plain">Info Terpopuler</h3>
+          <div class="populer-list">
+            <div class="populer-item">
+              <a href="#" class="populer-thumb">
+                <img src="https://static.e-ujian.id/website/4171/1747751105-foto-kepsek-dengan-lulusan.jpg" alt="[Judul Berita]" />
+              </a>
+              <div class="populer-item-body">
+                <h5><a href="#">SRF FK USU Gelar Seminar &amp; Workshop Nasi...</a></h5>
+                <div class="populer-meta">
+                  <span class="populer-cat">Seminar</span>
+                  <span class="populer-views">869 &bull; View</span>
+                </div>
+              </div>
+            </div>
+            <div class="populer-item">
+              <a href="#" class="populer-thumb">
+                <img src="images/post-placeholder.jpg" alt="[Judul Berita]" />
+              </a>
+              <div class="populer-item-body">
+                <h5><a href="#">Kunjungan Civitas Akademika Fakultas Ked...</a></h5>
+                <div class="populer-meta">
+                  <span class="populer-cat">S1 - Kedokteran</span>
+                  <span class="populer-views">1458 &bull; View</span>
+                </div>
+              </div>
+            </div>
+            <div class="populer-item">
+              <a href="#" class="populer-thumb">
+                <img src="images/post-placeholder.jpg" alt="[Judul Berita]" />
+              </a>
+              <div class="populer-item-body">
+                <h5><a href="#">[Judul Berita Populer 3]</a></h5>
+                <div class="populer-meta">
+                  <span class="populer-cat">[Kategori]</span>
+                  <span class="populer-views">0 &bull; View</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Widget -->
+        <div class="widget">
+          <h3 class="widget-title">Search</h3>
+          <form class="search-form" action="search.html" method="get">
+            <input type="text" name="q" placeholder="Cari berita..." class="search-input" />
+            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+          </form>
+        </div>
+
+        <!-- Instagram Feed Widget -->
+        <div class="widget">
+          <h3 class="widget-title">Instagram Feed</h3>
+          <div class="instagram-grid">
+            <!-- Ganti src dengan URL foto Instagram Anda -->
+            <a href="https://www.instagram.com/p/DX6WmIzAe9K/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="><img src="./images/ss-1.png" alt="Instagram" /></a>
+            <a href="https://www.instagram.com/p/DUQNwNFE6M9/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="><img src="./images/ss-2.png" alt="Instagram" /></a>
+            <a href="#"><img src="images/ig-placeholder.jpg" alt="Instagram" /></a>
+            <a href="#"><img src="images/ig-placeholder.jpg" alt="Instagram" /></a>
+            <a href="#"><img src="images/ig-placeholder.jpg" alt="Instagram" /></a>
+            <a href="#"><img src="images/ig-placeholder.jpg" alt="Instagram" /></a>
+          </div>
+        </div>
+
+        <!-- Kalender Widget -->
+        <div class="widget">
+          <h3 class="widget-title">Kalender</h3>
+          <div class="calendar-widget" id="calendar-widget"></div>
+        </div>
+
+        <!-- Kategori Widget -->
+        <div class="widget">
+          <h3 class="widget-title">Kategori</h3>
+          <ul class="category-list">
+            <li><a href="#">Alumni <span>(0)</span></a></li>
+            <li>
+              <a href="#">Berita Sekolah <span>(0)</span></a>
+              <ul>
+                <li><a href="#">Kerjasama <span>(0)</span></a></li>
+                <li><a href="#">Studi Banding <span>(0)</span></a></li>
+                <li><a href="#">Upacara <span>(0)</span></a></li>
+              </ul>
+            </li>
+            <li><a href="#">BP/BK <span>(0)</span></a></li>
+            <li>
+              <a href="#">GTK <span>(0)</span></a>
+              <ul>
+                <li><a href="#">Prestasi Guru <span>(0)</span></a></li>
+              </ul>
+            </li>
+            <li><a href="#">Hubin <span>(0)</span></a></li>
+            <li>
+              <a href="#">Kesiswaan <span>(0)</span></a>
+              <ul>
+                <li><a href="#">Ekskul <span>(0)</span></a></li>
+                <li><a href="#">LKS <span>(0)</span></a></li>
+                <li><a href="#">OSIS <span>(0)</span></a></li>
+                <li><a href="#">PPDB <span>(0)</span></a></li>
+                <li><a href="#">PMR <span>(0)</span></a></li>
+                <li><a href="#">Pramuka <span>(0)</span></a></li>
+                <li><a href="#">Prestasi Siswa <span>(0)</span></a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">Kurikulum <span>(0)</span></a>
+              <ul>
+                <li><a href="#">Jurusan <span>(0)</span></a></li>
+                <li><a href="#">Kuliah <span>(0)</span></a></li>
+                <li><a href="#">Teaching Factory <span>(0)</span></a></li>
+              </ul>
+            </li>
+            <li><a href="#">Sarana Prasarana <span>(0)</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Recent Posts Widget -->
+        <div class="widget">
+          <h3 class="widget-title">Recent Posts</h3>
+          <ul class="recent-posts-list">
+            <li><a href="#">[Judul Berita Terbaru 1]</a></li>
+            <li><a href="#">[Judul Berita Terbaru 2]</a></li>
+            <li><a href="#">[Judul Berita Terbaru 3]</a></li>
+            <li><a href="#">[Judul Berita Terbaru 4]</a></li>
+            <li><a href="#">[Judul Berita Terbaru 5]</a></li>
+          </ul>
+        </div>
+
+        <!-- Recent Comments Widget -->
+        <div class="widget">
+          <h3 class="widget-title">Recent Comments</h3>
+          <ul class="recent-comments-list">
+            <li><strong>[Nama Komentator]</strong> on <a href="#">[Judul Berita]</a></li>
+            <li><strong>[Nama Komentator]</strong> on <a href="#">[Judul Berita]</a></li>
+            <li><strong>[Nama Komentator]</strong> on <a href="#">[Judul Berita]</a></li>
+          </ul>
+        </div>
+
+      </aside><!-- end sidebar -->
+
+    </div><!-- end content-grid -->
+  </div><!-- end container -->
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo-area">
+      <img src="./images/logo.png" alt="Logo SMK IMELDA" class="footer-logo" />
+      <h2 class="footer-school-name"><a href="#index.html">TKJ 1 - SMK IMELDA MEDAN</a></h2>
+      <p class="footer-tagline">Pusat Keunggulan Kompetensi Teknologi dan Informasi</p>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/smkimeldamedan" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/elevenclass_tkjone?igsh=MWRidDhmdWV1ZjhnbA==" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@smkteknikimelda5904" target="_blank"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; Copyright - TKJ 1 - SMK IMELDA MEDAN 2026 | Design By: <a href="#TKJ1">TKJ 1</a> | All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
