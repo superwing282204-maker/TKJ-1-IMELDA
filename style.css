@@ -67,8 +67,8 @@ ul { list-style: none; }
 }
 .topbar-socials a:hover { opacity: 1; }
 .topbar-right { display: flex; align-items: center; gap: 12px; }
-.topbar-clock { display: flex; align-items: center; }
-.topbar-clock-svg { width: 24px; height: 24px; display: block; }
+.topbar-clock { display: flex; align-items: center; gap: 8px; }
+.topbar-clock-svg { width: 22px; height: 22px; display: block; flex-shrink: 0; }
 .topbar-clock-face {
   fill: rgba(255,255,255,0.08);
   stroke: var(--white);
