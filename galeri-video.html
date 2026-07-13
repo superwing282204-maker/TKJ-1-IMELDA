@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Video | JalanRasa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="../images/logo.png">
+<style>
+  :root{
+    --ink:#14181A;
+    --ivory:#F5F1E8;
+    --gold:#C6A15B;
+    --emerald:#1B3A34;
+    --stone:#9C9488;
+    --line: rgba(245,241,232,0.18);
+    --line-dark: rgba(20,24,26,0.1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  a{color:inherit;}
+  img,video{max-width:100%; display:block;}
+
+  .wrap{
+    max-width:1140px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2.4px;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background:var(--gold);
+    display:inline-block;
+  }
+
+  /* NAV */
+  nav.top{
+    background:var(--ink);
+    padding:24px 0;
+  }
+  nav.top .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    font-family:'Cormorant Garamond', serif;
+    font-size:24px;
+    color:var(--ivory);
+    letter-spacing:0.5px;
+    text-decoration:none;
+  }
+  .brand em{color:var(--gold); font-style:italic;}
+  nav.top ul{
+    list-style:none;
+    display:flex;
+    gap:36px;
+    margin:0;
+    padding:0;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.3px;
+  }
+  nav.top ul a{
+    text-decoration:none;
+    color:var(--ivory);
+    opacity:0.8;
+    transition:opacity .2s ease;
+  }
+  nav.top ul a:hover, nav.top ul a.active{opacity:1; color:var(--gold);}
+  @media (max-width:760px){
+    nav.top ul{display:none;}
+  }
+
+  /* PAGE HEAD */
+  .page-head{
+    background:var(--ink);
+    color:var(--ivory);
+    padding:70px 0 90px;
+    text-align:center;
+  }
+  .page-head h1{
+    font-size:56px;
+    margin:16px 0 14px;
+  }
+  .page-head h1 em{font-style:italic; color:var(--gold);}
+  .page-head p{
+    color:#c7c3b8;
+    max-width:480px;
+    margin:0 auto;
+    font-size:15px;
+  }
+
+  section{padding:90px 0;}
+
+  .section-head{max-width:560px; margin:0 auto 50px; text-align:center;}
+  .section-head h2{font-size:36px; margin:14px 0 12px;}
+  .section-head p{color:#5b5a52; font-size:15px;}
+
+  /* VIDEO grid */
+  .video-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:24px;
+  }
+  @media (max-width:760px){.video-grid{grid-template-columns:1fr;}}
+  .video-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:4px;
+    border:1px solid var(--line-dark);
+    background:var(--ink);
+    cursor:pointer;
+  }
+  .video-card video{
+    width:100%;
+    min-height:320px;
+    object-fit:cover;
+    display:block;
+  }
+  .video-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 45%, rgba(20,24,26,0.85) 100%);
+  }
+  .video-card .label{
+    position:absolute; left:22px; bottom:20px; z-index:2;
+  }
+  .video-card .label span{
+    display:block;
+    font-size:11px;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:6px;
+  }
+  .video-card .label h3{
+    font-size:24px;
+    color:#fff;
+  }
+  .video-card .play{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    z-index:2;
+    width:56px; height:56px;
+    border-radius:50%;
+    border:1px solid rgba(245,241,232,0.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:14px;
+    opacity:0;
+    transition:opacity .25s ease;
+    pointer-events:none;
+  }
+  .video-card:hover .play{opacity:1;}
+
+  /* PLACEHOLDER (kartu kosong sebelum video diisi) */
+  .video-card.empty{
+    min-height:320px;
+    background:repeating-linear-gradient(
+      45deg,
+      rgba(245,241,232,0.04),
+      rgba(245,241,232,0.04) 10px,
+      rgba(245,241,232,0.08) 10px,
+      rgba(245,241,232,0.08) 20px
+    );
+    border:1px dashed var(--stone);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .video-card.empty::after{display:none;}
+  .video-card.empty .placeholder-inner{
+    text-align:center;
+    color:#c7c3b8;
+    padding:12px;
+  }
+  .video-card.empty .placeholder-inner svg{
+    width:30px; height:30px;
+    margin-bottom:10px;
+    stroke:var(--gold);
+  }
+  .video-card.empty .placeholder-inner .slot-label{
+    display:block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .video-card.empty .placeholder-inner .slot-hint{
+    display:block;
+    font-size:11px;
+    margin-top:6px;
+    color:#8b877e;
+  }
+
+  footer.site{
+    background:var(--ink);
+    color:#a9a49a;
+    padding:50px 0 34px;
+    border-top:1px solid var(--line);
+  }
+  .foot-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+    margin-bottom:36px;
+  }
+  footer.site .brand{color:var(--ivory);}
+  footer.site .foot-links{
+    display:flex; gap:28px; list-style:none; padding:0; margin:0; font-size:13px;
+  }
+  footer.site .foot-links a{text-decoration:none; color:#c7c3b8;}
+  footer.site .foot-links a:hover{color:var(--gold);}
+  footer.site .bottom{
+    font-size:12px;
+    border-top:1px solid var(--line);
+    padding-top:22px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <a href="#" class="brand">Jalan<em>Rasa</em></a>
+    <ul>
+      <li><a href="./liburan.html">Beranda</a></li>
+      <li><a href="./galeri.html">Galeri</a></li>
+      <li><a href="./cerita.html">Cerita</a></li>
+      <li><a href="./galeri-foto.html">FOTO</a></li>
+      <li><a href="#galeri-video.html" class="active">VIDEO</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">Dokumentasi Perjalanan</span>
+    <h1>Galeri <em>Video</em></h1>
+    <p>Suasana asli tiap destinasi, direkam langsung di lokasi.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+
+    <div class="section-head">
+      <span class="eyebrow">4 Slot Video</span>
+      <h2>Sorotan dalam Gerak</h2>
+      <p>Video akan diputar saat kursor diarahkan ke kartu. (Isi source video di kode untuk mengaktifkan.)</p>
+    </div>
+
+    <!--
+      CARA MENGISI VIDEO:
+      1. Setiap .video-card di bawah punya class "empty" (kartu kosong bergaris putus-putus).
+      2. Untuk mengisi video, hapus class "empty" dari kartu tersebut,
+         lalu ganti isi placeholder-inner dengan struktur berikut:
+
+         <video muted loop playsinline preload="metadata" poster="LOKASI-GAMBAR-SAMPUL.jpg">
+           <source src="LOKASI-VIDEO-KAMU.mp4" type="video/mp4">
+         </video>
+         <span class="play">▶</span>
+         <div class="label"><span>Kategori/Label Kecil</span><h3>Judul Video</h3></div>
+
+      3. "poster" adalah gambar sampul yang tampil sebelum video diputar (wajib diisi
+         supaya kartu tidak kosong/hitam saat halaman dimuat).
+      4. Video otomatis play saat kursor hover (lihat script di bawah), dan pause saat
+         kursor keluar dari kartu.
+    -->
+
+    <div class="video-grid">
+
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1573790387438-4da905039392?q=80&w=1200&auto=format&fit=crop">
+          <source src="https://cdn.coverr.co/videos/coverr-relaxing-tropical-beach-5075/360p.mp4" type="video/mp4">
+        </video>
+        <span class="play">▶</span>
+        <div class="label"><span>Rute Favorit</span><h3>Pantai Tenang, Nusa Dua</h3></div>
+      </div>
+
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1200&auto=format&fit=crop">
+          <source src="https://cdn.coverr.co/videos/coverr-villas-by-the-sea-7295/360p.mp4" type="video/mp4">
+        </video>
+        <span class="play">▶</span>
+        <div class="label"><span>Menginap</span><h3>Villa Tepi Laut</h3></div>
+      </div>
+
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop">
+          <source src="https://cdn.coverr.co/videos/coverr-a-tropical-beach-681/360p.mp4" type="video/mp4">
+        </video>
+        <span class="play">▶</span>
+        <div class="label"><span>Golden Hour</span><h3>Senja di Tebing</h3></div>
+      </div>
+
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=1200&auto=format&fit=crop">
+          <source src="https://cdn.coverr.co/videos/coverr-beach-to-the-ocean-170/1080p.mp4" type="video/mp4">
+        </video>
+        <span class="play">▶</span>
+        <div class="label"><span>Aerial</span><h3>Garis Pantai dari Udara</h3></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site" id="kontak">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand">Jalan<em style="color:var(--gold); font-style:italic;">Rasa</em></div>
+      <ul class="foot-links">
+        <li><a href="./liburan.html">Beranda</a></li>
+        <li><a href="#">Galeri</a></li>
+        <li><a href="./cerita.html">Cerita</a></li>
+        <li><a href="./galeri-foto.html">FOTO</a></li>
+        <li><a href="#galeri-video.html" class="active">VIDEO</a></li>
+      </ul>
+    </div>
+    <div class="bottom">
+      <span>TKJ 1 — Semua Video Liburan</span>
+      <span>© 2026 JalanRasa. Semua hak dilindungi.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Play video on hover (desktop), pause saat kursor keluar. Hanya berlaku untuk kartu yang sudah diisi <video>.
+  document.querySelectorAll('.video-card video').forEach(v=>{
+    const card = v.closest('.video-card');
+    card.addEventListener('mouseenter', ()=> v.play());
+    card.addEventListener('mouseleave', ()=> v.pause());
+  });
+
+  // Klik kartu video -> tampilkan full layar (fullscreen)
+  document.querySelectorAll('.video-card').forEach(card=>{
+    const v = card.querySelector('video');
+    if(!v) return; // slot masih kosong, belum diisi video
+    card.addEventListener('click', ()=>{
+      if(v.requestFullscreen){
+        v.requestFullscreen();
+      } else if(v.webkitEnterFullscreen){
+        // Fallback untuk Safari di iOS
+        v.webkitEnterFullscreen();
+      }
+      v.muted = false; // aktifkan suara saat masuk fullscreen
+      v.play();
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri — Foto & Video | JalanRasa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="../images/logo.png">
+<style>
+  :root{
+    --ink:#14181A;
+    --ivory:#F5F1E8;
+    --gold:#C6A15B;
+    --emerald:#1B3A34;
+    --stone:#9C9488;
+    --line: rgba(245,241,232,0.18);
+    --line-dark: rgba(20,24,26,0.1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  a{color:inherit;}
+  img,video{max-width:100%; display:block;}
+
+  .wrap{
+    max-width:1140px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2.4px;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background:var(--gold);
+    display:inline-block;
+  }
+
+  /* NAV */
+  nav.top{
+    background:var(--ink);
+    padding:24px 0;
+  }
+  nav.top .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    font-family:'Cormorant Garamond', serif;
+    font-size:24px;
+    color:var(--ivory);
+    letter-spacing:0.5px;
+    text-decoration:none;
+  }
+  .brand em{color:var(--gold); font-style:italic;}
+  nav.top ul{
+    list-style:none;
+    display:flex;
+    gap:36px;
+    margin:0;
+    padding:0;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.3px;
+  }
+  nav.top ul a{
+    text-decoration:none;
+    color:var(--ivory);
+    opacity:0.8;
+    transition:opacity .2s ease;
+  }
+  nav.top ul a:hover, nav.top ul a.active{opacity:1; color:var(--gold);}
+  @media (max-width:760px){
+    nav.top ul{display:none;}
+  }
+
+  /* PAGE HEAD */
+  .page-head{
+    background:var(--ink);
+    color:var(--ivory);
+    padding:70px 0 90px;
+    text-align:center;
+  }
+  .page-head h1{
+    font-size:56px;
+    margin:16px 0 14px;
+  }
+  .page-head h1 em{font-style:italic; color:var(--gold);}
+  .page-head p{
+    color:#c7c3b8;
+    max-width:480px;
+    margin:0 auto;
+    font-size:15px;
+  }
+
+  /* TABS */
+  .tabs{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:36px;
+  }
+  .tab-btn{
+    background:transparent;
+    border:1px solid rgba(245,241,232,0.3);
+    color:var(--ivory);
+    font-family:'Manrope', sans-serif;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    padding:12px 28px;
+    cursor:pointer;
+    transition:all .25s ease;
+  }
+  .tab-btn.active{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:var(--ink);
+  }
+  .tab-btn:not(.active):hover{border-color:var(--gold); color:var(--gold);}
+
+  section{padding:90px 0;}
+
+  .section-head{max-width:560px; margin:0 auto 50px; text-align:center;}
+  .section-head h2{font-size:36px; margin:14px 0 12px;}
+  .section-head p{color:#5b5a52; font-size:15px;}
+
+  /* PANELS */
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* GALLERY - mosaic (foto) */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    grid-auto-rows:170px;
+    gap:14px;
+  }
+  .gallery figure{
+    position:relative;
+    margin:0;
+    overflow:hidden;
+    border-radius:2px;
+    cursor:pointer;
+  }
+  .gallery figure::before{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 55%, rgba(20,24,26,0.8) 100%);
+    z-index:1;
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+  .gallery figure:hover::before{opacity:1;}
+  .gallery figure img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s ease;
+  }
+  .gallery figure:hover img{transform:scale(1.06);}
+  .gallery figcaption{
+    position:absolute;
+    left:16px; bottom:12px;
+    z-index:2;
+    color:#fff;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.3px;
+    opacity:0;
+    transform:translateY(6px);
+    transition:all .3s ease;
+  }
+  .gallery figure:hover figcaption{opacity:1; transform:translateY(0);}
+  .gallery figure .corner{
+    position:absolute;
+    width:18px; height:18px;
+    z-index:2;
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+  .gallery figure:hover .corner{opacity:1;}
+  .corner.tl{top:10px; left:10px; border-top:2px solid var(--gold); border-left:2px solid var(--gold);}
+  .corner.br{bottom:10px; right:10px; border-bottom:2px solid var(--gold); border-right:2px solid var(--gold);}
+
+  .g-tall{grid-row:span 2;}
+  .g-wide{grid-column:span 2;}
+
+  @media (max-width:900px){
+    .gallery{grid-template-columns:repeat(2,1fr); grid-auto-rows:170px;}
+  }
+  @media (max-width:520px){
+    .gallery{grid-template-columns:1fr; grid-auto-rows:220px;}
+    .g-wide, .g-tall{grid-column:span 1; grid-row:span 1;}
+  }
+
+  /* VIDEO grid */
+  .video-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:24px;
+  }
+  @media (max-width:760px){.video-grid{grid-template-columns:1fr;}}
+  .video-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:4px;
+    border:1px solid var(--line-dark);
+    background:var(--ink);
+  }
+  .video-card video{
+    width:100%;
+    min-height:320px;
+    object-fit:cover;
+    display:block;
+  }
+  .video-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 45%, rgba(20,24,26,0.85) 100%);
+  }
+  .video-card .label{
+    position:absolute; left:22px; bottom:20px; z-index:2;
+  }
+  .video-card .label span{
+    display:block;
+    font-size:11px;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:6px;
+  }
+  .video-card .label h3{
+    font-size:24px;
+    color:#fff;
+  }
+  .video-card .play{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    z-index:2;
+    width:56px; height:56px;
+    border-radius:50%;
+    border:1px solid rgba(245,241,232,0.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:14px;
+    opacity:0;
+    transition:opacity .25s ease;
+    pointer-events:none;
+  }
+  .video-card:hover .play{opacity:1;}
+
+  footer.site{
+    background:var(--ink);
+    color:#a9a49a;
+    padding:50px 0 34px;
+    border-top:1px solid var(--line);
+  }
+  .foot-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+    margin-bottom:36px;
+  }
+  footer.site .brand{color:var(--ivory);}
+  footer.site .foot-links{
+    display:flex; gap:28px; list-style:none; padding:0; margin:0; font-size:13px;
+  }
+  footer.site .foot-links a{text-decoration:none; color:#c7c3b8;}
+  footer.site .foot-links a:hover{color:var(--gold);}
+  footer.site .bottom{
+    font-size:12px;
+    border-top:1px solid var(--line);
+    padding-top:22px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* LIGHTBOX */
+  .lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(20,24,26,0.94);
+    z-index:100;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{
+    max-width:90vw;
+    max-height:85vh;
+    object-fit:contain;
+  }
+  .lightbox-close{
+    position:absolute;
+    top:26px; right:30px;
+    color:var(--ivory);
+    font-size:28px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    line-height:1;
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <a href="#" class="brand">Jalan<em>Rasa</em></a>
+    <ul>
+      <li><a href="./liburan.html">Beranda</a></li>
+      <li><a href="#Galeri" class="active">Galeri</a></li>
+      <li><a href="./cerita.html">Cerita</a></li>
+      <li><a href="./galeri-foto.html">FOTO</a></li>
+      <li><a href="./galeri-video.html">VIDEO</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">Dokumentasi Perjalanan</span>
+    <h1>Galeri <em>Foto & Video</em></h1>
+    <p>Kumpulan momen nyata dari itinerary JalanRasa — supaya kamu tahu persis apa yang akan kamu dapat.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="foto">Foto</button>
+      <button class="tab-btn" data-tab="video">Video</button>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+
+    <!-- PANEL: FOTO -->
+    <div class="panel active" id="panel-foto">
+      <div class="section-head">
+        <span class="eyebrow">28 Foto</span>
+        <h2>Sekilas dari Perjalanan Sebelumnya</h2>
+        <p>Klik foto untuk melihat versi penuh.</p>
+      </div>
+
+      <div class="gallery">
+        <figure class="g-tall" data-full="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1400&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800&auto=format&fit=crop" alt="Pantai Bali">
+          <figcaption>Nusa Dua, Bali</figcaption>
+        </figure>
+        <figure class="g-wide" data-full="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=1600&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=1200&auto=format&fit=crop" alt="Sawah terasering">
+          <figcaption>Sawah Terasering, Ubud</figcaption>
+        </figure>
+        <figure data-full="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1400&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=800&auto=format&fit=crop" alt="Kuil Bangkok">
+          <figcaption>Bangkok</figcaption>
+        </figure>
+        <figure data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1400&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=800&auto=format&fit=crop" alt="Candi Yogyakarta">
+          <figcaption>Candi, Yogyakarta</figcaption>
+        </figure>
+        <figure class="g-wide" data-full="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1600&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1200&auto=format&fit=crop" alt="Villa tepi pantai">
+          <figcaption>Villa Tepi Pantai</figcaption>
+        </figure>
+        <figure data-full="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=1400&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=800&auto=format&fit=crop" alt="Senja pantai">
+          <figcaption>Senja, Uluwatu</figcaption>
+        </figure>
+        <figure data-full="https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=1400&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop" alt="Perahu tradisional">
+          <figcaption>Perahu Nelayan, Nusa Penida</figcaption>
+        </figure>
+        <figure class="g-tall" data-full="https://images.unsplash.com/photo-1470004914212-05527e49370b?q=80&w=1400&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1470004914212-05527e49370b?q=80&w=800&auto=format&fit=crop" alt="Air terjun">
+          <figcaption>Air Terjun, Yogyakarta</figcaption>
+        </figure>
+        <figure data-full="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1400&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=800&auto=format&fit=crop" alt="Kolam infinity">
+          <figcaption>Kolam Infinity, Bali</figcaption>
+        </figure>
+        <figure data-full="https://images.unsplash.com/photo-1548574505-5e239809ee19?q=80&w=1400&auto=format&fit=crop">
+          <span class="corner tl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?q=80&w=800&auto=format&fit=crop" alt="Pasar malam Bangkok">
+          <figcaption>Pasar Malam, Bangkok</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- PANEL: VIDEO -->
+    <div class="panel" id="panel-video">
+      <div class="section-head">
+        <span class="eyebrow">6 Video</span>
+        <h2>Sorotan dalam Gerak</h2>
+        <p>Suasana asli tiap destinasi, direkam langsung di lokasi.</p>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <video muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1573790387438-4da905039392?q=80&w=1200&auto=format&fit=crop">
+            <source src="https://cdn.coverr.co/videos/coverr-relaxing-tropical-beach-5075/360p.mp4" type="video/mp4">
+          </video>
+          <span class="play">▶</span>
+          <div class="label"><span>Rute Favorit</span><h3>Pantai Tenang, Nusa Dua</h3></div>
+        </div>
+
+        <div class="video-card">
+          <video muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1200&auto=format&fit=crop">
+            <source src="https://cdn.coverr.co/videos/coverr-villas-by-the-sea-7295/360p.mp4" type="video/mp4">
+          </video>
+          <span class="play">▶</span>
+          <div class="label"><span>Menginap</span><h3>Villa Tepi Laut</h3></div>
+        </div>
+
+        <div class="video-card">
+          <video muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop">
+            <source src="https://cdn.coverr.co/videos/coverr-a-tropical-beach-681/360p.mp4" type="video/mp4">
+          </video>
+          <span class="play">▶</span>
+          <div class="label"><span>Golden Hour</span><h3>Senja di Tebing</h3></div>
+        </div>
+
+        <div class="video-card">
+          <video muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=1200&auto=format&fit=crop">
+            <source src="https://cdn.coverr.co/videos/coverr-beach-to-the-ocean-170/1080p.mp4" type="video/mp4">
+          </video>
+          <span class="play">▶</span>
+          <div class="label"><span>Aerial</span><h3>Garis Pantai dari Udara</h3></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site" id="kontak">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand">Jalan<em style="color:var(--gold); font-style:italic;">Rasa</em></div>
+      <ul class="foot-links">
+        <li><a href="./liburan.html">Beranda</a></li>
+        <li><a href="#galeri.html">Galeri</a></li>
+        <li><a href="./cerita.html">Cerita</a></li>
+        <li><a href="./galeri-foto.html">FOTO</a></li>
+        <li><a href="./galeri-video.html">VIDEO</a></li>
+      </ul>
+    </div>
+    <div class="bottom">
+      <span>JalanRasa Travel — hubungi kami untuk konsultasi paket liburan.</span>
+      <span>© 2026 JalanRasa. Semua hak dilindungi.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  // Tabs
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = { foto: document.getElementById('panel-foto'), video: document.getElementById('panel-video') };
+  tabs.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabs.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      Object.values(panels).forEach(p=>p.classList.remove('active'));
+      panels[btn.dataset.tab].classList.add('active');
+    });
+  });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.gallery figure').forEach(fig=>{
+    fig.addEventListener('click', ()=>{
+      lightboxImg.src = fig.dataset.full;
+      lightbox.classList.add('open');
+    });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', ()=> lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) lightbox.classList.remove('open'); });
+
+  // Play video on hover (desktop), keep paused otherwise to save bandwidth
+  document.querySelectorAll('.video-card video').forEach(v=>{
+    const card = v.closest('.video-card');
+    card.addEventListener('mouseenter', ()=> v.play());
+    card.addEventListener('mouseleave', ()=> v.pause());
+  });
+</script>
+
+</body>
+</html>
