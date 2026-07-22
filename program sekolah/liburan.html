@@ -293,6 +293,7 @@
   .gallery figure img{
     width:100%; height:100%; object-fit:cover;
     transition:transform .6s ease;
+    cursor:zoom-in;
   }
   .gallery figure:hover img{transform:scale(1.06);}
   .gallery figcaption{
@@ -316,6 +317,7 @@
     z-index:2;
     opacity:0;
     transition:opacity .3s ease;
+    pointer-events:none;
   }
   .gallery figure:hover .corner{opacity:1;}
   .corner.tl{top:10px; left:10px; border-top:2px solid var(--gold); border-left:2px solid var(--gold);}
@@ -401,7 +403,11 @@
     height:210px;
     object-fit:cover;
     margin-bottom:22px;
+    cursor:zoom-in;
+    border-radius:2px;
+    transition:opacity .25s ease;
   }
+  .dest-card img:hover{opacity:0.9;}
   .dest-tag{
     font-size:11px;
     font-weight:700;
@@ -500,6 +506,67 @@
     flex-wrap:wrap;
     gap:10px;
   }
+
+  /* LIGHTBOX */
+  .lightbox-overlay{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:rgba(20,24,26,0.94);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+    opacity:0;
+    transition:opacity .25s ease;
+  }
+  .lightbox-overlay.active{
+    display:flex;
+    opacity:1;
+  }
+  .lightbox-overlay img{
+    max-width:90vw;
+    max-height:85vh;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:4px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+    transform:scale(0.96);
+    transition:transform .25s ease;
+    cursor:zoom-out;
+  }
+  .lightbox-overlay.active img{transform:scale(1);}
+  .lightbox-caption{
+    position:absolute;
+    bottom:34px;
+    left:0; right:0;
+    text-align:center;
+    color:var(--ivory);
+    font-family:'Cormorant Garamond', serif;
+    font-size:18px;
+    letter-spacing:0.3px;
+  }
+  .lightbox-close{
+    position:absolute;
+    top:24px; right:28px;
+    width:42px; height:42px;
+    border-radius:999px;
+    border:1px solid rgba(245,241,232,0.4);
+    background:rgba(20,24,26,0.4);
+    color:var(--ivory);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .lightbox-close:hover{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:var(--ink);
+  }
+  .lightbox-close svg{width:18px; height:18px;}
 </style>
 </head>
 <body>
@@ -552,32 +619,32 @@
     <div class="gallery">
       <figure class="g-tall">
         <span class="corner tl"></span><span class="corner br"></span>
-        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800&auto=format&fit=crop" alt="Pantai Bali">
-        <figcaption>Nusa Dua, Bali</figcaption>
+        <img src="../images/Foto2.jpeg" alt="Liburan" data-caption="Liburan Sikabung kabung">
+        <figcaption>Liburan Sikabung kabung</figcaption>
       </figure>
       <figure class="g-wide">
         <span class="corner tl"></span><span class="corner br"></span>
-        <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=1200&auto=format&fit=crop" alt="Sawah terasering">
+        <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=1200&auto=format&fit=crop" alt="Sawah terasering" data-caption="Sawah Terasering, Ubud">
         <figcaption>Sawah Terasering, Ubud</figcaption>
       </figure>
       <figure>
         <span class="corner tl"></span><span class="corner br"></span>
-        <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=800&auto=format&fit=crop" alt="Kuil Bangkok">
+        <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=800&auto=format&fit=crop" alt="Kuil Bangkok" data-caption="Bangkok">
         <figcaption>Bangkok</figcaption>
       </figure>
       <figure>
         <span class="corner tl"></span><span class="corner br"></span>
-        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=800&auto=format&fit=crop" alt="Candi Yogyakarta">
+        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=800&auto=format&fit=crop" alt="Candi Yogyakarta" data-caption="Candi, Yogyakarta">
         <figcaption>Candi, Yogyakarta</figcaption>
       </figure>
       <figure class="g-wide">
         <span class="corner tl"></span><span class="corner br"></span>
-        <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1200&auto=format&fit=crop" alt="Villa tepi pantai">
+        <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1200&auto=format&fit=crop" alt="Villa tepi pantai" data-caption="Villa Tepi Pantai">
         <figcaption>Villa Tepi Pantai</figcaption>
       </figure>
       <figure>
         <span class="corner tl"></span><span class="corner br"></span>
-        <img src="https://images.unsplash.com/photo-1524290119152-9a8d4c8d3f2a?q=80&w=800&auto=format&fit=crop" alt="Senja tebing Uluwatu">
+        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800&auto=format&fit=crop" alt="Senja tebing Uluwatu" data-caption="Senja, Uluwatu">
         <figcaption>Senja, Uluwatu</figcaption>
       </figure>
     </div>
@@ -639,7 +706,7 @@
   <div class="dest-grid">
     <div class="dest-card">
       <span class="dest-tag">Hari 1</span>
-      <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800&auto=format&fit=crop" alt="Tiba di Bali">
+      <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800&auto=format&fit=crop" alt="Tiba di Bali" data-caption="Berangkat & Pantai Nusa Dua">
       <h3>Berangkat & Pantai Nusa Dua</h3>
       <p>Kumpul jam 05.00 di sekolah, tiba sore, langsung main air sampai matahari turun.</p>
       <div class="dest-price">
@@ -650,7 +717,7 @@
 
     <div class="dest-card">
       <span class="dest-tag">Hari 2</span>
-      <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=800&auto=format&fit=crop" alt="Sawah Ubud">
+      <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=800&auto=format&fit=crop" alt="Sawah Ubud" data-caption="Sawah Ubud & Kuliner Malam">
       <h3>Sawah Ubud & Kuliner Malam</h3>
       <p>Foto-foto di terasering, lanjut jajan malam bareng satu angkatan.</p>
       <div class="dest-price">
@@ -661,7 +728,7 @@
 
     <div class="dest-card">
       <span class="dest-tag">Hari 3</span>
-      <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=800&auto=format&fit=crop" alt="Uluwatu senja">
+      <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=800&auto=format&fit=crop" alt="Uluwatu senja" data-caption="Uluwatu & Pulang">
       <h3>Uluwatu & Pulang</h3>
       <p>Senja terakhir di tebing, beli oleh-oleh, lalu perjalanan pulang.</p>
       <div class="dest-price">
@@ -723,6 +790,55 @@
     </div>
   </div>
 </footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-close" id="lightboxClose" aria-label="Tutup">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </div>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<script>
+  (function(){
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    // Ambil semua foto yang bisa di-zoom (gallery + destinasi)
+    const zoomableImages = document.querySelectorAll('.gallery img, .dest-card img');
+
+    zoomableImages.forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt || '';
+        lightboxCaption.textContent = img.dataset.caption || img.alt || '';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox(){
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => { lightboxImg.src = ''; }, 200);
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    // Klik di luar gambar (area gelap) juga menutup
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Tombol ESC menutup
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+    });
+  })();
+</script>
 
 </body>
 </html>

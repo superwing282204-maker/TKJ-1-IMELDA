@@ -25,7 +25,6 @@
     text-align: center;
     position: relative;
   }
-  /* Lapisan gelap transparan agar teks tetap terbaca di atas foto */
   header.site-header::before {
     content: "";
     position: absolute;
@@ -120,7 +119,6 @@
     line-height: 1.7;
   }
 
-  /* Kartu daftar program */
   .program-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -155,7 +153,7 @@
   .content-box .video-wrap {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* rasio 16:9 */
+    padding-bottom: 56.25%;
     margin-bottom: 16px;
   }
   .content-box .video-wrap iframe {
@@ -236,10 +234,6 @@
     height: 18px;
     fill: currentColor;
   }
-  .placeholder {
-    color: #999;
-    font-style: italic;
-  }
 </style>
 </head>
 <body>
@@ -260,10 +254,8 @@
     <li><a href="./prakata-kepala-sekolah.html">Profil</a></li>
     <li><a href="./teknik-komputer-jaringan.html">Kurikulum</a></li>
     <li><a href="./program-sekolah.html">Program Sekolah</a></li>
-    <li><a href="./gtk.html">GTK</a></li>
     <li><a href="./kesiswaan.html">Kesiswaan</a></li>
     <li><a href="./kontak.html">Kontak</a></li>
-    <!-- Tambahkan/atur menu sesuai kebutuhan -->
   </ul>
 </nav>
 
@@ -276,45 +268,44 @@
 <main>
   <div class="content-box">
 
-    <h2 class="page-heading">[Judul Halaman Program Sekolah]</h2>
-    <p class="placeholder">[Paragraf pembuka - jelaskan secara umum program-program unggulan yang dijalankan sekolah dan tujuannya bagi siswa]</p>
+    <h2 class="page-heading">Program Unggulan Kompetensi Keahlian Teknik Komputer dan Jaringan (TKJ)</h2>
+    <p>Kompetensi Keahlian Teknik Komputer dan Jaringan (TKJ) SMK Imelda Medan menghadirkan berbagai program unggulan yang dirancang untuk membekali siswa dengan kompetensi teknis di bidang jaringan komputer, administrasi server, keamanan siber, dan pengembangan perangkat lunak sederhana. Melalui pembelajaran berbasis praktik langsung, kerja sama industri, serta keikutsertaan dalam berbagai kompetisi, siswa TKJ dipersiapkan untuk siap kerja, siap melanjutkan pendidikan, maupun berwirausaha di bidang Teknologi Informasi dan Komunikasi (TIK).</p>
 
     <!-- Gambar/banner program sekolah (opsional) -->
-    <img class="feature-img" src="" alt="[Banner Program Sekolah]">
+    <img class="feature-img" src="../images/prestasi.jpeg" alt="Banner Program Sekolah TKJ">
 
     <h3 class="section-heading">Daftar Program</h3>
-    <p class="placeholder">[Pengantar singkat sebelum daftar kartu program di bawah]</p>
+    <p>Berikut adalah beberapa program unggulan yang dijalankan oleh Kompetensi Keahlian TKJ untuk mendukung pengembangan kompetensi dan prestasi siswa.</p>
 
     <!-- Kartu/grid daftar program -->
     <div class="program-grid">
       <div class="program-card">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghvx4G4iEME3nm9oBUwj-kr1lF3739cFLm3_wUV07hzFHCqSoMyQ-R7Zcd2bSf-MvnZUClHKGks6s556YuSiPtOBYbxBGyvto1u13VpelN0OS2cL2qMe5NjUqj-ojXxW71_y0fIL-uIlHwoRO1rbF-1KbO8MpQwy-CNByVEu6CpRdJj8OhfPciYKznPw/s733/lomba-kreasi-pelajar.jpg" alt="[Foto Program 1]">
-        <h4 class="placeholder">Lomba Kreator Pemuda</h4>
-        <p class="placeholder">Dispora Gelar Lomba Kreator Pemuda Piala Walikota Medan, Ajang Mengasah Ketangkasan Pelajar | MedanMerdeka.com</p>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghvx4G4iEME3nm9oBUwj-kr1lF3739cFLm3_wUV07hzFHCqSoMyQ-R7Zcd2bSf-MvnZUClHKGks6s556YuSiPtOBYbxBGyvto1u13VpelN0OS2cL2qMe5NjUqj-ojXxW71_y0fIL-uIlHwoRO1rbF-1KbO8MpQwy-CNByVEu6CpRdJj8OhfPciYKznPw/s733/lomba-kreasi-pelajar.jpg" alt="Foto Lomba Kreator Pemuda">
+        <h4>Lomba Kreator Pemuda</h4>
+        <p>Dispora Gelar Lomba Kreator Pemuda Piala Walikota Medan, ajang bagi siswa TKJ untuk mengasah kreativitas digital dan ketangkasan berkarya di bidang teknologi.</p>
       </div>
       <div class="program-card">
-        <img src="../images/prestasi.jpeg" alt="[Foto Program 2]">
-        <h4 class="placeholder">[Nama Program 2]</h4>
-        <p class="placeholder">[Deskripsi singkat program 2]</p>
+        <img src="../images/prestasi.jpeg" alt="Foto Prestasi Siswa TKJ">
+        <h4>Lomba Kompetensi Siswa (LKS) Bidang IT Network Systems Administration</h4>
+        <p>Ajang kompetisi tahunan tingkat kota/provinsi bagi siswa TKJ untuk menguji kemampuan instalasi, konfigurasi, dan troubleshooting jaringan komputer secara langsung.</p>
       </div>
       <div class="program-card">
-        <img src="" alt="[Foto Program 3]">
-        <h4 class="placeholder">[Nama Program 3]</h4>
-        <p class="placeholder">[Deskripsi singkat program 3]</p>
+        <img src="https://enrollment-api.ui.ac.id/uploads/20250922072406_Edited-9722.jpg" alt="Foto Praktik Jaringan Komputer">
+        <h4>Praktik Instalasi & Konfigurasi Jaringan</h4>
+        <p>Kegiatan praktik rutin di laboratorium komputer meliputi perakitan PC, instalasi sistem operasi, konfigurasi router/switch, hingga pengelolaan server lokal.</p>
       </div>
       <div class="program-card">
-        <img src="" alt="[Foto Program 4]">
-        <h4 class="placeholder">[Nama Program 4]</h4>
-        <p class="placeholder">[Deskripsi singkat program 4]</p>
+        <img src="../images/prestasi.jpeg" alt="Foto Kelas Sertifikasi">
+        <h4>Kelas Sertifikasi Kompetensi (LSP)</h4>
+        <p>Program uji sertifikasi kompetensi melalui Lembaga Sertifikasi Profesi (LSP) sebagai bukti kompetensi siswa di bidang jaringan komputer sesuai standar industri.</p>
       </div>
-      <!-- Salin blok .program-card di atas untuk menambah program lain -->
     </div>
 
     <h3 class="section-heading">Teaching Factory & Program Inovasi</h3>
-    <p class="placeholder">[Jelaskan program Teaching Factory atau inovasi unggulan sekolah, jika ada]</p>
+    <p>Program Teaching Factory TKJ menghadirkan simulasi lingkungan kerja nyata di sekolah, seperti layanan perakitan dan perbaikan komputer, instalasi jaringan internet untuk lingkungan sekolah dan masyarakat sekitar, serta pengembangan aplikasi sederhana berbasis kebutuhan sekolah. Melalui program ini, siswa belajar mengelola pekerjaan mulai dari analisis kebutuhan, pengerjaan teknis, hingga pelaporan hasil layaknya di dunia industri sesungguhnya.</p>
 
     <h3 class="section-heading">Program Kerjasama / Hubungan Industri</h3>
-    <p class="placeholder">[Jelaskan program kerjasama dengan dunia industri, magang, atau bursa kerja]</p>
+    <p>TKJ menjalin kerja sama dengan berbagai perusahaan dan instansi di bidang Teknologi Informasi untuk pelaksanaan Praktik Kerja Lapangan (PKL), kunjungan industri, serta bursa kerja khusus (BKK) bagi lulusan. Kerja sama ini bertujuan untuk menyelaraskan kurikulum dengan kebutuhan dunia usaha dan dunia industri (DUDI), sekaligus membuka peluang penyerapan lulusan ke dunia kerja maupun studi lanjut.</p>
 
     <h3 class="section-heading">Jadwal/Agenda Kegiatan Terkait</h3>
     <table class="data-table">
@@ -328,16 +319,28 @@
       </thead>
       <tbody>
         <tr>
-          <td class="placeholder">1</td>
-          <td class="placeholder">[Nama kegiatan]</td>
-          <td class="placeholder">[Tanggal]</td>
-          <td class="placeholder">[Keterangan]</td>
+          <td>1</td>
+          <td>Praktik Kerja Lapangan (PKL) TKJ</td>
+          <td>Juli - September 2026</td>
+          <td>Penempatan siswa di mitra industri TIK</td>
         </tr>
         <tr>
-          <td class="placeholder">2</td>
-          <td class="placeholder">[Nama kegiatan]</td>
-          <td class="placeholder">[Tanggal]</td>
-          <td class="placeholder">[Keterangan]</td>
+          <td>2</td>
+          <td>Lomba Kompetensi Siswa (LKS) Tingkat Kota</td>
+          <td>Agustus 2026</td>
+          <td>Bidang IT Network Systems Administration</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Uji Sertifikasi Kompetensi (LSP)</td>
+          <td>Oktober 2026</td>
+          <td>Bagi siswa tingkat akhir TKJ</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Bakti Sosial Instalasi Jaringan Desa</td>
+          <td>November 2026</td>
+          <td>Program Teaching Factory bersama masyarakat</td>
         </tr>
       </tbody>
     </table>
@@ -345,15 +348,15 @@
     <!-- Video profil program sekolah (opsional) -->
     <h3 class="section-heading">Video Profil Program</h3>
     <div class="video-wrap">
-      <iframe src="" title="[Judul Video Profil Program]" allowfullscreen></iframe>
+      <iframe src="" title="Video Profil Program TKJ SMK Imelda Medan" allowfullscreen></iframe>
     </div>
 
     <!-- Dokumen unduhan terkait program sekolah -->
     <h3 class="section-heading">Dokumen Terkait</h3>
     <ul class="download-list">
-      <li><a href="#" target="_blank">[Nama Dokumen 1, misalnya: Program Kerja Sekolah.pdf]</a></li>
-      <li><a href="#" target="_blank">[Nama Dokumen 2]</a></li>
-      <li><a href="#" target="_blank">[Nama Dokumen 3]</a></li>
+      <li><a href="#" target="_blank">Program Kerja Kompetensi Keahlian TKJ.pdf</a></li>
+      <li><a href="#" target="_blank">Panduan Praktik Kerja Lapangan (PKL) TKJ.pdf</a></li>
+      <li><a href="#" target="_blank">Silabus dan Modul Pembelajaran TKJ.pdf</a></li>
     </ul>
 
   </div>
@@ -372,7 +375,7 @@
       <svg viewBox="0 0 24 24"><path d="M16.5 2h-3v13.6a2.9 2.9 0 1 1-2.05-2.77V9.7a6 6 0 1 0 5.05 5.92V8.32a6.9 6.9 0 0 0 4.2 1.43V6.6a4.07 4.07 0 0 1-4.2-3.6V2z"/></svg>
     </a>
   </div>
-  <p>&copy; Copyright - [Nama Tim/Sekolah] [Tahun] | All Rights reserved.</p>
+  <p>&copy; Copyright - TKJ SMK Imelda Medan 2026 | All Rights reserved.</p>
 </footer>
 
 </body>
