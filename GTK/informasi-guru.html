@@ -98,7 +98,6 @@
     line-height: 1.7;
   }
 
-  /* Filter kelompok guru */
   .filter-row {
     display: flex;
     flex-wrap: wrap;
@@ -120,7 +119,6 @@
     color: #fff;
   }
 
-  /* Kartu profil guru (mengikuti pola meaning-card) */
   .teacher-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -263,10 +261,6 @@
     height: 18px;
     fill: currentColor;
   }
-  .placeholder {
-    color: #999;
-    font-style: italic;
-  }
   .back-button-wrap {
     background: #143745;
     padding: 14px 16px;
@@ -343,61 +337,61 @@
 
     <div class="teacher-grid">
       <div class="teacher-card">
-        <div class="avatar"><img src="../images/guru1.png" alt="Foto Guru RA"></div>
+        <span class="badge-wali">Kepala Program TKJ</span>
+        <div class="avatar"><img src="../images/guru1.png" alt="Foto Guru Erfina"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">Erfina Wati Simamora, S.Kom</h4>
-          <span class="teacher-role placeholder">Teknik Komputer dan Jaringan</span>
-          <p class="placeholder">Pendidikan: S3 Teknik Informatika &middot;</p>
+          <h4>Erfina Wati Simamora, S.Kom.</h4>
+          <span class="teacher-role">Teknik Komputer dan Jaringan</span>
+          <p>Pendidikan: S1 Teknik Informatika &middot; Sertifikasi: Cisco CCNA, MTCNA</p>
         </div>
       </div>
 
       <div class="teacher-card">
-        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=DP" alt="Foto Guru DP"></div>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=DP" alt="Foto Guru Dwi"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">[Nama Guru 2, S.T.]</h4>
-          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Administrasi Sistem Jaringan]</span>
-          <p class="placeholder">[Pendidikan: S1 Sistem Komputer &middot; Sertifikasi: CompTIA Network+]</p>
+          <h4>Dwi Purnama, S.T.</h4>
+          <span class="teacher-role">Administrasi Sistem Jaringan</span>
+          <p>Pendidikan: S1 Sistem Komputer &middot; Sertifikasi: CompTIA Network+</p>
         </div>
       </div>
 
       <div class="teacher-card">
         <span class="badge-wali">Wali Kelas X</span>
-        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=FH" alt="Foto Guru FH"></div>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=FH" alt="Foto Guru Fahri"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">[Nama Guru 3, S.Kom.]</h4>
-          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Dasar-Dasar TKJ &amp; Sistem Komputer]</span>
-          <p class="placeholder">[Pendidikan: S1 Teknik Komputer &middot; Sertifikasi: CompTIA A+]</p>
+          <h4>Fahri Hidayat, S.Kom.</h4>
+          <span class="teacher-role">Dasar-Dasar TKJ &amp; Sistem Komputer</span>
+          <p>Pendidikan: S1 Teknik Komputer &middot; Sertifikasi: CompTIA A+</p>
         </div>
       </div>
 
       <div class="teacher-card">
-        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=SN" alt="Foto Guru SN"></div>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=SN" alt="Foto Guru Siti"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">[Nama Guru 4, M.Kom.]</h4>
-          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Keamanan Jaringan]</span>
-          <p class="placeholder">[Pendidikan: S2 Ilmu Komputer &middot; Sertifikasi: CompTIA Security+, CEH]</p>
+          <h4>Siti Nurhaliza Br. Ginting, M.Kom.</h4>
+          <span class="teacher-role">Keamanan Jaringan</span>
+          <p>Pendidikan: S2 Ilmu Komputer &middot; Sertifikasi: CompTIA Security+, CEH</p>
         </div>
       </div>
 
       <div class="teacher-card">
         <span class="badge-wali">Wali Kelas XI</span>
-        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=BW" alt="Foto Guru BW"></div>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=BW" alt="Foto Guru Budi"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">[Nama Guru 5, S.T.]</h4>
-          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Teknologi Layanan Jaringan &amp; PKL]</span>
-          <p class="placeholder">[Pendidikan: S1 Teknik Elektro &middot; Sertifikasi: MTCNA, MTCRE]</p>
+          <h4>Budi Wijaya, S.T.</h4>
+          <span class="teacher-role">Teknologi Layanan Jaringan &amp; PKL</span>
+          <p>Pendidikan: S1 Teknik Elektro &middot; Sertifikasi: MTCNA, MTCRE</p>
         </div>
       </div>
 
       <div class="teacher-card">
-        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=AL" alt="Foto Guru AL"></div>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=AL" alt="Foto Guru Andi"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">[Nama Guru 6, S.Kom.]</h4>
-          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Pemrograman Dasar &amp; Basis Data]</span>
-          <p class="placeholder">[Pendidikan: S1 Teknik Informatika &middot; Sertifikasi: Oracle Database Foundations]</p>
+          <h4>Andi Lesmana, S.Kom.</h4>
+          <span class="teacher-role">Pemrograman Dasar &amp; Basis Data</span>
+          <p>Pendidikan: S1 Teknik Informatika &middot; Sertifikasi: Oracle Database Foundations</p>
         </div>
       </div>
-      <!-- Salin blok .teacher-card di atas untuk menambah guru lain -->
     </div>
 
     <h3 class="section-heading">Guru Mata Pelajaran Umum</h3>
@@ -405,29 +399,29 @@
 
     <div class="teacher-grid">
       <div class="teacher-card">
-        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=TW" alt="Foto Guru TW"></div>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=TW" alt="Foto Guru Tri"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">[Nama Guru 7, S.Pd.]</h4>
-          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Matematika]</span>
-          <p class="placeholder">[Pendidikan: S1 Pendidikan Matematika]</p>
+          <h4>Tri Wahyuni, S.Pd.</h4>
+          <span class="teacher-role">Matematika</span>
+          <p>Pendidikan: S1 Pendidikan Matematika</p>
         </div>
       </div>
 
       <div class="teacher-card">
-        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=RH" alt="Foto Guru RH"></div>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=RH" alt="Foto Guru Rahmat"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">[Nama Guru 8, S.Pd.]</h4>
-          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Bahasa Inggris]</span>
-          <p class="placeholder">[Pendidikan: S1 Pendidikan Bahasa Inggris]</p>
+          <h4>Rahmat Hidayatullah, S.Pd.</h4>
+          <span class="teacher-role">Bahasa Inggris</span>
+          <p>Pendidikan: S1 Pendidikan Bahasa Inggris</p>
         </div>
       </div>
 
       <div class="teacher-card">
-        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=AS" alt="Foto Guru AS"></div>
+        <div class="avatar"><img src="https://via.placeholder.com/92x92.png?text=AS" alt="Foto Guru Ayu"></div>
         <div class="teacher-info">
-          <h4 class="placeholder">[Nama Guru 9, S.Pd.]</h4>
-          <span class="teacher-role placeholder">[Mata Pelajaran, misalnya: Bahasa Indonesia &amp; PPKn]</span>
-          <p class="placeholder">[Pendidikan: S1 Pendidikan Bahasa Indonesia]</p>
+          <h4>Ayu Setiawati, S.Pd.</h4>
+          <span class="teacher-role">Bahasa Indonesia &amp; PPKn</span>
+          <p>Pendidikan: S1 Pendidikan Bahasa Indonesia</p>
         </div>
       </div>
     </div>
@@ -446,34 +440,54 @@
       <tbody>
         <tr>
           <td>1</td>
-          <td class="placeholder">[Nama Guru 1]</td>
-          <td class="placeholder">[Jabatan / Mapel]</td>
-          <td class="placeholder">[Pendidikan]</td>
-          <td class="placeholder">[Sertifikasi]</td>
+          <td>Erfina Wati Simamora, S.Kom.</td>
+          <td>Kepala Program TKJ</td>
+          <td>S1 Teknik Informatika</td>
+          <td>Cisco CCNA, MTCNA</td>
         </tr>
         <tr>
           <td>2</td>
-          <td class="placeholder">[Nama Guru 2]</td>
-          <td class="placeholder">[Jabatan / Mapel]</td>
-          <td class="placeholder">[Pendidikan]</td>
-          <td class="placeholder">[Sertifikasi]</td>
+          <td>Dwi Purnama, S.T.</td>
+          <td>Administrasi Sistem Jaringan</td>
+          <td>S1 Sistem Komputer</td>
+          <td>CompTIA Network+</td>
         </tr>
         <tr>
           <td>3</td>
-          <td class="placeholder">[Nama Guru 3]</td>
-          <td class="placeholder">[Jabatan / Mapel]</td>
-          <td class="placeholder">[Pendidikan]</td>
-          <td class="placeholder">[Sertifikasi]</td>
+          <td>Fahri Hidayat, S.Kom.</td>
+          <td>Wali Kelas X / Dasar-Dasar TKJ</td>
+          <td>S1 Teknik Komputer</td>
+          <td>CompTIA A+</td>
         </tr>
-        <!-- Salin baris <tr> di atas untuk menambah data guru lain -->
+        <tr>
+          <td>4</td>
+          <td>Siti Nurhaliza Br. Ginting, M.Kom.</td>
+          <td>Keamanan Jaringan</td>
+          <td>S2 Ilmu Komputer</td>
+          <td>CompTIA Security+, CEH</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Budi Wijaya, S.T.</td>
+          <td>Wali Kelas XI / Teknologi Layanan Jaringan</td>
+          <td>S1 Teknik Elektro</td>
+          <td>MTCNA, MTCRE</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Andi Lesmana, S.Kom.</td>
+          <td>Pemrograman Dasar &amp; Basis Data</td>
+          <td>S1 Teknik Informatika</td>
+          <td>Oracle Database Foundations</td>
+        </tr>
       </tbody>
     </table>
 
     <!-- Unduhan dokumen terkait guru -->
     <h3 class="section-heading">Unduh Dokumen Terkait</h3>
     <ul class="download-list">
-      <li><a href="#" target="_blank">[Nama File, misalnya: Daftar Guru TKJ (PDF).pdf]</a></li>
-      <li><a href="#" target="_blank">[Nama File, misalnya: Struktur Organisasi Guru.pdf]</a></li>
+      <li><a href="#" target="_blank">Daftar Guru TKJ.pdf</a></li>
+      <li><a href="#" target="_blank">Struktur Organisasi Guru.pdf</a></li>
     </ul>
 
   </div>
@@ -492,7 +506,7 @@
       <svg viewBox="0 0 24 24"><path d="M16.5 2h-3v13.6a2.9 2.9 0 1 1-2.05-2.77V9.7a6 6 0 1 0 5.05 5.92V8.32a6.9 6.9 0 0 0 4.2 1.43V6.6a4.07 4.07 0 0 1-4.2-3.6V2z"/></svg>
     </a>
   </div>
-  <p>&copy; Copyright - SMK Imelda Medan [Tahun] | All Rights reserved.</p>
+  <p>&copy; Copyright - SMK Imelda Medan 2026 | All Rights reserved.</p>
 </footer>
 
 </body>
