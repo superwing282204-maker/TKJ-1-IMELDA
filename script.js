@@ -4,6 +4,30 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  // ===== MODE GELAP / TERANG =====
+  // (Deteksi tema awal sudah dijalankan lebih dulu lewat inline script di <head>
+  //  supaya tidak ada kedipan warna terang sesaat sebelum halaman tampil)
+  const themeToggle = document.getElementById('theme-toggle');
+  const THEME_KEY    = 'tkj-theme';
+  const systemDark   = window.matchMedia('(prefers-color-scheme: dark)');
+
+  // Kalau user belum pernah pilih manual, ikuti perubahan setelan HP/laptop otomatis
+  systemDark.addEventListener('change', function (e) {
+    if (!localStorage.getItem(THEME_KEY)) {
+      document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+    }
+  });
+
+  // Tombol toggle manual, tersimpan permanen di browser
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next    = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(THEME_KEY, next);
+    });
+  }
+
   // ===== TANGGAL HARI INI (TOPBAR) =====
   const dateEl = document.getElementById('today-date');
   if (dateEl) {

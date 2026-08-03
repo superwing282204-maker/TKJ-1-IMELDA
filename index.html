@@ -3,8 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TKJ 1 - SMK IMELDA MEDAN</title>
+  <title>TEKNIK KOMPUTER JARINGAN 1 - SMK IMELDA MEDAN</title>
   <meta name="description" content="SMK IMELDA MEDAN" />
+  <script>
+    // Set mode gelap/terang sedini mungkin agar tidak ada kedipan warna
+    (function () {
+      var saved = localStorage.getItem('tkj-theme');
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
@@ -45,6 +53,10 @@
           <circle class="topbar-clock-center" cx="20" cy="20" r="1.6" />
         </svg>
       </span>
+      <button class="theme-toggle" id="theme-toggle" title="Ganti mode gelap/terang" aria-label="Ganti mode gelap/terang">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+      </button>
     </div>
   </div>
 </div>
