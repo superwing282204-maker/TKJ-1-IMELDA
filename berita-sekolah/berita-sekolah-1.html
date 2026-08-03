@@ -8,20 +8,28 @@
 <style>
   :root{
     --brand-dark:#143745;
+    --brand-dark2:#0d2732;
+    --brand-teal:#1e5f6e;
     --brand-green:#2ECC71;
     --text-dark:#464646;
     --border-color:#e5e5e5;
     --bg-light:#f5f5f5;
   }
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{
     margin:0;
     font-family:"Work Sans", Arial, sans-serif;
     color:var(--text-dark);
     background:#eee;
+    overflow-x:hidden;
   }
   a{color:var(--brand-dark); text-decoration:none;}
   a:hover{text-decoration:underline;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
 
   /* ===== TOP BAR ===== */
   .topbar{
@@ -33,7 +41,8 @@
     justify-content:space-between;
     align-items:center;
   }
-  .topbar .social a{color:#fff; margin-left:10px;}
+  .topbar .social a{color:#fff; margin-left:10px; transition:color .2s;}
+  .topbar .social a:hover{color:var(--brand-green); text-decoration:none;}
 
   /* ===== HEADER ===== */
   header.site-header{
@@ -41,6 +50,8 @@
     padding:20px;
     text-align:center;
     border-bottom:3px solid var(--brand-dark);
+    position:relative;
+    overflow:hidden;
   }
   header.site-header img.logo{
     width:80px; height:80px; object-fit:contain;
@@ -58,7 +69,8 @@
 
   /* ===== NAV ===== */
   nav.main-nav{
-    background:#222; 
+    background:#222;
+    position:sticky; top:0; z-index:50;
   }
   nav.main-nav ul{
     list-style:none; margin:0; padding:0;
@@ -67,8 +79,9 @@
   nav.main-nav li{position:relative;}
   nav.main-nav a{
     display:block; padding:14px 18px; color:#fff; font-size:14px;
+    transition:background .25s, letter-spacing .25s;
   }
-  nav.main-nav a:hover{background:var(--brand-green); text-decoration:none;}
+  nav.main-nav a:hover{background:var(--brand-green); text-decoration:none; letter-spacing:.5px;}
 
   /* ===== LAYOUT ===== */
   .wrapper{
@@ -76,11 +89,13 @@
   }
 
   /* ===== ARTICLE ===== */
-  .article-box{background:#fff; padding:20px; border-radius:4px;}
+  .article-box{background:#fff; padding:20px; border-radius:4px; box-shadow:0 2px 10px rgba(0,0,0,.05);}
   .category-tags a{
     display:inline-block; background:var(--brand-dark); color:#fff;
     font-size:11px; padding:4px 10px; border-radius:3px; margin-right:5px; margin-bottom:8px;
+    transition:background .2s;
   }
+  .category-tags a:hover{background:var(--brand-teal); text-decoration:none;}
   .article-box h2.title{
     font-size:26px; margin:5px 0 10px; color:#222; line-height:1.3;
   }
@@ -92,16 +107,26 @@
     background:var(--bg-light);
     display:flex; align-items:center; justify-content:center;
     color:#aaa; font-size:14px; border:1px dashed #ccc; margin-bottom:20px;
-    overflow:hidden;
+    overflow:hidden; border-radius:6px;
   }
-  .featured-image img{width:100%; height:100%; object-fit:cover; display:block;}
+  .featured-image img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
   article p{
-    text-align:justify; line-height:1.7; margin-bottom:14px;
+    text-align:justify; line-height:1.8; margin-bottom:14px;
   }
   article ol, article ul{margin-bottom:14px; line-height:1.7;}
   .highlight-box{
     background:var(--brand-green); border-left:4px solid var(--brand-dark);
     padding:12px 16px; margin:16px 0; font-weight:bold; color:#333;
+    border-radius:2px;
+  }
+  .section-divider{
+    display:flex; align-items:center; gap:10px; margin:22px 0 14px; color:var(--brand-dark);
+    font-size:13px; font-weight:700; letter-spacing:.5px; text-transform:uppercase;
+  }
+  .section-divider::before, .section-divider::after{
+    content:""; flex:1; height:2px; background:var(--border-color);
   }
 
   /* ===== TABLE PESERTA ===== */
@@ -113,26 +138,31 @@
   }
   table.data-table th{background:var(--brand-dark); color:#fff; text-align:left;}
   table.data-table tr:nth-child(even){background:#fafafa;}
+  table.data-table tbody tr:hover{background:#eafaf0;}
 
   /* ===== SHARE ===== */
   .share-row{margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color);}
   .share-row a{
     display:inline-block; width:34px; height:34px; line-height:34px; text-align:center;
     background:var(--brand-dark); color:#fff; border-radius:50%; margin-right:6px; font-size:14px;
+    transition:transform .2s, background .2s;
   }
+  .share-row a:hover{background:var(--brand-green); transform:translateY(-3px); text-decoration:none;}
 
   /* ===== AUTHOR ===== */
   .author-box{
     display:flex; align-items:center; gap:12px; margin-top:20px;
     background:#fff; padding:15px 20px; border-radius:4px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
   }
   .author-box .avatar{
     width:50px; height:50px; border-radius:50%; background:var(--bg-light);
     display:flex; align-items:center; justify-content:center; font-size:11px; color:#aaa;
+    overflow:hidden;
   }
 
   /* ===== RELATED ===== */
-  .related-box{background:#fff; padding:20px; border-radius:4px; margin-top:20px;}
+  .related-box{background:#fff; padding:20px; border-radius:4px; margin-top:20px; box-shadow:0 2px 10px rgba(0,0,0,.05);}
   .related-box h3{margin-top:0; border-bottom:2px solid var(--brand-green); padding-bottom:8px;}
   .related-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:15px;}
   @media (max-width:800px){.related-grid{grid-template-columns:1fr;}}
@@ -155,6 +185,37 @@
   footer h1.site-title{font-size:22px; margin:8px 0 0;}
   footer p{font-size:13px; opacity:.85;}
   footer .copy{font-size:12px; opacity:.7; margin-top:15px;}
+
+  /* ===== BACK TO TOP ===== */
+  .back-to-top{
+    position:fixed; right:18px; bottom:18px;
+    width:44px; height:44px; border-radius:50%;
+    background:var(--brand-dark); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; box-shadow:0 4px 14px rgba(0,0,0,.25);
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:opacity .3s, transform .3s, background .3s;
+    z-index:60;
+  }
+  .back-to-top.show{opacity:1; pointer-events:auto; transform:translateY(0);}
+  .back-to-top:hover{background:var(--brand-green); text-decoration:none;}
+
+  /* ===== MOBILE ===== */
+  @media (max-width:600px){
+    header.site-header{padding:14px 10px;}
+    header.site-header img.logo{width:56px; height:56px; margin-right:6px;}
+    header.site-header h1.site-title{font-size:19px;}
+    header.site-header p.site-desc{font-size:11px;}
+    nav.main-nav a{padding:10px 12px; font-size:13px;}
+    .wrapper{margin:12px auto; padding:0 10px;}
+    .article-box{padding:14px;}
+    .article-box h2.title{font-size:20px;}
+    article p{text-align:left; line-height:1.75; font-size:14.5px;}
+    .related-grid{gap:10px;}
+    table.data-table th, table.data-table td{font-size:12.5px; padding:6px 7px;}
+    .author-box{padding:12px 14px; flex-wrap:wrap;}
+    .back-to-top{width:40px; height:40px; right:12px; bottom:12px;}
+  }
 </style>
 </head>
 <body>
@@ -196,43 +257,62 @@
         <h2 class="title">Healing bareng temen temen sircle</h2>
         <div class="meta-date">📅 sabtu/27-06-2026</div>
 
-        <!-- 
-          Catatan path gambar:
-          Kalau file HTML ini dan folder "images" berada SEJAJAR (satu level, bukan images ada di atas),
-          maka path yang benar TANPA "../" -> src="../images/post-placeholder.jpg"
-        -->
         <div class="featured-image">
           <img src="../images/gabungan-foto.jpeg" alt="Foto Liburan Circle TKJ 1">
         </div>
 
         <article>
-          <p>acara ini di rencakan oleh ingky dan adzra , tetapi yang ikut liburan hanya 5 orang</p>
+          <div class="section-divider">Awal Cerita</div>
+          <p>Semua ini bermula dari obrolan iseng di grup chat. Ingky sama Adzra yang punya ide buat healing bareng, katanya udah lama banget circle ini nggak jalan bareng gara-gara jadwal masing-masing yang beda-beda, tugas numpuk, dan rasa males yang kadang susah dilawan. Awalnya rencana ini kedengeran rame, hampir semua anak circle bilang "iya" pas ditanya, tapi begitu hari-H makin dekat, satu-satu mulai kasih alasan. Ada yang tiba-tiba ada acara keluarga, ada yang capek abis pulang sekolah, sampai akhirnya dari rencana rame-rame itu cuma tersisa lima orang yang beneran niat berangkat.</p>
 
-          <p>titik kumpul kami di rumah rayhan , jika semua sudah disana maka langsung berangkat. dan yang ikut adalah <strong>Juan</strong>,<strong>dimas</strong>,<strong>adzra</strong>,<strong>ingky</strong>,dan <strong>rayhan</strong></p>
+          <p>Walaupun cuma lima orang, nggak ada yang kecewa. Malah jadi lebih seru karena kita semua udah saling kenal luar dalam, jadi nggak perlu basa-basi, nggak perlu jaim, dan obrolan bisa ngalir gitu aja dari awal sampai akhir perjalanan. Kadang emang jumlah orang yang dikit itu bikin momennya jadi lebih berasa dan gampang diinget.</p>
 
-          <p>Lalu sesampai nya kami disana, kami langsung makan nasi, dan Juan awalnya tidak mau makan tetapi karena disuapi dimas jadi juan mau, dan saat kami selesai makan . kami langsung berenang dan mancing . 
-            hanya saja ikan nya ga dapat-dapat. dan akhirny kami fokus berenang aja, lalu..</p>
-         
+          <p>Titik kumpul kami tentukan di rumah Rayhan, soalnya lokasinya paling gampang dijangkau dari arah rumah anak-anak yang lain. Rencananya kumpul pagi, tapi ya namanya juga rencana anak sekolah, molor beberapa menit itu udah jadi hal biasa. Satu-satu mulai berdatangan dengan gaya masing-masing, ada yang masih ngantuk, ada yang udah semangat banget dari rumah. Begitu semua sudah lengkap, kami langsung berangkat bareng-bareng dengan suasana hati yang campur aduk antara excited dan masih setengah ngantuk.</p>
 
-          <p>selesai kami berenang kami langung mandi dan pergi untuk melanjutkan perjalan kami, dan kami pergi ke penatapan lalu tiba tiba cuaca nya mendadak mendung tidak lama setelah itu langung hujan 
-                </p>
+          <p>Yang ikut liburan kali ini adalah <strong>Juan</strong>, <strong>Dimas</strong>, <strong>Adzra</strong>, <strong>Ingky</strong>, dan <strong>Rayhan</strong>. Lima orang ini emang udah kayak paket komplit kalau soal bikin suasana rame, karena masing-masing punya karakter yang beda tapi entah kenapa selalu nyambung kalau udah kumpul bareng.</p>
 
-          <p>dan akhirnya kami tiba di tempat makan dan kami makan sekalian menunggu hujan reda, setelah hujan nya reda kami langung kembali ke rumah masing-masing dan akhirnya kami semua pulang ke rumah </p>
+          <div class="section-divider">Makan Siang Pertama</div>
+          <p>Sesampainya di lokasi, hal pertama yang kami lakukan bukan langsung main atau explore tempat, tapi malah duduk bareng buat makan dulu. Maklum, perjalanan bikin perut jadi cepat lapar, apalagi abis nahan kantuk di jalan. Kami langsung gelar nasi yang udah disiapkan, dan mulai makan sambil ngobrol ngalor-ngidul, mulai dari bahas sekolah, bahas circle, sampai bahas hal-hal receh yang nggak penting tapi tetap aja bikin ketawa.</p>
+
+          <p>Yang paling bikin momen ini berkesan itu pas Juan awalnya nggak mau makan. Entah karena masih kenyang atau emang lagi nggak mood, dia cuma diam aja megang piringnya sambil lihatin makanan tanpa niat nyendok sesuap pun. Anak-anak lain udah mulai godain, sampai akhirnya Dimas yang inisiatif buat nyuapin Juan langsung. Awalnya kelihatan kayak bercanda doang, tapi ternyata beneran kejadian, dan momen itu langsung jadi bahan ketawaan seisi rombongan. Herannya, begitu disuapi Dimas, Juan jadi mau makan dengan lahap, seolah-olah emang butuh "dorongan" dari teman buat mulai makan.</p>
+
+          <div class="section-divider">Berenang dan Mancing</div>
+          <p>Selesai makan, kami nggak buang-buang waktu dan langsung lanjut ke acara utama, yaitu berenang. Air yang seger langsung bikin capek di badan hilang seketika, apalagi abis duduk lama waktu di jalan. Semua langsung nyebur, ada yang lompat dengan gaya asal-asalan, ada yang hati-hati banget masuknya, tapi intinya semua sama-sama menikmati momen itu. Suara ketawa dan teriakan kaget silih berganti terdengar setiap kali ada yang kena ciprat air atau kepeleset.</p>
+
+          <p>Di sela-sela berenang, kami juga coba mancing, berharap bisa dapet hasil tangkapan buat dibakar atau minimal jadi bahan cerita. Sayangnya, sudah nunggu cukup lama, umpan diganti berkali-kali, posisi mancing dipindah ke sana kemari, tetap saja hasilnya nihil. Nggak ada satu ikan pun yang mau nyantol. Akhirnya kami cuma bisa ketawa sendiri ngeliat usaha mancing yang berujung gagal total, dan malah dijadiin bahan bercandaan sepanjang sisa waktu di sana.</p>
+
+          <p>Karena mancing nggak membuahkan hasil, akhirnya fokus kami balik lagi ke berenang. Dan justru di situlah momen paling seru terjadi, saling kejar-kejaran di air, saling siram, sampai ada yang hampir kepeleset gara-gara licin di pinggir kolam. Rasa capek jadi nggak kerasa karena kebanyakan ketawa.</p>
+
+          <div class="section-divider">Perjalanan ke Penatapan</div>
+          <p>Setelah puas berenang, kami langsung mandi dan berbenah buat lanjut perjalanan ke destinasi berikutnya, yaitu penatapan. Suasana di jalan menuju ke sana lumayan bikin adem mata, pemandangan yang beda dari biasanya kelihatan di sekolah atau rumah. Semua orang kelihatan tenang dan menikmati suasana sambil sesekali berhenti buat foto-foto.</p>
+
+          <p>Tapi baru beberapa saat menikmati suasana di penatapan, cuaca yang tadinya cerah mendadak berubah jadi mendung. Nggak butuh waktu lama, langit yang tadinya biru langsung berganti jadi abu-abu gelap, dan nggak lama kemudian hujan turun dengan derasnya. Kami yang tadinya santai jadi buru-buru cari tempat berteduh sambil setengah panik bawa barang-barang biar nggak basah.</p>
+
+          <div class="section-divider">Berteduh Sambil Makan</div>
+          <p>Untungnya nggak jauh dari lokasi ada tempat makan yang bisa dijadiin tempat berteduh sekaligus ngisi perut lagi. Kami langsung mampir ke sana, pesan makanan, dan menunggu sampai hujan reda sambil ngobrol santai. Suasana hujan di luar justru bikin obrolan makin hangat, apalagi ditemani makanan yang lumayan ngademin badan yang tadinya lumayan pegel abis berenang dan jalan-jalan.</p>
+
+          <p>Waktu terasa cepat berlalu saat nunggu hujan reda itu, karena kami sibuk saling cerita, saling ledek, dan sesekali ngebahas ulang kejadian lucu tadi pas di kolam. Nggak berasa hujan udah mulai reda, dan langit perlahan kembali cerah walaupun masih agak mendung.</p>
+
+          <div class="section-divider">Pulang</div>
+          <p>Begitu hujan benar-benar reda, kami memutuskan buat langsung pulang, mengingat hari juga udah mulai sore. Perjalanan pulang diisi dengan obrolan yang lebih santai, sedikit capek tapi hati puas karena hari itu diisi dengan momen yang seru dan nggak akan gampang dilupain. Satu-satu mulai turun di rumah masing-masing sampai akhirnya semua sampai rumah dengan selamat.</p>
 
           <p>Daftar kegiatan:</p>
           <ol>
+            <li>MAKAN BARENG DI AWAL PERJALANAN</li>
             <li>BERENANG</li>
-            <li>MANCING</li>
+            <li>MANCING (NIHIL HASIL)</li>
+            <li>JALAN-JALAN KE PENATAPAN</li>
+            <li>BERTEDUH DAN MAKAN SAAT HUJAN</li>
             <li>MENUNGGU HUJAN REDA</li>
-            <li>KEMBALI KE RUMAH</li>
+            <li>KEMBALI KE RUMAH MASING-MASING</li>
           </ol>
 
           <div class="highlight-box">
-            <p>Catatan: Ini adalah pengalaman liburan yang menyenangkan bersama teman-teman sircle. Semoga kita bisa mengulanginya lagi di lain waktu!</p>
+            <p>Catatan: Ini adalah pengalaman liburan yang menyenangkan bersama teman-teman sircle. Semoga kita bisa mengulanginya lagi di lain waktu, dengan orang yang lebih banyak dan cerita yang lebih seru lagi!</p>
           </div>
 
-          <p> Perjalanan ini sangat menyenangkan dan kami semua senang bisa liburan bareng temen-temen circle TKJ 1, dan saya berharap kedepannya kami bisa liburan bareng lagi dan lebih banyak orang yang ikut.</p>
-          <p>Terima kasih kepada semua pihak yang telah mendukung kegiatan ini.</p>
+          <p>Perjalanan ini sangat menyenangkan dan kami semua senang bisa liburan bareng temen-temen circle TKJ 1. Walaupun cuma berlima, momen ini kerasa banget bedanya dibanding hari-hari biasa di sekolah. Kami berharap ke depannya bisa liburan bareng lagi dengan lebih banyak orang yang ikut, biar makin rame dan makin banyak cerita seru yang bisa dikenang bareng-bareng.</p>
+          <p>Terima kasih kepada semua pihak yang telah mendukung kegiatan ini, terutama buat Rayhan yang udah nyediain rumahnya jadi titik kumpul, dan buat semua yang tetap semangat ikut walaupun cuacanya sempat nggak bersahabat.</p>
 
           <p><strong>Daftar yang ikut:</strong></p>
 
@@ -244,11 +324,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>1</td><td>Alif Ananda juan</td></tr>
-              <tr><td>2</td><td>dimas Setiawan</td></tr>
-              <tr><td>3</td><td>adzra Marpaung</td></tr>
-              <tr><td>4</td><td>ingky Aldewa</td></tr>
-              <tr><td>5</td><td>rayhan Alfarabi siregar</td></tr>
+              <tr><td>1</td><td>Alif Ananda Juan</td></tr>
+              <tr><td>2</td><td>Dimas Setiawan</td></tr>
+              <tr><td>3</td><td>Adzra Marpaung</td></tr>
+              <tr><td>4</td><td>Ingky Aldewa</td></tr>
+              <tr><td>5</td><td>Rayhan Alfarabi Siregar</td></tr>
             </tbody>
           </table>
 
@@ -257,8 +337,8 @@
       <!-- ===== AUTHOR ===== -->
       <div class="author-box">
         <div class="avatar">
-  <img src="../images/logo.png" alt="Juan" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
-</div>
+          <img src="../images/logo.png" alt="Rayhan">
+        </div>
           <strong>NOTULIS : Rayhan/King</strong>
         </div>
       </div>
@@ -270,7 +350,7 @@
 
           <div class="related-card">
             <div class="thumb">
-              <img src="../images/penatapan-1.jpeg" alt="Foto sementara - ganti nanti">
+              <img src="../images/penatapan-1.jpeg" alt="Foto Liburan">
             </div>
             <div class="content">
               <h4>Foto Liburan</h4>
@@ -280,7 +360,7 @@
 
           <div class="related-card">
             <div class="thumb">
-              <img src="../images/penatapan.jpeg" alt="Foto sementara - ganti nanti">
+              <img src="../images/penatapan.jpeg" alt="Makan sebelum berenang">
             </div>
             <div class="content">
               <h4>Makan sebelum berenang</h4>
@@ -290,7 +370,7 @@
 
           <div class="related-card">
             <div class="thumb">
-              <img src="../images/penatapan-2.jpeg" alt="Foto sementara - ganti nanti">
+              <img src="../images/penatapan-2.jpeg" alt="Penatapan">
             </div>
             <div class="content">
               <h4>Penatapan</h4>
@@ -312,6 +392,20 @@
       &copy; Aljuan 2026 | All Rights Reserved.
     </div>
   </footer>
+
+  <a href="#top" class="back-to-top" id="backToTop" aria-label="Kembali ke atas">&uarr;</a>
+
+  <script>
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY > 300){
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+  </script>
 
 </body>
 </html>
