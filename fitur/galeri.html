@@ -17,7 +17,8 @@
     --line: #e3e6ea;
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden;}
 
   /* Header */
   .site-head{
@@ -40,6 +41,7 @@
     border:1px solid rgba(255,255,255,.12);
   }
   .head-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2;}
+  .site-head{width:100%;}
 
   /* Tombol kembali */
   .back-btn{
@@ -118,10 +120,53 @@
   @media (max-width:900px){
     .gallery{grid-template-columns:repeat(3,1fr);}
   }
+
+  /* Tablet */
+  @media (max-width:768px){
+    .site-head{padding:44px 20px 56px;}
+    h1{font-size:clamp(26px,7vw,36px);}
+    .head-desc{font-size:14px;}
+    .filter-bar{padding:0 16px;}
+    .gallery-wrap{padding:0 16px;}
+  }
+
+  /* HP */
   @media (max-width:640px){
-    .gallery{grid-template-columns:repeat(2,1fr);}
+    .gallery{grid-template-columns:repeat(2,1fr); gap:10px;}
     .g-item.wide{grid-column: span 2;}
     .g-item.tall{grid-row: span 1;}
+
+    .site-head{padding:36px 16px 52px;}
+    .back-btn{font-size:12px; padding:8px 14px 8px 10px; margin-bottom:16px;}
+    .eyebrow{font-size:11px;}
+    h1{margin:0 0 8px;}
+    .head-desc{margin:0 0 16px;}
+    .motto-rule{font-size:12px;}
+
+    .filter-bar{margin:-24px auto 0; padding:0 12px;}
+    .filter-inner{padding:10px 12px; gap:6px;}
+    .chip{padding:7px 13px; font-size:12.5px;}
+
+    .gallery-wrap{margin:24px auto 56px; padding:0 12px;}
+    .g-item .cap{font-size:11.5px; padding:12px 10px 8px;}
+    .g-item .tag{font-size:10px; padding:3px 8px; top:8px; left:8px;}
+
+    .lightbox{padding:16px 8px 90px;}
+    .lightbox img{max-width:94vw; max-height:60vh;}
+    .lightbox .lb-cap{font-size:12.5px; padding:0 8px;}
+    .lightbox .lb-close, .lightbox .lb-nav{width:38px; height:38px; font-size:16px;}
+    .lightbox .lb-close{top:12px; right:12px;}
+    .lightbox .lb-prev{left:auto; right:64px; top:auto; bottom:20px; transform:none;}
+    .lightbox .lb-next{left:auto; right:12px; top:auto; bottom:20px; transform:none;}
+
+    footer{font-size:11.5px; padding:20px 16px 32px;}
+  }
+
+  /* HP sangat kecil */
+  @media (max-width:380px){
+    .gallery{grid-template-columns:repeat(2,1fr); gap:8px;}
+    h1{font-size:22px;}
+    .head-desc{font-size:13px;}
   }
 
   /* Add-more helper card */
@@ -211,71 +256,71 @@ const photos = [
   { src:"../images/fot3.jpeg",       cat:"civitas",  cap:"Buka Bersama Kelas X" },
   { src:"../images/fot4.jpeg",      cat:"civitas",  cap:"Buka Bersama Kelas XI" },
   { src:"../images/fot5.jpeg",              cat:"civitas",  cap:"Ganti dengan judul foto" },
-  { src:"../images/fot6.jpeg",           cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot7.jpeg",               cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot8.jpeg",               cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot9.jpeg",               cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot10.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot11.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot12.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot13.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot14.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot15.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot16.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot17.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot18.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot19.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot20.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot21.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot22.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot23.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot24.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot25.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot26.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot27.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot28.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot29.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot30.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot31.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot32.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot33.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot34.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot35.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot36.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot37.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot38.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot39.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot40.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot41.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot42.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot43.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot44.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot45.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot46.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot47.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot48.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot49.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot50.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot51.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot52.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot53.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot54.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot55.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot56.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot57.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot58.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot59.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot60.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot61.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot62.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot63.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot64.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot65.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot66.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot67.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot68.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot69.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
-  { src:"../images/fot70.jpeg",              cat:"prestasi", cap:"Ganti dengan judul prestasi" },
+  { src:"../images/fot6.jpeg",           cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot7.jpeg",               cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot8.jpeg",               cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot9.jpeg",               cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot10.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot11.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot12.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot13.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot14.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot15.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot16.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot17.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot18.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot19.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot20.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot21.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot22.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot23.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot24.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot25.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot26.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot27.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot28.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot29.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot30.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot31.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot32.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot33.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot34.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot35.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot36.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot37.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot38.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot39.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot40.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot41.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot42.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot43.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot44.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot45.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot46.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot47.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot48.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot49.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot50.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot51.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot52.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot53.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot54.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot55.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot56.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot57.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot58.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot59.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot60.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot61.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot62.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot63.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot64.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot65.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot66.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot67.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot68.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot69.jpeg",              cat:"prestasi", cap:"Foto kelas" },
+  { src:"../images/fot70.jpeg",              cat:"prestasi", cap:"Foto kelas" },
 ];
 
 const galleryEl = document.getElementById('gallery');
