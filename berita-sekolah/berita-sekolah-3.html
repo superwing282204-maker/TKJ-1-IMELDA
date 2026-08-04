@@ -1,55 +1,444 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<title>Berita Sekolah 3 - TKJ 1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title id="pageTitle">Perpisahan PPL Unimed - TKJ 1</title>
 <link rel="shortcut icon" href="../images/logo.png">
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        max-width: 700px;
-        margin: 40px auto;
-        padding: 0 20px;
-        line-height: 1.6;
-        color: #222;
-        text-align: center;
-    }
-    h1 {
-        font-size: 22px;
-        border-bottom: 2px solid #333;
-        padding-bottom: 10px;
-        margin-bottom: 30px;
-    }
-    .header-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        text-align: left;
-    }
-    .btn-back {
-        display: inline-block;
-        padding: 8px 16px;
-        background: #333;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-    .btn-back:hover { background: #555; }
-    .logo-sekolah { height: 50px; }
-    .soon { margin-top: 60px; color: #666; font-size: 15px; }
+  :root{
+    --brand-dark:#143745;
+    --brand-dark2:#0d2732;
+    --brand-teal:#1e5f6e;
+    --brand-green:#2ECC71;
+    --text-dark:#464646;
+    --border-color:#e5e5e5;
+    --bg-light:#f5f5f5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Work Sans", Arial, sans-serif;
+    color:var(--text-dark);
+    background:#eee;
+    overflow-x:hidden;
+  }
+  a{color:var(--brand-dark); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  .topbar{
+    background:var(--brand-dark);
+    color:#fff;
+    font-size:13px;
+    padding:6px 20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px 10px;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .topbar .social a{color:#fff; margin-left:10px; transition:color .2s;}
+  .topbar .social a:hover{color:var(--brand-green); text-decoration:none;}
+
+  header.site-header{
+    background:#fff;
+    padding:20px;
+    text-align:center;
+    border-bottom:3px solid var(--brand-dark);
+    position:relative;
+    overflow:hidden;
+  }
+  header.site-header img.logo{
+    width:80px; height:80px; object-fit:contain;
+    vertical-align:middle; margin-right:10px;
+  }
+  header.site-header .brand-text{
+    display:inline-block; vertical-align:middle; text-align:left;
+  }
+  header.site-header h1.site-title{
+    margin:0; font-size:clamp(19px, 4.5vw, 28px); color:var(--brand-dark);
+  }
+  header.site-header p.site-desc{
+    margin:0; font-size:clamp(11px, 2vw, 13px); color:#777;
+  }
+
+  nav.main-nav{
+    background:#222;
+    position:sticky; top:0; z-index:50;
+  }
+  nav.main-nav ul{
+    list-style:none; margin:0; padding:0;
+    display:flex; flex-wrap:wrap; justify-content:center;
+  }
+  nav.main-nav li{position:relative;}
+  nav.main-nav a{
+    display:block; padding:14px 18px; color:#fff; font-size:14px;
+    transition:background .25s, letter-spacing .25s;
+  }
+  nav.main-nav a:hover{background:var(--brand-green); text-decoration:none; letter-spacing:.5px;}
+
+  .wrapper{
+    max-width:900px; margin:20px auto; padding:0 15px;
+  }
+
+  .article-box{background:#fff; padding:20px; border-radius:4px; box-shadow:0 2px 10px rgba(0,0,0,.05);}
+  .category-tags a{
+    display:inline-block; background:var(--brand-dark); color:#fff;
+    font-size:11px; padding:4px 10px; border-radius:3px; margin-right:5px; margin-bottom:8px;
+    transition:background .2s;
+  }
+  .category-tags a:hover{background:var(--brand-teal); text-decoration:none;}
+  .article-box h2.title{
+    font-size:clamp(20px, 4vw, 26px); margin:5px 0 10px; color:#222; line-height:1.3; word-wrap:break-word;
+  }
+  .meta-date{
+    font-size:13px; color:#999; margin-bottom:15px;
+  }
+  .featured-image{
+    width:100%; aspect-ratio:16/9;
+    background:var(--bg-light);
+    display:flex; align-items:center; justify-content:center;
+    color:#aaa; font-size:14px; border:1px dashed #ccc; margin-bottom:20px;
+    overflow:hidden; border-radius:6px;
+  }
+  .featured-image img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  article p{
+    text-align:justify; line-height:1.8; margin-bottom:14px;
+  }
+  article ol, article ul{margin-bottom:14px; line-height:1.7;}
+  .highlight-box{
+    background:var(--brand-green); border-left:4px solid var(--brand-dark);
+    padding:12px 16px; margin:16px 0; font-weight:bold; color:#333;
+    border-radius:2px;
+  }
+  .section-divider{
+    display:flex; align-items:center; gap:10px; margin:22px 0 14px; color:var(--brand-dark);
+    font-size:13px; font-weight:700; letter-spacing:.5px; text-transform:uppercase;
+  }
+  .section-divider::before, .section-divider::after{
+    content:""; flex:1; height:2px; background:var(--border-color);
+  }
+
+  table.data-table{
+    width:100%; border-collapse:collapse; margin:15px 0;
+  }
+  table.data-table th, table.data-table td{
+    border:1px solid var(--border-color); padding:8px 10px; font-size:14px;
+  }
+  table.data-table th{background:var(--brand-dark); color:#fff; text-align:left;}
+  table.data-table tr:nth-child(even){background:#fafafa;}
+  table.data-table tbody tr:hover{background:#eafaf0;}
+
+  .share-row{margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color);}
+  .share-row a{
+    display:inline-block; width:34px; height:34px; line-height:34px; text-align:center;
+    background:var(--brand-dark); color:#fff; border-radius:50%; margin-right:6px; font-size:14px;
+    transition:transform .2s, background .2s;
+  }
+  .share-row a:hover{background:var(--brand-green); transform:translateY(-3px); text-decoration:none;}
+
+  .author-box{
+    display:flex; align-items:center; gap:12px; margin-top:20px;
+    background:#fff; padding:15px 20px; border-radius:4px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+  }
+  .author-box .avatar{
+    width:50px; height:50px; border-radius:50%; background:var(--bg-light);
+    display:flex; align-items:center; justify-content:center; font-size:11px; color:#aaa;
+    overflow:hidden;
+  }
+
+  .related-box{background:#fff; padding:20px; border-radius:4px; margin-top:20px; box-shadow:0 2px 10px rgba(0,0,0,.05);}
+  .related-box h3{margin-top:0; border-bottom:2px solid var(--brand-green); padding-bottom:8px;}
+  .related-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:15px;}
+  @media (max-width:800px){.related-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.related-grid{grid-template-columns:1fr;}}
+  .related-card{
+    background:var(--bg-light); border-radius:4px; overflow:hidden;
+  }
+  .related-card .thumb{
+    aspect-ratio:16/9; background:#e0e0e0; display:flex; align-items:center;
+    justify-content:center; color:#aaa; font-size:12px; overflow:hidden;
+  }
+  .related-card .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .related-card .content{padding:10px;}
+  .related-card .content h4{font-size:14px; margin:0 0 6px;}
+  .related-card .content .date{font-size:11px; color:#999;}
+
+  footer{
+    background:var(--brand-dark); color:#fff; text-align:center; padding:25px 15px; margin-top:30px;
+  }
+  footer h1.site-title{font-size:22px; margin:8px 0 0;}
+  footer p{font-size:13px; opacity:.85;}
+  footer .copy{font-size:12px; opacity:.7; margin-top:15px;}
+
+  .back-to-top{
+    position:fixed; right:18px; bottom:18px;
+    width:44px; height:44px; border-radius:50%;
+    background:var(--brand-dark); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; box-shadow:0 4px 14px rgba(0,0,0,.25);
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:opacity .3s, transform .3s, background .3s;
+    z-index:60;
+  }
+  .back-to-top.show{opacity:1; pointer-events:auto; transform:translateY(0);}
+  .back-to-top:hover{background:var(--brand-green); text-decoration:none;}
+
+  @media (min-width:601px) and (max-width:900px){
+    .wrapper{max-width:100%; padding:0 20px;}
+  }
+
+  @media (max-width:600px){
+    .topbar{font-size:11px; padding:6px 12px;}
+    header.site-header{padding:14px 10px;}
+    header.site-header img.logo{width:56px; height:56px; margin-right:6px;}
+    nav.main-nav a{padding:10px 12px; font-size:13px;}
+    .wrapper{margin:12px auto; padding:0 10px;}
+    .article-box{padding:14px;}
+    article p{text-align:left; line-height:1.75; font-size:14.5px;}
+    .related-grid{gap:10px;}
+    table.data-table th, table.data-table td{font-size:12.5px; padding:6px 7px;}
+    .author-box{padding:12px 14px; flex-wrap:wrap;}
+    .back-to-top{width:40px; height:40px; right:12px; bottom:12px;}
+  }
 </style>
 </head>
 <body>
 
-<div class="header-top">
-    <a href="../index.html" class="btn-back">&larr; Kembali</a>
-    <img src="../images/logo.png" alt="Logo" class="logo-sekolah">
-</div>
+  <div class="topbar">
+    <span id="tanggalTop"></span>
+    <span class="social">   </span>
+  </div>
 
-<h1>Berita Sekolah 3</h1>
-<p class="soon">Halaman ini sedang dalam proses pembuatan.<br>Konten akan segera ditambahkan.</p>
+  <header class="site-header">
+      <img class="logo" src="../images/logo.png" alt="TKJ 1 - SMK IMELDA">
+      <div class="brand-text">
+      <h1 class="site-title">TKJ 1 - SMK IMELDA</h1>
+      <p class="site-desc" id="siteDesc"></p>
+    </div>
+  </header>
+
+  <nav class="main-nav">
+    <ul>
+      <a href="../index.html" class="btn-back">&larr; Kembali</a>
+    </ul>
+  </nav>
+
+  <div class="wrapper">
+    <main>
+      <div class="article-box">
+
+        <div class="category-tags" id="categoryTags"></div>
+
+        <h2 class="title" id="judulCerita"></h2>
+        <div class="meta-date" id="tanggalMeta"></div>
+
+        <div class="featured-image">
+          <img id="fotoUtama" src="" alt="Foto utama" loading="lazy">
+        </div>
+
+        <article id="isiCerita">
+          <!-- diisi otomatis dari config.sections -->
+        </article>
+
+      </div>
+
+      <div class="author-box">
+        <div class="avatar">
+          <img src="../images/logo.png" alt="notulis">
+        </div>
+        <strong id="notulisText"></strong>
+      </div>
+
+      <div class="related-box">
+        <h3>Foto Terkait</h3>
+        <div class="related-grid" id="gridFotoTerkait">
+          <!-- diisi otomatis dari config.fotoTerkait -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <img class="logo" src="../images/logo.png" alt="TKJ 1 - SMK IMELDA" style="width:70px;height:70px;object-fit:contain;">
+    <h1 class="site-title">TKJ 1 - SMK IMELDA</h1>
+    <p></p>
+    <div class="copy" id="copyFooter"></div>
+  </footer>
+
+  <a href="#top" class="back-to-top" id="backToTop" aria-label="Kembali ke atas">&uarr;</a>
+
+  <script>
+    // =====================================================================
+    //  TEMPLATE CERITA — TINGGAL GANTI ISI "config" DI BAWAH INI.
+    //  Semua yang tampil di halaman (judul, cerita, peserta, foto,
+    //  footer) diambil dari sini. TIDAK PERLU sentuh HTML di atas
+    //  untuk mengganti isi cerita berikutnya.
+    // =====================================================================
+    const config = {
+
+      // --- Info dasar ---
+      tanggal: "GANTI: tanggal perpisahan",   // GANTI: tanggal acara (dipakai di 2 tempat)
+      judulTab: "Perpisahan PPL Unimed - TKJ 1",
+      deskripsiKecil: "Kenangan Bersama Abang-Abang PPL",
+      judulCerita: "Kenangan Bersama Abang-Abang PPL dari Unimed",
+      tags: ["PPL", "UNIMED", "PERPISAHAN"],
+      fotoUtama: "../images/fot63.jpeg",      // GANTI: foto utama di atas cerita
+
+      // --- Isi cerita ---
+      // Tiap objek = satu bagian cerita dengan judul kecil + beberapa paragraf.
+      // Tambah atau hapus objek sesuai jumlah bagian yang kamu mau.
+      sections: [
+        {
+          judul: "Awal Kedatangan",
+          paragraf: [
+            "Beberapa bulan lalu, kelas kami kedatangan beberapa abang mahasiswa dari Unimed (Universitas Negeri Medan) yang sedang menjalani praktik mengajar atau PPL di sekolah kami. Awalnya suasana kelas terasa agak canggung, soalnya belum terbiasa diajar oleh orang baru selain guru yang biasa mengajar sehari-hari.",
+            "Tapi nggak butuh waktu lama, abang-abang PPL ini berhasil mencairkan suasana dengan cara mengajar yang santai dan gampang diikuti, jadi kami cepat merasa nyaman belajar bareng mereka."
+          ]
+        },
+        {
+          judul: "Masa-Masa Belajar Bersama",
+          paragraf: [
+            "Selama beberapa bulan ke depan, abang-abang PPL ini rutin masuk ke kelas untuk mengajar berbagai materi. Cara mengajarnya beda dari biasanya, kadang diselingi cerita pengalaman kuliah, kadang juga dikasih tugas atau praktik langsung supaya nggak monoton.",
+            "Kami juga jadi lebih semangat masuk kelas, apalagi kalau ada sesi tanya jawab santai atau diskusi yang bikin suasana belajar terasa lebih hidup."
+          ]
+        },
+        {
+          judul: "Kedekatan dengan Kelas",
+          paragraf: [
+            "Seiring berjalannya waktu, hubungan antara abang-abang PPL dengan anak-anak kelas jadi semakin dekat. Nggak cuma soal pelajaran, kadang kami juga cerita-cerita hal di luar sekolah, sampai bercanda bareng di sela-sela jam istirahat.",
+            "Kedekatan ini bikin proses belajar terasa nggak seperti belajar formal biasa, tapi lebih kayak belajar bareng kakak sendiri."
+          ]
+        },
+        {
+          judul: "Hari-Hari Terakhir",
+          paragraf: [
+            "Semakin mendekati akhir masa PPL, suasana kelas mulai berubah. Ada rasa nggak rela karena sebentar lagi abang-abang ini harus kembali ke kampus dan menyelesaikan tugas kuliah mereka.",
+            "Di hari-hari terakhir, kami sempat mengadakan momen kecil sebagai bentuk terima kasih, mulai dari ucapan-ucapan, foto bersama, sampai kesan pesan yang disampaikan langsung ke abang-abang PPL."
+          ]
+        },
+        {
+          judul: "Perpisahan",
+          paragraf: [
+            "Sampai akhirnya tiba hari terakhir masa PPL abang-abang ini di sekolah kami. Suasana kelas terasa haru, campur antara senang karena sempat diajar dengan cara yang menyenangkan, dan sedih karena harus berpisah.",
+            "Banyak kesan dan pesan yang disampaikan, baik dari abang-abang PPL untuk kelas, maupun dari kami untuk mereka. Semoga ilmu dan pengalaman yang sudah dibagikan selama ini bisa terus bermanfaat buat kami ke depannya."
+          ]
+        }
+      ],
+
+      // Daftar kegiatan (list bernomor)
+      daftarKegiatan: [
+        "PROSES BELAJAR MENGAJAR SELAMA BEBERAPA BULAN",
+        "SESI DISKUSI DAN TANYA JAWAB SANTAI",
+        "KEGIATAN PRAKTIK DI KELAS",
+        "PERSIAPAN ACARA PERPISAHAN",
+        "PEMBERIAN KESAN DAN PESAN",
+        "FOTO BERSAMA SEBAGAI KENANG-KENANGAN",
+        "ACARA PERPISAHAN RESMI"
+      ],
+
+      // Kotak catatan hijau di akhir cerita
+      catatanPenutup: "Terima kasih banyak kepada abang-abang PPL dari Unimed yang sudah mengajar dan membimbing kami selama beberapa bulan ini. Semoga kebaikan dan ilmu yang sudah diberikan selalu jadi kenangan yang berharga bagi kelas kami.",
+
+      // Paragraf penutup setelah kotak catatan
+      penutup: [
+        "Meskipun masa PPL abang-abang ini sudah selesai, pelajaran dan kenangan yang ditinggalkan akan terus kami ingat.",
+        "Semoga abang-abang PPL ini sukses menyelesaikan kuliah dan cita-citanya, dan semoga suatu saat nanti kita bisa bertemu kembali."
+      ],
+
+      // --- Notulis / penulis cerita ---
+      notulis: "NOTULIS : Admin TKJ 1",
+
+      // --- Foto terkait di bagian bawah ---
+      fotoTerkait: [
+        { src: "../images/fot61.jpeg", judul: "Foto Bersama di Kelas",   tanggal: "GANTI: tanggal foto" },
+        { src: "../images/fot62.jpeg", judul: "Sesi Belajar Mengajar",   tanggal: "GANTI: tanggal foto" },
+        { src: "../images/fot60.jpeg", judul: "Momen Perpisahan",       tanggal: "GANTI: tanggal foto" }
+      ],
+
+      // --- Footer ---
+      tahunCopy: "2026"
+    };
+
+    // =====================================================================
+    //  BAGIAN RENDER — TIDAK PERLU DIEDIT.
+    //  Ini yang mengambil "config" di atas dan menampilkannya ke HTML.
+    // =====================================================================
+
+    document.getElementById('pageTitle').textContent = config.judulTab;
+    document.getElementById('tanggalTop').textContent = config.tanggal;
+    document.getElementById('siteDesc').textContent = config.deskripsiKecil;
+    document.getElementById('judulCerita').textContent = config.judulCerita;
+    document.getElementById('tanggalMeta').textContent = "📅 " + config.tanggal;
+    document.getElementById('fotoUtama').src = config.fotoUtama;
+    document.getElementById('fotoUtama').alt = config.judulCerita;
+    document.getElementById('notulisText').textContent = config.notulis;
+    document.getElementById('copyFooter').innerHTML = `&copy; TKJ 1 ${config.tahunCopy} | All Rights Reserved.`;
+
+    // Catatan: tabel "Daftar yang ikut" sudah dihapus dari halaman ini,
+    // jadi config.peserta tidak lagi digunakan / dirender.
+
+    // Tags kategori
+    const tagsEl = document.getElementById('categoryTags');
+    config.tags.forEach(tag => {
+      const a = document.createElement('a');
+      a.href = '#' + tag;
+      a.textContent = tag;
+      tagsEl.appendChild(a);
+    });
+
+    // Isi cerita (sections + daftar kegiatan + catatan + penutup)
+    const artikel = document.getElementById('isiCerita');
+    let htmlCerita = '';
+    config.sections.forEach(sec => {
+      htmlCerita += `<div class="section-divider">${sec.judul}</div>`;
+      sec.paragraf.forEach(p => {
+        htmlCerita += `<p>${p}</p>`;
+      });
+    });
+    htmlCerita += `<p>Daftar kegiatan:</p><ol>`;
+    config.daftarKegiatan.forEach(item => {
+      htmlCerita += `<li>${item}</li>`;
+    });
+    htmlCerita += `</ol>`;
+    htmlCerita += `<div class="highlight-box"><p>Catatan: ${config.catatanPenutup}</p></div>`;
+    config.penutup.forEach(p => {
+      htmlCerita += `<p>${p}</p>`;
+    });
+    artikel.innerHTML = htmlCerita;
+
+    // Kartu foto terkait
+    const gridFoto = document.getElementById('gridFotoTerkait');
+    config.fotoTerkait.forEach(foto => {
+      const card = document.createElement('div');
+      card.className = 'related-card';
+      card.innerHTML = `
+        <div class="thumb"><img src="${foto.src}" alt="${foto.judul}" loading="lazy"></div>
+        <div class="content">
+          <h4>${foto.judul}</h4>
+          <div class="date">📅 ${foto.tanggal}</div>
+        </div>`;
+      gridFoto.appendChild(card);
+    });
+
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY > 300){
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+  </script>
 
 </body>
 </html>

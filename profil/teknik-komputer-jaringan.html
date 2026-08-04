@@ -8,11 +8,13 @@
 
 <style>
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     font-family: 'Work Sans', Arial, sans-serif;
     color: #313131;
     background: #eee;
+    overflow-x: hidden;
   }
   header.site-header {
     background-color: #143745;
@@ -43,7 +45,7 @@
   }
   header.site-header h1.site-title {
     margin: 0;
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
   }
   header.site-header p.site-description {
     margin: 4px 0 0;
@@ -80,6 +82,8 @@
   .breadcrumb h2 {
     margin: 0;
     font-weight: 600;
+    font-size: clamp(18px, 4vw, 24px);
+    padding: 0 16px;
   }
   main {
     max-width: 1100px;
@@ -89,12 +93,12 @@
   .content-box {
     background: #fff;
     padding: 24px;
-    padding-right: 64px;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
   .content-box h2.page-heading {
     margin-top: 0;
+    font-size: clamp(19px, 4vw, 24px);
   }
   .content-box img.feature-img {
     max-width: 100%;
@@ -125,10 +129,17 @@
     height: 100%;
     border: 0;
   }
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
   .content-box table.data-table {
     width: 100%;
+    min-width: 480px;
     border-collapse: collapse;
-    margin-bottom: 16px;
+    margin-bottom: 0;
     font-size: 14px;
   }
   .content-box table.data-table th,
@@ -136,6 +147,7 @@
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    white-space: nowrap;
   }
   .content-box table.data-table th {
     background: #143745;
@@ -145,7 +157,7 @@
     background: #143745;
     color: #fff;
     text-align: center;
-    padding: 20px 0;
+    padding: 20px 16px;
     margin-top: 24px;
     font-size: 13px;
   }
@@ -180,6 +192,39 @@
   .placeholder {
     color: #999;
     font-style: italic;
+  }
+
+  /* ===================== RESPONSIF: TABLET ===================== */
+  @media (max-width: 768px) {
+    header.site-header .header-inner { padding: 32px 16px; }
+    header.site-header img.logo { height: 56px; }
+    .breadcrumb { padding: 22px 0; }
+    main { margin: 18px auto; }
+    .content-box { padding: 20px; }
+  }
+
+  /* ===================== RESPONSIF: HP ===================== */
+  @media (max-width: 480px) {
+    header.site-header .header-inner { padding: 26px 12px; }
+    header.site-header img.logo { height: 48px; margin-bottom: 6px; }
+    header.site-header p.site-description { font-size: 12.5px; }
+
+    nav.main-nav ul li a { padding: 10px 12px; font-size: 12.5px; }
+
+    .breadcrumb { padding: 18px 0; }
+
+    main { padding: 0 12px; margin: 14px auto; }
+    .content-box { padding: 16px; }
+    .content-box p { text-align: left; line-height: 1.65; font-size: 14.5px; }
+    .content-box ol, .content-box ul { padding-left: 18px; font-size: 14.5px; }
+
+    .content-box table.data-table { font-size: 12.5px; }
+    .content-box table.data-table th,
+    .content-box table.data-table td { padding: 6px; }
+
+    footer { font-size: 12px; padding: 16px 12px; }
+    .social-links a { width: 34px; height: 34px; }
+    .social-links svg { width: 16px; height: 16px; }
   }
 </style>
 </head>
@@ -265,26 +310,28 @@
 
     <!-- Tabel daftar prestasi (opsional) -->
     <p><strong>Daftar Prestasi Siswa TKJ 1</strong></p>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama Kejuaraan/Kegiatan</th>
-          <th>Tingkat</th>
-          <th>Peringkat</th>
-          <th>Tahun</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="placeholder">1</td>
-          <td class="placeholder">[Nama kejuaraan]</td>
-          <td class="placeholder">[Tingkat]</td>
-          <td class="placeholder">[Peringkat]</td>
-          <td class="placeholder">[Tahun]</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Kejuaraan/Kegiatan</th>
+            <th>Tingkat</th>
+            <th>Peringkat</th>
+            <th>Tahun</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="placeholder">1</td>
+            <td class="placeholder">[Nama kejuaraan]</td>
+            <td class="placeholder">[Tingkat]</td>
+            <td class="placeholder">[Peringkat]</td>
+            <td class="placeholder">[Tahun]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </main>

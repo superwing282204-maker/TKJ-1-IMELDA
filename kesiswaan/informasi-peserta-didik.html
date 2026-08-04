@@ -8,11 +8,13 @@
 
 <style>
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     font-family: 'Work Sans', Arial, sans-serif;
     color: #313131;
     background: #eee;
+    overflow-x: hidden;
   }
   header.site-header {
     background-color: #143745;
@@ -42,7 +44,7 @@
   }
   header.site-header h1.site-title {
     margin: 0;
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
   }
   header.site-header p.site-description {
     margin: 4px 0 0;
@@ -58,6 +60,8 @@
   .breadcrumb h2 {
     margin: 0;
     font-weight: 600;
+    font-size: clamp(18px, 4vw, 24px);
+    padding: 0 16px;
   }
   main {
     max-width: 1100px;
@@ -67,12 +71,12 @@
   .content-box {
     background: #fff;
     padding: 24px;
-    padding-right: 64px;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
   .content-box h2.page-heading {
     margin-top: 0;
+    font-size: clamp(19px, 4vw, 24px);
   }
   .content-box h3.section-heading {
     margin-top: 28px;
@@ -80,6 +84,7 @@
     color: #143745;
     border-left: 4px solid #143745;
     padding-left: 10px;
+    font-size: clamp(16px, 3.4vw, 19px);
   }
   .content-box p {
     text-align: justify;
@@ -132,6 +137,16 @@
     background: #143745;
     border-color: #143745;
     color: #fff;
+  }
+
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .content-box table.data-table {
+    min-width: 320px;
   }
 
   /* Kartu profil siswa */
@@ -215,7 +230,7 @@
     background: #143745;
     color: #fff;
     text-align: center;
-    padding: 20px 0;
+    padding: 20px 16px;
     margin-top: 24px;
     font-size: 13px;
   }
@@ -276,6 +291,48 @@
     height: 16px;
     fill: currentColor;
   }
+
+  /* ===================== RESPONSIF: TABLET ===================== */
+  @media (max-width: 768px) {
+    header.site-header .header-inner { padding: 32px 16px; }
+    header.site-header img.logo { height: 56px; }
+    .breadcrumb { padding: 22px 0; }
+    main { margin: 18px auto; }
+    .content-box { padding: 20px; }
+    .student-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  }
+
+  /* ===================== RESPONSIF: HP ===================== */
+  @media (max-width: 480px) {
+    header.site-header .header-inner { padding: 26px 12px; }
+    header.site-header img.logo { height: 48px; margin-bottom: 6px; }
+    header.site-header p.site-description { font-size: 12.5px; }
+
+    .back-button-wrap { padding: 10px 12px; }
+    .back-button { font-size: 12.5px; padding: 8px 13px; }
+
+    .breadcrumb { padding: 18px 0; }
+
+    main { padding: 0 12px; margin: 14px auto; }
+    .content-box { padding: 16px; }
+    .content-box p { text-align: left; line-height: 1.65; font-size: 14.5px; }
+
+    .stats-row { gap: 10px; }
+    .stat-pill { min-width: 100px; padding: 10px 10px; }
+    .stat-pill .stat-number { font-size: 20px; }
+    .stat-pill .stat-label { font-size: 11.5px; }
+
+    .student-grid { grid-template-columns: 1fr; gap: 10px; }
+    .student-card { padding: 12px; gap: 10px; }
+    .student-card .avatar { flex-basis: 40px; width: 40px; height: 40px; }
+    .student-card h4 { font-size: 14px; }
+    .student-card .student-meta { font-size: 11.5px; }
+    .student-card .student-role { font-size: 11px; }
+
+    footer { font-size: 12px; padding: 16px 12px; }
+    .social-links a { width: 34px; height: 34px; }
+    .social-links svg { width: 16px; height: 16px; }
+  }
 </style>
 </head>
 <body>
@@ -328,21 +385,23 @@
 
     <h3 class="section-heading">Struktur Pengurus Kelas</h3>
     <p>Berikut susunan pengurus Kelas TKJ 1 yang bertugas membantu koordinasi kegiatan belajar dan administrasi kelas.</p>
-    <table class="data-table" style="width:100%;border-collapse:collapse;margin-bottom:16px;font-size:14px;">
-      <thead>
-        <tr>
-          <th style="background:#143745;color:#fff;border:1px solid #ddd;padding:8px;text-align:left;">Jabatan</th>
-          <th style="background:#143745;color:#fff;border:1px solid #ddd;padding:8px;text-align:left;">Nama</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td style="border:1px solid #ddd;padding:8px;">Ketua Kelas</td><td style="border:1px solid #ddd;padding:8px;">Trytian Variyansyah</td></tr>
-        <tr><td style="border:1px solid #ddd;padding:8px;">Wakil Ketua Kelas</td><td style="border:1px solid #ddd;padding:8px;">Ingky Aldewa</td></tr>
-        <tr><td style="border:1px solid #ddd;padding:8px;">Sekretaris</td><td style="border:1px solid #ddd;padding:8px;">Intan Chairiza</td></tr>
-        <tr><td style="border:1px solid #ddd;padding:8px;">Wakil Sekretaris</td><td style="border:1px solid #ddd;padding:8px;">Angel Airin</td></tr>
-        <tr><td style="border:1px solid #ddd;padding:8px;">Bendahara</td><td style="border:1px solid #ddd;padding:8px;">Defi Efnisyah Bunga Hasibuan</td></tr>
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="data-table" style="width:100%;border-collapse:collapse;margin-bottom:0;font-size:14px;">
+        <thead>
+          <tr>
+            <th style="background:#143745;color:#fff;border:1px solid #ddd;padding:8px;text-align:left;">Jabatan</th>
+            <th style="background:#143745;color:#fff;border:1px solid #ddd;padding:8px;text-align:left;">Nama</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="border:1px solid #ddd;padding:8px;">Ketua Kelas</td><td style="border:1px solid #ddd;padding:8px;">Trytian Variyansyah</td></tr>
+          <tr><td style="border:1px solid #ddd;padding:8px;">Wakil Ketua Kelas</td><td style="border:1px solid #ddd;padding:8px;">Ingky Aldewa</td></tr>
+          <tr><td style="border:1px solid #ddd;padding:8px;">Sekretaris</td><td style="border:1px solid #ddd;padding:8px;">Intan Chairiza</td></tr>
+          <tr><td style="border:1px solid #ddd;padding:8px;">Wakil Sekretaris</td><td style="border:1px solid #ddd;padding:8px;">Angel Airin</td></tr>
+          <tr><td style="border:1px solid #ddd;padding:8px;">Bendahara</td><td style="border:1px solid #ddd;padding:8px;">Defi Efnisyah Bunga Hasibuan</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3 class="section-heading">Daftar Peserta Didik</h3>
     <p>Setiap kartu di bawah memiliki foto profil siswa. Foto akan ditambahkan menyusul; slot foto sudah disiapkan pada masing-masing kartu.</p>

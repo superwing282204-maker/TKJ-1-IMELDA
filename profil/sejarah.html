@@ -19,6 +19,7 @@
     color:var(--text);
     background:#f4f4f4;
     line-height:1.6;
+    overflow-x:hidden;
   }
   header.banner{
     background:var(--navy);
@@ -28,7 +29,7 @@
   }
   header.banner h1{
     margin:0;
-    font-size:28px;
+    font-size:clamp(20px, 5vw, 28px);
     letter-spacing:0.5px;
   }
   .back-bar{
@@ -76,6 +77,7 @@
   .content-box h2{
     margin-top: 28px;
     color: var(--navy);
+    font-size: clamp(18px, 3.5vw, 22px);
   }
   .content-box ol{
     text-align: justify;
@@ -105,16 +107,32 @@
     margin:20px 0;
     display:block;
   }
+
+  /* Wrapper supaya tabel panjang bisa di-scroll ke samping di layar sempit
+     tanpa merusak tata letak halaman */
+  .table-scroll{
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    margin-top:12px;
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
   table.kepsek{
     width:100%;
+    min-width:520px;
     border-collapse: collapse;
-    margin-top: 12px;
   }
   table.kepsek th, table.kepsek td{
     border:1px solid var(--border);
     padding:10px;
     text-align:left;
     vertical-align: top;
+    white-space:nowrap;
+  }
+  table.kepsek td:nth-child(2){
+    white-space:normal;
+    min-width:180px;
   }
   table.kepsek th{
     background: #eef3f5;
@@ -138,6 +156,26 @@
     border:1px dashed #c9b76b;
     padding:2px 6px;
     border-radius:3px;
+  }
+
+  /* ===== TABLET / LAPTOP KECIL ===== */
+  @media (min-width:601px) and (max-width:1100px){
+    main{padding:24px 16px;}
+    .content-box{padding:22px 20px;}
+  }
+
+  /* ===== HP ===== */
+  @media (max-width:600px){
+    header.banner{padding:26px 14px;}
+    .back-bar{padding:12px 14px 0;}
+    .btn-back{padding:7px 12px; font-size:13px;}
+    main{padding:16px 12px;}
+    .content-box{padding:16px;}
+    .content-box p{text-align:left; font-size:14.5px;}
+    .content-box ol{padding-left:18px; text-align:left; font-size:14.5px;}
+    .foto-konten{max-height:260px;}
+    table.kepsek th, table.kepsek td{padding:7px 8px; font-size:12.5px;}
+    footer{padding:16px; font-size:12.5px;}
   }
 </style>
 </head>
@@ -179,9 +217,10 @@
 
       <p>Berikut dokumentasi kegiatan Kelas TKJ 1 SMK IMELDA MEDAN.</p>
 
-      <img src="../images/foto.jpeg" alt="Foto Sekolah" class="foto-konten">
+      <img src="../images/foto.jpeg" alt="Foto Sekolah" class="foto-konten" loading="lazy">
 
       <h2>Daftar Siswa TKJ 1</h2>
+      <div class="table-scroll">
       <table class="kepsek">
         <thead>
           <tr>
@@ -233,6 +272,7 @@
           <tr><td>39</td><td> NINDI AULIA</td><td>1234567897</td><td>Anggota Kelas</td></tr>
         </tbody>
       </table>
+      </div>
 
     </section>
   </main>
