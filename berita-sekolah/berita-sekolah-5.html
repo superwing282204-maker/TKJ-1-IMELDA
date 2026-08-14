@@ -2,443 +2,340 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title id="pageTitle">Renang Bulanan - TKJ 1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="../images/logo.png">
 <style>
+  /* =====================================================
+     PANDUAN EDIT CEPAT
+     - File ini punya 2 bagian: TENTANG KAMI (atas) dan
+       FOOTER (bawah).
+     - Bagian "Tentang Kami" diatur dari ABOUT_CONFIG.
+     - Bagian "Footer" diatur dari FOOTER_CONFIG.
+       Keduanya ada di bagian bawah file ini (dekat </body>).
+     - Cukup ubah nilai di dalam config masing-masing,
+       JANGAN ubah bagian <section>/<footer> di HTML karena
+       itu cetakan kosong yang diisi otomatis oleh script.
+     - Warna tema bisa diubah lewat variabel CSS di :root.
+  ===================================================== */
+
   :root{
-    --brand-dark:#143745;
-    --brand-dark2:#0d2732;
-    --brand-teal:#1e5f6e;
-    --brand-green:#2ECC71;
-    --text-dark:#464646;
-    --border-color:#e5e5e5;
-    --bg-light:#f5f5f5;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    font-family:"Work Sans", Arial, sans-serif;
-    color:var(--text-dark);
-    background:#eee;
-    overflow-x:hidden;
-  }
-  a{color:var(--brand-dark); text-decoration:none;}
-  a:hover{text-decoration:underline;}
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
+    --brand-dark: #143745;     /* teal gelap, warna utama tema situs */
+    --brand-dark-soft: #1c4657;
+    --brand-darkest: #0F2A34;
+    --accent: #FFD400;         /* warna aksen tombol / judul */
+    --accent-text: #1A1A1A;
+    --bg-panel: #F4F6F5;
+    --text-heading: #12262C;
+    --text-body: #45575A;
+    --text-main: #EAF2F1;
+    --text-muted: #A9C0BE;
+    --radius: 10px;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
   }
 
-  .topbar{
-    background:var(--brand-dark);
-    color:#fff;
-    font-size:13px;
-    padding:6px 20px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:4px 10px;
-    justify-content:space-between;
-    align-items:center;
-  }
-  .topbar .social a{color:#fff; margin-left:10px; transition:color .2s;}
-  .topbar .social a:hover{color:var(--brand-green); text-decoration:none;}
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family: var(--font-body); background:#fff; }
 
-  header.site-header{
-    background:#fff;
-    padding:20px;
-    text-align:center;
-    border-bottom:3px solid var(--brand-dark);
-    position:relative;
-    overflow:hidden;
-  }
-  header.site-header img.logo{
-    width:80px; height:80px; object-fit:contain;
-    vertical-align:middle; margin-right:10px;
-  }
-  header.site-header .brand-text{
-    display:inline-block; vertical-align:middle; text-align:left;
-  }
-  header.site-header h1.site-title{
-    margin:0; font-size:clamp(19px, 4.5vw, 28px); color:var(--brand-dark);
-  }
-  header.site-header p.site-desc{
-    margin:0; font-size:clamp(11px, 2vw, 13px); color:#777;
-  }
+  /* ============ BAGIAN 1: TENTANG KAMI ============ */
+  .about-topbar{ height: 10px; background: var(--brand-dark); }
 
-  nav.main-nav{
-    background:#222;
-    position:sticky; top:0; z-index:50;
+  .back-bar{
+    background: var(--bg-panel);
+    padding: 14px clamp(20px, 5vw, 64px);
   }
-  nav.main-nav ul{
-    list-style:none; margin:0; padding:0;
-    display:flex; flex-wrap:wrap; justify-content:center;
+  .back-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family: var(--font-body); font-weight:600; font-size:0.9rem;
+    color: var(--brand-dark); text-decoration:none;
   }
-  nav.main-nav li{position:relative;}
-  nav.main-nav a{
-    display:block; padding:14px 18px; color:#fff; font-size:14px;
-    transition:background .25s, letter-spacing .25s;
-  }
-  nav.main-nav a:hover{background:var(--brand-green); text-decoration:none; letter-spacing:.5px;}
+  .back-btn svg{ width:16px; height:16px; }
+  .back-btn:hover{ text-decoration: underline; }
 
-  .wrapper{
-    max-width:900px; margin:20px auto; padding:0 15px;
+  .about{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 340px;
   }
+  @media (max-width: 800px){ .about{ grid-template-columns: 1fr; } }
 
-  .article-box{background:#fff; padding:20px; border-radius:4px; box-shadow:0 2px 10px rgba(0,0,0,.05);}
-  .category-tags a{
-    display:inline-block; background:var(--brand-dark); color:#fff;
-    font-size:11px; padding:4px 10px; border-radius:3px; margin-right:5px; margin-bottom:8px;
-    transition:background .2s;
-  }
-  .category-tags a:hover{background:var(--brand-teal); text-decoration:none;}
-  .article-box h2.title{
-    font-size:clamp(20px, 4vw, 26px); margin:5px 0 10px; color:#222; line-height:1.3; word-wrap:break-word;
-  }
-  .meta-date{
-    font-size:13px; color:#999; margin-bottom:15px;
-  }
-  .featured-image{
-    width:100%; aspect-ratio:16/9;
-    background:var(--bg-light);
+  .about__media{
+    position:relative; overflow:hidden; background: var(--bg-panel);
     display:flex; align-items:center; justify-content:center;
-    color:#aaa; font-size:14px; border:1px dashed #ccc; margin-bottom:20px;
-    overflow:hidden; border-radius:6px;
+    padding: clamp(20px, 4vw, 48px);
   }
-  .featured-image img{
-    width:100%; height:100%; object-fit:cover; display:block;
+  .about__media img{
+    width:100%; height:100%;
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    display:block;
   }
-  article p{
-    text-align:justify; line-height:1.8; margin-bottom:14px;
+  @media (max-width: 800px){
+    .about__media img{ max-height: 260px; }
   }
-  article ol, article ul{margin-bottom:14px; line-height:1.7;}
-  .highlight-box{
-    background:var(--brand-green); border-left:4px solid var(--brand-dark);
-    padding:12px 16px; margin:16px 0; font-weight:bold; color:#333;
-    border-radius:2px;
-  }
-  .section-divider{
-    display:flex; align-items:center; gap:10px; margin:22px 0 14px; color:var(--brand-dark);
-    font-size:13px; font-weight:700; letter-spacing:.5px; text-transform:uppercase;
-  }
-  .section-divider::before, .section-divider::after{
-    content:""; flex:1; height:2px; background:var(--border-color);
+  @media (max-width: 420px){
+    .about__media img{ max-height: 200px; }
   }
 
-  table.data-table{
-    width:100%; border-collapse:collapse; margin:15px 0;
+  .about__content{
+    background: var(--bg-panel);
+    display:flex; flex-direction:column; justify-content:center; gap: 18px;
+    padding: clamp(32px, 6vw, 72px);
   }
-  table.data-table th, table.data-table td{
-    border:1px solid var(--border-color); padding:8px 10px; font-size:14px;
+  .about__eyebrow{
+    font-family: var(--font-display); font-size: 0.78rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-dark);
   }
-  table.data-table th{background:var(--brand-dark); color:#fff; text-align:left;}
-  table.data-table tr:nth-child(even){background:#fafafa;}
-  table.data-table tbody tr:hover{background:#eafaf0;}
+  .about__title{
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--text-heading); line-height:1.2;
+  }
+  .about__text{ font-size: 1rem; line-height: 1.7; color: var(--text-body); max-width: 55ch; }
 
-  .share-row{margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color);}
-  .share-row a{
-    display:inline-block; width:34px; height:34px; line-height:34px; text-align:center;
-    background:var(--brand-dark); color:#fff; border-radius:50%; margin-right:6px; font-size:14px;
-    transition:transform .2s, background .2s;
+  .about__gallery{ margin-top: 10px; }
+  .about__gallery h4{
+    font-family: var(--font-display); color: var(--brand-dark);
+    font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;
   }
-  .share-row a:hover{background:var(--brand-green); transform:translateY(-3px); text-decoration:none;}
+  .about__gallery-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 55ch; }
+  @media (max-width: 420px){ .about__gallery-grid{ gap: 8px; } }
+  .about__gallery-item{
+    position:relative; border-radius: var(--radius); overflow:hidden;
+    aspect-ratio: 4/3; background: var(--bg-panel);
+  }
+  .about__gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .3s ease; }
+  .about__gallery-item:hover img{ transform: scale(1.06); }
+  .about__gallery-cap{
+    position:absolute; left:0; right:0; bottom:0;
+    padding: 6px 8px; font-size:0.7rem; color:#fff;
+    background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
+  }
+  @media (max-width: 420px){ .about__gallery-cap{ display:none; } }
 
-  .author-box{
-    display:flex; align-items:center; gap:12px; margin-top:20px;
-    background:#fff; padding:15px 20px; border-radius:4px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
+  /* ============ BAGIAN 2: FOOTER ============ */
+  .footer{
+    background: var(--brand-dark);
+    color: var(--text-main);
+    padding: clamp(32px, 5vw, 56px) clamp(20px, 5vw, 64px) 0;
   }
-  .author-box .avatar{
-    width:50px; height:50px; border-radius:50%; background:var(--bg-light);
-    display:flex; align-items:center; justify-content:center; font-size:11px; color:#aaa;
-    overflow:hidden;
-  }
+  .footer__inner{ max-width: 1200px; margin: 0 auto; }
 
-  .related-box{background:#fff; padding:20px; border-radius:4px; margin-top:20px; box-shadow:0 2px 10px rgba(0,0,0,.05);}
-  .related-box h3{margin-top:0; border-bottom:2px solid var(--brand-green); padding-bottom:8px;}
-  .related-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:15px;}
-  @media (max-width:800px){.related-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:480px){.related-grid{grid-template-columns:1fr;}}
-  .related-card{
-    background:var(--bg-light); border-radius:4px; overflow:hidden;
+  .footer__grid{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px 24px;
   }
-  .related-card .thumb{
-    aspect-ratio:16/9; background:#e0e0e0; display:flex; align-items:center;
-    justify-content:center; color:#aaa; font-size:12px; overflow:hidden;
-  }
-  .related-card .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
-  .related-card .content{padding:10px;}
-  .related-card .content h4{font-size:14px; margin:0 0 6px;}
-  .related-card .content .date{font-size:11px; color:#999;}
+  @media (max-width: 640px){ .footer__grid{ grid-template-columns: 1fr; } }
 
-  footer{
-    background:var(--brand-dark); color:#fff; text-align:center; padding:25px 15px; margin-top:30px;
-  }
-  footer h1.site-title{font-size:22px; margin:8px 0 0;}
-  footer p{font-size:13px; opacity:.85;}
-  footer .copy{font-size:12px; opacity:.7; margin-top:15px;}
+  .footer__brand{ display:flex; flex-direction:column; gap:14px; }
+  .footer__logo{ display:flex; align-items:center; gap:10px; }
+  .footer__logo img{ width:34px; height:34px; object-fit:contain; border-radius:6px; }
+  .footer__logo span{ font-family: var(--font-display); font-weight:700; font-size: 1.3rem; letter-spacing:0.02em; }
+  .footer__desc{ color: var(--text-muted); font-size:0.92rem; line-height:1.6; max-width: 32ch; }
 
-  .back-to-top{
-    position:fixed; right:18px; bottom:18px;
-    width:44px; height:44px; border-radius:50%;
-    background:var(--brand-dark); color:#fff;
-    display:flex; align-items:center; justify-content:center;
-    font-size:20px; box-shadow:0 4px 14px rgba(0,0,0,.25);
-    opacity:0; pointer-events:none; transform:translateY(10px);
-    transition:opacity .3s, transform .3s, background .3s;
-    z-index:60;
+  .footer__social{ display:flex; gap:10px; margin-top:4px; }
+  .footer__social a{
+    width:36px; height:36px; border-radius:50%; background: var(--brand-dark-soft);
+    display:flex; align-items:center; justify-content:center; transition: background .15s ease;
   }
-  .back-to-top.show{opacity:1; pointer-events:auto; transform:translateY(0);}
-  .back-to-top:hover{background:var(--brand-green); text-decoration:none;}
+  .footer__social a:hover{ background: var(--accent); }
+  .footer__social svg{ width:16px; height:16px; fill: var(--text-main); }
+  .footer__social a:hover svg{ fill:#143745; }
 
-  @media (min-width:601px) and (max-width:900px){
-    .wrapper{max-width:100%; padding:0 20px;}
+  .footer__col h4{
+    font-family: var(--font-display); color: var(--accent);
+    font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px;
   }
+  .footer__col ul{ list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .footer__col a{ color: var(--text-muted); text-decoration:none; font-size:0.92rem; transition: color .15s ease; }
+  .footer__col a:hover{ color: var(--text-main); }
+  .footer__col p{ color: var(--text-muted); font-size:0.92rem; line-height:1.7; margin-bottom: 4px; }
 
-  @media (max-width:600px){
-    .topbar{font-size:11px; padding:6px 12px;}
-    header.site-header{padding:14px 10px;}
-    header.site-header img.logo{width:56px; height:56px; margin-right:6px;}
-    nav.main-nav a{padding:10px 12px; font-size:13px;}
-    .wrapper{margin:12px auto; padding:0 10px;}
-    .article-box{padding:14px;}
-    article p{text-align:left; line-height:1.75; font-size:14.5px;}
-    .related-grid{gap:10px;}
-    table.data-table th, table.data-table td{font-size:12.5px; padding:6px 7px;}
-    .author-box{padding:12px 14px; flex-wrap:wrap;}
-    .back-to-top{width:40px; height:40px; right:12px; bottom:12px;}
+  .footer__contact li{ color: var(--text-muted); font-size:0.9rem; line-height:1.6; display:flex; gap:8px; }
+  .footer__contact li span.ico{ color: var(--accent); flex-shrink:0; }
+
+  .footer__bottom{
+    margin-top: clamp(28px, 5vw, 44px);
+    background: var(--brand-darkest);
+    display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center; justify-content:space-between;
+    padding: 16px 20px; font-size: 0.85rem; color: var(--text-muted);
+  }
+  .footer__bottom a{ color: var(--accent); text-decoration:none; }
+  .footer__bottom-links{ display:flex; gap:16px; flex-wrap:wrap; }
+  @media (max-width: 480px){
+    .footer__bottom{ justify-content:center; text-align:center; }
   }
 </style>
 </head>
 <body>
 
-  <div class="topbar">
-    <span id="tanggalTop"></span>
-    <span class="social">   </span>
-  </div>
+<!-- ============ BAGIAN 1: TENTANG KAMI ============ -->
+<div class="about-topbar"></div>
 
-  <header class="site-header">
-      <img class="logo" src="../images/logo.png" alt="TKJ 1 - SMK IMELDA">
-      <div class="brand-text">
-      <h1 class="site-title">TKJ 1 - SMK IMELDA</h1>
-      <p class="site-desc" id="siteDesc"></p>
+<div class="back-bar">
+  <a class="back-btn" id="a-back" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    <span id="a-back-text"></span>
+  </a>
+</div>
+
+<section class="about" id="about-section">
+  <div class="about__media">
+    <img id="a-image" src="" alt="">
+  </div>
+  <div class="about__content">
+    <span class="about__eyebrow" id="a-eyebrow"></span>
+    <h2 class="about__title" id="a-title"></h2>
+    <p class="about__text" id="a-text"></p>
+
+    <div class="about__gallery">
+      <h4 id="a-gallery-title"></h4>
+      <div class="about__gallery-grid" id="a-gallery-grid"></div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <nav class="main-nav">
-    <ul>
-      <a href="../index.html" class="btn-back">&larr; Kembali</a>
-    </ul>
-  </nav>
+<!-- ============ BAGIAN 2: FOOTER ============ -->
+<footer class="footer" id="site-footer">
+  <div class="footer__inner">
 
-  <div class="wrapper">
-    <main>
-      <div class="article-box">
-
-        <div class="category-tags" id="categoryTags"></div>
-
-        <h2 class="title" id="judulCerita"></h2>
-        <div class="meta-date" id="tanggalMeta"></div>
-
-        <div class="featured-image">
-          <img id="fotoUtama" src="" alt="Foto utama" loading="lazy">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <img id="f-logo" src="" alt="Logo">
+          <span id="f-brand"></span>
         </div>
-
-        <article id="isiCerita">
-          <!-- diisi otomatis dari config.sections -->
-        </article>
-
+        <p class="footer__desc" id="f-desc"></p>
+        <div class="footer__social" id="f-social"></div>
       </div>
 
-      <div class="author-box">
-        <div class="avatar">
-          <img src="../images/logo.png" alt="notulis">
-        </div>
-        <strong id="notulisText"></strong>
+      <div class="footer__col">
+        <h4 id="f-col3-title"></h4>
+        <ul class="footer__contact" id="f-col3-list"></ul>
       </div>
+    </div>
 
-      <div class="related-box">
-        <h3>Foto Terkait</h3>
-        <div class="related-grid" id="gridFotoTerkait">
-          <!-- diisi otomatis dari config.fotoTerkait -->
-        </div>
-      </div>
-    </main>
   </div>
 
-  <footer>
-    <img class="logo" src="../images/logo.png" alt="TKJ 1 - SMK IMELDA" style="width:70px;height:70px;object-fit:contain;">
-    <h1 class="site-title">TKJ 1 - SMK IMELDA</h1>
-    <p></p>
-    <div class="copy" id="copyFooter"></div>
-  </footer>
+  <div class="footer__bottom" id="f-bottom-wrap">
+    <span id="f-bottom"></span>
+    <div class="footer__bottom-links" id="f-bottom-links"></div>
+  </div>
+</footer>
 
-  <a href="#top" class="back-to-top" id="backToTop" aria-label="Kembali ke atas">&uarr;</a>
+<script>
+/* =====================================================
+   ABOUT_CONFIG — EDIT DI SINI SAJA
+===================================================== */
+const ABOUT_CONFIG = {
+  backButton: {
+    text: "Kembali",
+    href: "../index.html" // ganti dengan halaman tujuan, misalnya "index.html" atau "berita.html"
+  },
 
-  <script>
-    // =====================================================================
-    //  TEMPLATE CERITA — TINGGAL GANTI ISI "config" DI BAWAH INI.
-    //  Semua yang tampil di halaman (judul, cerita, peserta, foto,
-    //  footer) diambil dari sini. TIDAK PERLU sentuh HTML di atas
-    //  untuk mengganti isi cerita berikutnya.
-    // =====================================================================
-    const config = {
+  image: {
+    src: "../images/fotobukberXI.jpeg", // ganti dengan foto asli
+    alt: "Foto kegiatan kelas TKJ 1"
+  },
+  eyebrow: "Tentang Kami",
+  title: "Sekilas Tentang Kelas Kami",
+  text: "Momen Buka Puasa Bersama XI TKJ 1 yang diselenggarakan di Cafe Sejiwa menjadi wujud nyata eratnya tali silaturahmi antar siswa. Di tengah kesibukan aktivitas pembelajaran dan praktikum, acara ini dirancang sebagai wadah untuk saling berbagi cerita serta memperkuat rasa kekeluargaan. Malam itu bukan hanya tentang menikmati hidangan bersama, melainkan tentang merawat kebersamaan yang berharga.",
+  // 3 foto acak — TINGGAL GANTI "src" dengan path/URL foto kamu sendiri
+  gallery: {
+    title: "Galeri Terbaru",
+    photos: [
+      { src: "../images/fot30.jpeg", alt: "Kegiatan kelas 1", caption: "Acara Bukber XI" },
+      { src: "../images/fot31.jpeg", alt: "Kegiatan kelas 2", caption: "Acara Bukber XI" },
+      { src: "../images/fotobukberXI.jpeg", alt: "Kegiatan kelas 3", caption: "Acara Bukber XI" }
+    ]
+  }
+};
 
-      // --- Info dasar ---
-      tanggal: "5 Juli 2025",       // GANTI: tanggal kegiatan (dipakai di 2 tempat)
-      judulTab: "Renang Bulanan - TKJ 1",
-      deskripsiKecil: "Agenda Renang Bulanan Sekelas",
-      judulCerita: "Renang Bulanan di Kolam Renang Unimed",
-      tags: ["RENANG", "UNIMED", "AGENDA BULANAN"],
-      fotoUtama: "../images/fot65.jpeg",      // GANTI: foto utama di atas cerita
+/* =====================================================
+   FOOTER_CONFIG — EDIT DI SINI SAJA
+===================================================== */
+const FOOTER_CONFIG = {
+  logo: "../images/logo.png", // ganti dengan path logo TKJ 1 kamu
+  brand: "TKJ 1",
+  desc: "SMK Imelda Medan — Teknik Komputer dan Jaringan. Dokumentasi kegiatan, informasi kelas, dan galeri kelas XI TKJ 1.",
 
-      // --- Isi cerita ---
-      // Tiap objek = satu bagian cerita dengan judul kecil + beberapa paragraf.
-      // Tambah atau hapus objek sesuai jumlah bagian yang kamu mau.
-      sections: [
-        {
-          judul: "Awal Mula Tradisi",
-          paragraf: [
-            "Berawal dari keinginan untuk melepas penat setelah rutinitas sekolah, kami sekelas sepakat membuat agenda renang bareng yang dilaksanakan setiap bulan. Tujuannya sederhana, supaya kekompakan kelas tetap terjaga di luar jam pelajaran.",
-            "Setelah berdiskusi, akhirnya kolam renang Unimed (Universitas Negeri Medan) dipilih jadi lokasi rutin, karena tempatnya bersih, luas, dan mudah dijangkau oleh anak-anak sekelas."
-          ]
-        },
-        {
-          judul: "Rutin Setiap Bulan",
-          paragraf: [
-            "Sejak saat itu, renang bareng di kolam renang Unimed jadi agenda bulanan yang selalu dinanti-nanti. Setiap bulan, kami sekelas menyempatkan waktu untuk kumpul dan berenang bersama, biasanya di akhir pekan supaya tidak mengganggu jadwal sekolah.",
-            "Harga masuk kolam renangnya juga cukup terjangkau, yaitu 25 ribu rupiah per orang, jadi nggak terlalu memberatkan buat anak sekolah seperti kami."
-          ]
-        },
-        {
-          judul: "Keseruan di Kolam Renang",
-          paragraf: [
-            "Setiap kali agenda renang bulanan ini berlangsung, suasana selalu ramai dan seru. Ada yang lomba renang kecil-kecilan, ada yang cuma santai berendam sambil ngobrol, dan ada juga yang sibuk foto-foto buat kenangan.",
-            "Momen basah-basahan bareng teman sekelas ini selalu berhasil menghilangkan penat dan bikin badan jadi lebih segar setelah seharian penuh dengan tugas dan pelajaran di sekolah."
-          ]
-        },
-        {
-          judul: "Kebersamaan Sekelas",
-          paragraf: [
-            "Lebih dari sekadar berenang, agenda bulanan ini jadi ajang buat mempererat kekompakan seluruh anak sekelas. Banyak cerita, candaan, dan momen kebersamaan yang tercipta setiap kali acara ini berlangsung.",
-            "Nggak jarang juga, setelah puas berenang, kami lanjut istirahat sejenak sambil makan bersama sebelum akhirnya pulang ke rumah masing-masing."
-          ]
-        },
-        {
-          judul: "Rencana Bulan Berikutnya",
-          paragraf: [
-            "Karena selalu seru dan bikin nagih, agenda renang bulanan di kolam renang Unimed ini rencananya akan terus dilanjutkan setiap bulannya, selama nggak berbenturan dengan jadwal sekolah.",
-            "Semoga tradisi renang bareng sekelas ini bisa terus berjalan dan jadi salah satu momen kebersamaan yang selalu dirindukan oleh seluruh anak kelas."
-          ]
-        }
-      ],
+  social: [
+    { icon: "instagram", href: "https://instagram.com/elevenclass_tkjone" },
+    { icon: "facebook",  href: "https://facebook.com/smkimeldamedan" },
+    { icon: "tiktok",    href: "https://tiktok.com/@smkkesehatanimeldamedan" }
+  ],
 
-      // Daftar kegiatan (list bernomor)
-      daftarKegiatan: [
-        "KUMPUL DAN BERANGKAT BERSAMA KE UNIMED",
-        "MEMBAYAR TIKET MASUK KOLAM (25K/ORANG)",
-        "BERENANG DAN BERMAIN AIR BERSAMA",
-        "LOMBA RENANG KECIL-KECILAN",
-        "SESI FOTO BERSAMA DI PINGGIR KOLAM",
-        "ISTIRAHAT DAN MAKAN BERSAMA",
-        "PULANG BERSAMA-SAMA"
-      ],
+  col3: {
+    title: "Kontak",
+    items: [
+      { icon: "📍", text: "Jl. Bilal No. 48, Pulo Brayan Darat I, Medan Timur" },
+      { icon: "✉️", text: "tkj1.smkimelda@gmail.com" },
+      { icon: "📞", text: "(061) 000-0000" }
+    ]
+  },
 
-      // Kotak catatan hijau di akhir cerita
-      catatanPenutup: "Agenda renang bulanan di kolam renang Unimed ini menjadi momen yang selalu dinanti seluruh anak sekelas. Dengan harga yang terjangkau, yaitu 25 ribu rupiah per orang, kegiatan ini berhasil jadi cara sederhana untuk terus menjaga kekompakan kelas.",
+  bottomText: "© 2026 TKJ 1 SMK Imelda Medan — Dibuat oleh siswa TKJ 1",
+  bottomLinks: [
+    { text: "Kontak", href: "kontak.html" },
+    { text: "Tentang", href: "tentang.html" }
+  ]
+};
 
-      // Paragraf penutup setelah kotak catatan
-      penutup: [
-        "Terima kasih untuk semua teman sekelas yang selalu semangat ikut serta dalam agenda renang bulanan ini.",
-        "Sampai jumpa di agenda renang bulan depan di kolam renang Unimed!"
-      ],
+/* =====================================================
+   Jangan perlu diedit — bagian ini otomatis merender
+   ABOUT_CONFIG & FOOTER_CONFIG ke dalam HTML di atas.
+===================================================== */
 
-      // --- Notulis / penulis cerita ---
-      notulis: "NOTULIS : Nama Kamu",
+// -- Render Tentang Kami --
+document.getElementById('a-back').href = ABOUT_CONFIG.backButton.href;
+document.getElementById('a-back-text').textContent = ABOUT_CONFIG.backButton.text;
+document.getElementById('a-image').src = ABOUT_CONFIG.image.src;
+document.getElementById('a-image').alt = ABOUT_CONFIG.image.alt;
+document.getElementById('a-eyebrow').textContent = ABOUT_CONFIG.eyebrow;
+document.getElementById('a-title').textContent = ABOUT_CONFIG.title;
+document.getElementById('a-text').textContent = ABOUT_CONFIG.text;
 
-      // --- Foto terkait di bagian bawah ---
-      fotoTerkait: [
-        { src: "../images/fot66.jpeg", judul: "Keseruan di Kolam Renang",  tanggal: "5 Juli 2025" },
-        { src: "../images/fot64.jpeg", judul: "Foto Bersama Sekelas",      tanggal: "5 Juli 2025" },
-        { src: "../images/fot65.jpeg", judul: "Kolam Renang Unimed",       tanggal: "5 Juli 2025" }
-      ],
+document.getElementById('a-gallery-title').textContent = ABOUT_CONFIG.gallery.title;
+document.getElementById('a-gallery-grid').innerHTML = ABOUT_CONFIG.gallery.photos.map(p => `
+  <div class="about__gallery-item">
+    <img src="${p.src}" alt="${p.alt}">
+    <div class="about__gallery-cap">${p.caption}</div>
+  </div>
+`).join('');
 
-      // --- Footer ---
-      tahunCopy: "2026"
-    };
+// -- Render Footer --
+const ICONS = {
+  instagram: '<svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 3.3.15 4.8 1.7 5 5C22 8.5 22 8.9 22 12.1s0 3.6-.07 4.9c-.15 3.3-1.7 4.8-5 5C15.6 22 15.2 22 12 22s-3.6 0-4.9-.07c-3.3-.15-4.8-1.7-5-5C2 15.7 2 15.3 2 12.1s0-3.6.07-4.9c.15-3.3 1.7-4.8 5-5C8.4 2.2 8.8 2.2 12 2.2zm0 3.3a6.6 6.6 0 1 0 0 13.2 6.6 6.6 0 0 0 0-13.2zm0 2a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm6.9-.4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg>',
+  facebook: '<svg viewBox="0 0 24 24"><path d="M13.5 22v-8.4h2.8l.4-3.3h-3.2V8c0-.96.27-1.6 1.66-1.6H17V3.4A22 22 0 0 0 14.7 3.3c-2.3 0-3.9 1.4-3.9 4v2.3H8v3.3h2.8V22h2.7z"/></svg>',
+  tiktok: '<svg viewBox="0 0 24 24"><path d="M16.6 2h-3.2v13.4a2.7 2.7 0 1 1-2.1-2.6V9.6a6 6 0 1 0 5.3 5.95V9.1a7.6 7.6 0 0 0 4.4 1.4V7.3c-2-.1-3.7-1.5-4.4-3.4V2z"/></svg>',
+  youtube: '<svg viewBox="0 0 24 24"><path d="M21.6 7.2s-.2-1.5-.85-2.15c-.8-.85-1.7-.85-2.1-.9C15.9 4 12 4 12 4s-3.9 0-6.65.15c-.4.05-1.3.05-2.1.9C2.6 5.7 2.4 7.2 2.4 7.2S2.2 9 2.2 10.7v1.6c0 1.7.2 3.5.2 3.5s.2 1.5.85 2.15c.8.85 1.85.82 2.3.9C7.1 19 12 19 12 19s3.9 0 6.65-.15c.4-.05 1.3-.05 2.1-.9.65-.65.85-2.15.85-2.15s.2-1.8.2-3.5v-1.6c0-1.7-.2-3.5-.2-3.5zM9.9 14.6V8.9l5.4 2.85z"/></svg>',
+  whatsapp: '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.35A10 10 0 1 0 12 2zm0 18.2a8.15 8.15 0 0 1-4.16-1.14l-.3-.18-3.1.82.83-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.25-.13-1.47-.72-1.7-.8-.23-.09-.4-.13-.56.13-.17.25-.65.8-.8.96-.15.17-.3.19-.55.06-.25-.13-1.06-.39-2-1.24-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.3.37-.44.13-.15.17-.25.25-.42.08-.17.04-.3-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.3-.23.25-.87.85-.87 2.1s.9 2.44 1.02 2.6c.13.17 1.77 2.7 4.28 3.78.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.17-.48-.3z"/></svg>'
+};
 
-    // =====================================================================
-    //  BAGIAN RENDER — TIDAK PERLU DIEDIT.
-    //  Ini yang mengambil "config" di atas dan menampilkannya ke HTML.
-    // =====================================================================
+document.getElementById('f-logo').src = FOOTER_CONFIG.logo;
+document.getElementById('f-brand').textContent = FOOTER_CONFIG.brand;
+document.getElementById('f-desc').textContent = FOOTER_CONFIG.desc;
 
-    document.getElementById('pageTitle').textContent = config.judulTab;
-    document.getElementById('tanggalTop').textContent = config.tanggal;
-    document.getElementById('siteDesc').textContent = config.deskripsiKecil;
-    document.getElementById('judulCerita').textContent = config.judulCerita;
-    document.getElementById('tanggalMeta').textContent = "📅 " + config.tanggal;
-    document.getElementById('fotoUtama').src = config.fotoUtama;
-    document.getElementById('fotoUtama').alt = config.judulCerita;
-    document.getElementById('notulisText').textContent = config.notulis;
-    document.getElementById('copyFooter').innerHTML = `&copy; TKJ 1 ${config.tahunCopy} | All Rights Reserved.`;
+document.getElementById('f-social').innerHTML = FOOTER_CONFIG.social.map(s =>
+  `<a href="${s.href}" target="_blank" rel="noopener" aria-label="${s.icon}">${ICONS[s.icon] || ''}</a>`
+).join('');
 
-    // Catatan: tabel "Daftar yang ikut" sudah dihapus dari halaman ini,
-    // jadi config.peserta tidak lagi digunakan / dirender.
+document.getElementById('f-col3-title').textContent = FOOTER_CONFIG.col3.title;
 
-    // Tags kategori
-    const tagsEl = document.getElementById('categoryTags');
-    config.tags.forEach(tag => {
-      const a = document.createElement('a');
-      a.href = '#' + tag;
-      a.textContent = tag;
-      tagsEl.appendChild(a);
-    });
+document.getElementById('f-col3-list').innerHTML = FOOTER_CONFIG.col3.items.map(i =>
+  `<li><span class="ico">${i.icon}</span><span>${i.text}</span></li>`
+).join('');
 
-    // Isi cerita (sections + daftar kegiatan + catatan + penutup)
-    const artikel = document.getElementById('isiCerita');
-    let htmlCerita = '';
-    config.sections.forEach(sec => {
-      htmlCerita += `<div class="section-divider">${sec.judul}</div>`;
-      sec.paragraf.forEach(p => {
-        htmlCerita += `<p>${p}</p>`;
-      });
-    });
-    htmlCerita += `<p>Daftar kegiatan:</p><ol>`;
-    config.daftarKegiatan.forEach(item => {
-      htmlCerita += `<li>${item}</li>`;
-    });
-    htmlCerita += `</ol>`;
-    htmlCerita += `<div class="highlight-box"><p>Catatan: ${config.catatanPenutup}</p></div>`;
-    config.penutup.forEach(p => {
-      htmlCerita += `<p>${p}</p>`;
-    });
-    artikel.innerHTML = htmlCerita;
-
-    // Kartu foto terkait
-    const gridFoto = document.getElementById('gridFotoTerkait');
-    config.fotoTerkait.forEach(foto => {
-      const card = document.createElement('div');
-      card.className = 'related-card';
-      card.innerHTML = `
-        <div class="thumb"><img src="${foto.src}" alt="${foto.judul}" loading="lazy"></div>
-        <div class="content">
-          <h4>${foto.judul}</h4>
-          <div class="date">📅 ${foto.tanggal}</div>
-        </div>`;
-      gridFoto.appendChild(card);
-    });
-
-    // Back to top button
-    const backToTop = document.getElementById('backToTop');
-    window.addEventListener('scroll', ()=>{
-      if(window.scrollY > 300){
-        backToTop.classList.add('show');
-      } else {
-        backToTop.classList.remove('show');
-      }
-    });
-  </script>
+document.getElementById('f-bottom').innerHTML = FOOTER_CONFIG.bottomText;
+document.getElementById('f-bottom-links').innerHTML = FOOTER_CONFIG.bottomLinks.map(l =>
+  `<a href="${l.href}">${l.text}</a>`
+).join('');
+</script>
 
 </body>
 </html>
