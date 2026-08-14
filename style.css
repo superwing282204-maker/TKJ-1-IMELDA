@@ -24,6 +24,13 @@
   --img-brightness: 1;
   --warn-bg:   #fff4e5;
   --warn-text: #8a5a00;
+  --line-soft: #f0f0f0;          /* garis pemisah tipis */
+  --surface-2: #eef2f9;          /* permukaan sekunder */
+  --primary-dark: #12294f;       /* hover tombol primary */
+  --secondary-dark: #c0150c;     /* hover tombol secondary */
+  --on-accent: #5c3b00;          /* teks di atas warna kuning */
+  --hero-bg:   #0b1119;
+  --overlay:   rgba(0,0,0,.45);
 }
 
 /* ===== MODE GELAP ===== */
@@ -43,6 +50,13 @@
   --img-brightness: .92;
   --warn-bg:   #3a2e12;
   --warn-text: #ffd27a;
+  --line-soft: #26323f;
+  --surface-2: #22303e;
+  --primary-dark: #35609f;
+  --secondary-dark: #ff7a73;
+  --on-accent: #3a2600;
+  --hero-bg:   #05090d;
+  --overlay:   rgba(0,0,0,.6);
 }
 
 /* Transisi halus saat ganti tema */
@@ -211,7 +225,7 @@ ul { list-style: none; }
 .nav-menu > li:hover > a { background: var(--nav-hover, #e8201c); color: #ffffff; }
 
 .nav-highlight { background: var(--secondary) !important; border-radius: 3px; }
-.nav-highlight:hover { background: #c0150c !important; }
+.nav-highlight:hover { background: var(--secondary-dark) !important; }
 
 /* Dropdown */
 .dropdown {
@@ -232,7 +246,7 @@ ul { list-style: none; }
   padding: 9px 16px;
   color: var(--text);
   font-size: 13px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line-soft);
   transition: background .15s;
 }
 .dropdown li a:hover { background: var(--tag-bg); color: var(--primary); }
@@ -295,7 +309,7 @@ ul { list-style: none; }
 .jam-online-time {
   font-size: clamp(40px, 9vw, 64px);
   font-weight: 800;
-  color: #3e4759;
+  color: var(--text);
   font-variant-numeric: tabular-nums;
   letter-spacing: 2px;
   line-height: 1.1;
@@ -324,7 +338,7 @@ ul { list-style: none; }
 .hero-slider {
   position: relative;
   overflow: hidden;
-  background: #000000;
+  background: var(--hero-bg);
   width: 100%;
   aspect-ratio: 16 / 7;
   max-height: 480px;
@@ -337,8 +351,8 @@ ul { list-style: none; }
 .slider-btn {
   position: absolute;
   top: 50%; transform: translateY(-50%);
-  background: rgba(0,0,0,.45);
-  color: var(--white);
+  background: var(--overlay);
+  color: #fff;
   border: none;
   width: 38px; height: 38px;
   font-size: 18px;
@@ -580,10 +594,10 @@ ul { list-style: none; }
   background: var(--secondary);
   color: var(--white);
 }
-.badge-cat:hover { background: #c0150c; color: var(--white); }
+.badge-cat:hover { background: var(--secondary-dark); color: #fff; }
 .badge-time {
   background: var(--accent);
-  color: #5c3b00;
+  color: var(--on-accent);
 }
 
 .post-card-body { padding: 16px 16px 18px; }
@@ -742,7 +756,7 @@ ul { list-style: none; }
 .cal-grid .cal-day.other-month { color: var(--border); }
 
 /* Category List */
-.category-list li { border-bottom: 1px solid #f0f0f0; }
+.category-list li { border-bottom: 1px solid var(--line-soft); }
 .category-list li a {
   display: flex;
   justify-content: space-between;
@@ -756,7 +770,7 @@ ul { list-style: none; }
 .category-list ul { padding-left: 14px; }
 
 /* Recent Posts */
-.recent-posts-list li { border-bottom: 1px solid #f0f0f0; }
+.recent-posts-list li { border-bottom: 1px solid var(--line-soft); }
 .recent-posts-list li a {
   display: block;
   padding: 7px 0;
@@ -767,7 +781,7 @@ ul { list-style: none; }
 .recent-posts-list li a:hover { color: var(--secondary); }
 
 /* Recent Comments */
-.recent-comments-list li { border-bottom: 1px solid #f0f0f0; font-size: 12px; padding: 6px 0; color: var(--text-muted); }
+.recent-comments-list li { border-bottom: 1px solid var(--line-soft); font-size: 12px; padding: 6px 0; color: var(--text-muted); }
 .recent-comments-list li a { color: var(--primary); }
 .recent-comments-list li a:hover { color: var(--secondary); }
 
@@ -944,7 +958,7 @@ ul { list-style: none; }
   color: var(--warn-text, #8a5a00);
 }
 .chat-setup-warning code {
-  background: rgba(0,0,0,0.06);
+  background: var(--surface-2);
   padding: 1px 5px;
   border-radius: 3px;
 }
@@ -1017,4 +1031,374 @@ ul { list-style: none; }
 @media (max-width: 600px) {
   .chat-box { height: 70vh; }
   .chat-msg { max-width: 92%; }
+}
+
+/* Spinner loading chat */
+.chat-spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: -2px;
+  animation: chatSpin .7s linear infinite;
+}
+@keyframes chatSpin { to { transform: rotate(360deg); } }
+
+/* Tombol "Pesan baru" saat user sedang scroll ke atas */
+.chat-jump-btn {
+  position: relative;
+  align-self: center;
+  margin: -4px auto 8px;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  animation: bounceIn .25s ease;
+}
+.chat-jump-btn.show { display: flex; }
+.chat-jump-btn:hover { background: var(--secondary); }
+@keyframes bounceIn {
+  0%   { transform: translateY(6px); opacity: 0; }
+  100% { transform: translateY(0);   opacity: 1; }
+}
+
+/* Penghitung karakter di form chat */
+.chat-char-count {
+  align-self: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  min-width: 26px;
+  text-align: right;
+}
+.chat-char-count.warn { color: var(--secondary); font-weight: 700; }
+
+/* Getar input saat kena limit anti-spam atau gagal kirim */
+.chat-input.shake { animation: chatShake .35s ease; border-color: var(--secondary); }
+@keyframes chatShake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+.chat-send-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+/* Pesan masuk sedikit "muncul" biar gak kaku */
+.chat-msg { animation: chatMsgIn .25s ease; }
+@keyframes chatMsgIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TOMBOL KEMBALI KE ATAS ===== */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity .25s ease, transform .25s ease, background .2s ease, visibility .25s;
+  z-index: 900;
+}
+.back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+.back-to-top:hover { background: var(--secondary); }
+
+/* ===== ANIMASI MUNCUL SAAT DI-SCROLL ===== */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal-on-scroll.revealed { opacity: 1; transform: translateY(0); }
+
+/* Kalender: tombol navigasi bulan */
+.cal-nav {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: background .15s, color .15s;
+}
+.cal-nav:hover { background: var(--primary); color: #fff; }
+
+/* Hormati preferensi user yang minta animasi minimal */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll, .chat-msg, .back-to-top, .chat-jump-btn { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+
+/* ===================================================
+   PERBAIKAN & PENYELARASAN TEMA GELAP / TERANG
+   =================================================== */
+
+/* --- Pemilih mode tampilan (Terang / Gelap / Otomatis) --- */
+.theme-switch { position: relative; display: inline-flex; }
+
+.theme-toggle { position: relative; }
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 1.5px solid var(--nav-bg);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+[data-theme-mode="auto"] .theme-toggle::after { opacity: 1; }
+
+.theme-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 168px;
+  background: var(--white);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 6px;
+  z-index: 1200;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+}
+.theme-switch.open .theme-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: background .15s ease, color .15s ease;
+}
+.theme-option i { width: 16px; text-align: center; color: var(--text-muted); }
+.theme-option:hover { background: var(--surface-2); color: var(--primary); }
+.theme-option.active { background: var(--primary); color: #fff; font-weight: 700; }
+.theme-option.active i { color: var(--accent); }
+
+/* --- Pemilih tema di HP & tablet: area sentuh lebih besar --- */
+@media (max-width: 1024px) {
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+    margin-left: 6px;
+  }
+  .theme-toggle::after { width: 9px; height: 9px; }
+  .theme-menu {
+    right: 0;
+    min-width: 190px;
+    padding: 8px;
+  }
+  .theme-option {
+    padding: 12px 12px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 400px) {
+  .theme-menu {
+    position: fixed;
+    top: auto;
+    right: 10px;
+    left: 10px;
+    min-width: 0;
+    width: auto;
+  }
+}
+
+/* --- Penyelarasan mode gelap --- */
+[data-theme="dark"] .site-header { box-shadow: 0 1px 0 var(--border); }
+[data-theme="dark"] .breaking-news-bar,
+[data-theme="dark"] .jam-online-card,
+[data-theme="dark"] .widget,
+[data-theme="dark"] .post-card-item,
+[data-theme="dark"] .post-list-item,
+[data-theme="dark"] .chat-box { border: 1px solid var(--border); }
+
+[data-theme="dark"] .post-card-item:hover { box-shadow: 0 6px 18px rgba(0,0,0,.55); }
+[data-theme="dark"] .post-list-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,.5); }
+
+[data-theme="dark"] .breaking-tags a { background: var(--surface-2); color: var(--accent); }
+[data-theme="dark"] .breaking-tags a:hover { background: var(--primary); color: #fff; }
+
+[data-theme="dark"] .berita-scroll-label { color: #1b1200; }
+[data-theme="dark"] .post-cat { color: #fff; }
+[data-theme="dark"] .badge-time { color: var(--on-accent); }
+
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .chat-input,
+[data-theme="dark"] .jam-online-city { background: var(--surface-2); color: var(--text); }
+[data-theme="dark"] .search-input::placeholder,
+[data-theme="dark"] .chat-input::placeholder { color: var(--text-muted); }
+[data-theme="dark"] .jam-online-city option { background: var(--white); color: var(--text); }
+
+[data-theme="dark"] .cal-grid .cal-day.other-month { color: var(--text-muted); opacity: .45; }
+[data-theme="dark"] .cal-grid .cal-day.today { background: var(--secondary); color: #1b0c0a; }
+
+[data-theme="dark"] .page-current { color: #0f1720; }
+[data-theme="dark"] .page-link:hover { color: #0f1720; }
+[data-theme="dark"] .widget-title { color: #fff; }
+[data-theme="dark"] .tab-btn.active,
+[data-theme="dark"] .tab-btn:hover { color: #fff; }
+
+[data-theme="dark"] .site-footer { background: var(--nav-bg); border-top: 1px solid var(--border); }
+[data-theme="dark"] .footer-bottom { background: rgba(0,0,0,.35); }
+
+[data-theme="dark"] .chat-msg.me .chat-bubble { background: var(--surface-2); }
+[data-theme="dark"] .chat-send-btn,
+[data-theme="dark"] .back-to-top { color: #0f1720; }
+
+[data-theme="dark"] .slider-dots .dot { background: rgba(255,255,255,.35); }
+
+/* --- Penyelarasan mode terang --- */
+[data-theme="light"] .theme-option.active i { color: var(--accent); }
+
+
+/* ===================================================
+   PENYESUAIAN LAYAR HP, TABLET & LAPTOP
+   =================================================== */
+
+/* Cegah layout melebar / geser ke samping di HP */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, video, iframe, table { max-width: 100%; }
+
+/* Ukuran teks & area sentuh nyaman di layar sentuh */
+@media (max-width: 768px) {
+  .topbar { font-size: 11px; }
+  .topbar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .topbar-right {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .topbar-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-left: 2px;
+    font-size: 15px;
+  }
+  .nav-toggle { min-width: 44px; min-height: 44px; }
+  .search-btn { min-width: 44px; }
+  .search-input, .chat-input, .jam-online-city { font-size: 16px; } /* cegah zoom otomatis iOS */
+  .page-current, .page-link, .page-next { width: 40px; height: 40px; }
+  .back-to-top { width: 46px; height: 46px; right: 14px; bottom: 14px; }
+  .widget { padding: 16px; }
+  .main-content { padding: 20px 0; }
+  .jam-online-card { padding: 18px 16px 22px; }
+}
+
+/* Layar sedang: 3 kolom kartu kecil */
+@media (min-width: 601px) and (max-width: 900px) {
+  .posts-grid-small { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Sidebar pindah ke bawah dengan jarak rapi saat 1 kolom */
+@media (max-width: 900px) {
+  .sidebar { margin-top: 8px; }
+  .breaking-news-bar { border-radius: 0; }
+}
+
+/* Laptop & desktop lebar: manfaatkan ruang */
+@media (min-width: 1440px) {
+  .container,
+  .topbar-inner,
+  .header-inner,
+  .nav-inner,
+  .breaking-news-bar,
+  .footer-inner { max-width: 1320px; }
+  .content-grid { grid-template-columns: 1fr 330px; gap: 34px; }
+  .hero-slider { max-height: 560px; }
+}
+
+/* Layar sentuh: hover tidak tersedia, dropdown menu dibuka lewat ketukan */
+@media (hover: none) {
+  .has-dropdown:hover > .dropdown { display: none; }
+  .has-dropdown.open > .dropdown { display: block; }
+  .nav-menu > li > a { padding-top: 14px; padding-bottom: 14px; }
+}
+
+/* Mode layar mendatar (landscape) di HP */
+@media (max-height: 480px) and (orientation: landscape) {
+  .hero-slider { aspect-ratio: 16 / 7; max-height: 60vh; }
+  .chat-box { height: 78vh; }
+}
+
+
+/* --- Menu ringkas (hamburger) juga untuk tablet sampai 1024px --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .nav-inner { flex-wrap: wrap; }
+  .nav-toggle { display: block; min-width: 44px; min-height: 44px; }
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--nav-bg) !important;
+    padding-bottom: 10px;
+  }
+  .nav-menu.open { display: flex; }
+  .nav-menu > li { width: 100%; background-color: var(--nav-bg); }
+  .nav-menu > li > a {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+    width: 100%;
+  }
+  .dropdown {
+    position: static;
+    border-top: none;
+    box-shadow: none;
+    background-color: rgba(0,0,0,.2);
+    min-width: 0;
+  }
+  .has-dropdown:hover > .dropdown { display: none; }
+  .has-dropdown.open > .dropdown { display: block; }
+  .dropdown li a { color: #ffffff; }
+  .submenu { left: 0; position: static; }
 }

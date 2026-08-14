@@ -6,11 +6,15 @@
   <title>TEKNIK KOMPUTER JARINGAN 1 - SMK IMELDA MEDAN</title>
   <meta name="description" content="SMK IMELDA MEDAN" />
   <script>
-    // Set mode gelap/terang sedini mungkin agar tidak ada kedipan warna
+    // Tentukan tema sedini mungkin agar tidak ada kedipan warna.
+    // Mode tersimpan: 'light' | 'dark' | 'auto' (ikut setelan perangkat)
     (function () {
-      var saved = localStorage.getItem('tkj-theme');
-      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', theme);
+      var mode = localStorage.getItem('tkj-theme') || 'auto';
+      if (mode !== 'light' && mode !== 'dark') mode = 'auto';
+      var dark = mode === 'dark' ||
+        (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme-mode', mode);
     })();
   </script>
   <link rel="stylesheet" href="style.css" />
@@ -53,10 +57,17 @@
           <circle class="topbar-clock-center" cx="20" cy="20" r="1.6" />
         </svg>
       </span>
-      <button class="theme-toggle" id="theme-toggle" title="Ganti mode gelap/terang" aria-label="Ganti mode gelap/terang">
-        <i class="fas fa-moon"></i>
-        <i class="fas fa-sun"></i>
-      </button>
+      <div class="theme-switch" id="theme-switch">
+        <button class="theme-toggle" id="theme-toggle" title="Atur mode tampilan" aria-label="Atur mode tampilan" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+        </button>
+        <div class="theme-menu" id="theme-menu" role="menu" aria-label="Pilih mode tampilan">
+          <button type="button" class="theme-option" data-theme-choice="light" role="menuitemradio"><i class="fas fa-sun"></i><span>Terang</span></button>
+          <button type="button" class="theme-option" data-theme-choice="dark" role="menuitemradio"><i class="fas fa-moon"></i><span>Gelap</span></button>
+          <button type="button" class="theme-option" data-theme-choice="auto" role="menuitemradio"><i class="fas fa-desktop"></i><span>Otomatis</span></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -68,7 +79,7 @@
       <img src="./images/logo.png" alt="Logo SMK IMELDA MEDAN" class="logo-img" />
     </div>
     <div class="header-title">
-      <h1 class="school-name"><a href="#TKJ1">TKJ 1</a></h1>
+      <h1 class="school-name"><a href="index.html">TKJ 1</a></h1>
       <p class="school-tagline">SMK IMELDA MEDAN</p>
     </div>
   </div>
@@ -246,10 +257,10 @@
         <div class="tab-content" id="tab-populer">
           <div class="posts-grid-small">
             <article class="post-card-small">
-              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <a href="#"><img src="images/fot30.jpeg" alt="Bukber" /></a>
               <div class="post-card-small-meta">
-                <span class="post-cat"><a href="#">[Kategori]</a></span>
-                <h5><a href="#">[Judul Berita Populer 1]</a></h5>
+                <span class="post-cat"><a href="#">Bukber</a></span>
+                <h5><a href="berita-sekolah/berita-sekolah-5.html">Acara Bukber Kelas 2 Bersama Teman Sekelas di Cafe Sejiwa...</a></h5>
               </div>
             </article>
             <article class="post-card-small">
@@ -485,12 +496,19 @@
 
       <div class="chat-box">
         <div class="chat-messages" id="chat-messages">
-          <div class="chat-loading" id="chat-loading">Memuat pesan...</div>
+          <div class="chat-loading" id="chat-loading">
+            <span class="chat-spinner"></span> Memuat pesan...
+          </div>
         </div>
+
+        <button type="button" class="chat-jump-btn" id="chat-jump-btn">
+          <i class="fas fa-arrow-down"></i> Pesan baru
+        </button>
 
         <form class="chat-form" id="chat-form">
           <input type="text" id="chat-input" class="chat-input" placeholder="Tulis pesan..." maxlength="300" autocomplete="off" required />
-          <button type="submit" class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+          <span class="chat-char-count" id="chat-char-count">300</span>
+          <button type="submit" class="chat-send-btn" id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
 
@@ -508,7 +526,7 @@
   <div class="footer-inner">
     <div class="footer-logo-area">
       <img src="./images/logo.png" alt="Logo SMK IMELDA" class="footer-logo" />
-      <h2 class="footer-school-name"><a href="#index.html">TKJ 1 - SMK IMELDA MEDAN</a></h2>
+      <h2 class="footer-school-name"><a href="index.html">TKJ 1 - SMK IMELDA MEDAN</a></h2>
       <p class="footer-tagline">Pusat Keunggulan Kompetensi Teknologi dan Informasi</p>
       <div class="footer-socials">
         <a href="https://www.facebook.com/smkimeldamedan" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -518,9 +536,14 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; Hak Cipta : TKJ 1 - SMK IMELDA MEDAN 2026/2027 | Dibuat Oleh: <a href="#TKJ1">TKJ 1</a> | All Rights Reserved.</p>
+    <p>&copy; Hak Cipta : TKJ 1 - SMK IMELDA MEDAN 2026/2027 | Dibuat Oleh: <a href="index.html">TKJ 1</a> | All Rights Reserved.</p>
   </div>
 </footer>
+
+<!-- Tombol Kembali ke Atas -->
+<button id="back-to-top" class="back-to-top" title="Kembali ke atas" aria-label="Kembali ke atas">
+  <i class="fas fa-arrow-up"></i>
+</button>
 
 <script src="script.js"></script>
 
