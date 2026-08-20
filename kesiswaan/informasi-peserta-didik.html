@@ -5,8 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="../images/logo.png">
 <title>Informasi Peserta Didik - TKJ 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+  :root{
+    --navy:#143745;
+    --navy-deep:#0d2530;
+    --navy-soft:#1c4a5c;
+    --gold:#b5872f;
+    --led:#3ddc97;
+    --led-glow: rgba(61,220,151,.55);
+    --line: #cfd8dc;
+    --paper:#f3f5f4;
+  }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
@@ -16,6 +28,8 @@
     background: #eee;
     overflow-x: hidden;
   }
+  .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+
   header.site-header {
     background-color: #143745;
     background-image: url('https://enrollment-api.ui.ac.id/uploads/20250922072406_Edited-9722.jpg');
@@ -118,45 +132,164 @@
     color: #666;
   }
 
-  .filter-row {
+  /* ===================== NETWORK TOPOLOGY ORG CHART ===================== */
+  .topo-wrap {
+    position: relative;
+    background:
+      linear-gradient(rgba(20,55,69,.05) 1px, transparent 1px) 0 0/28px 28px,
+      linear-gradient(90deg, rgba(20,55,69,.05) 1px, transparent 1px) 0 0/28px 28px,
+      var(--paper);
+    border: 1px solid #e2e6e5;
+    border-radius: 8px;
+    padding: 32px 16px 24px;
+    margin-bottom: 8px;
+  }
+  .topo-caption {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 8px;
-    margin: 0 0 20px;
+    font-size: 11.5px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--navy);
+    opacity: .65;
+    margin-bottom: 22px;
   }
-  .filter-pill {
-    border: 1px solid #ddd;
-    background: #fafafa;
-    color: #143745;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 7px 14px;
-    border-radius: 20px;
-  }
-  .filter-pill.active {
-    background: #143745;
-    border-color: #143745;
-    color: #fff;
+  .topo-caption .dot-live {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--led);
+    box-shadow: 0 0 0 3px var(--led-glow);
   }
 
+  .topo-tier { display: flex; justify-content: center; }
+  .topo-tier + .topo-tier { margin-top: 0; }
+
+  .node {
+    position: relative;
+    background: #fff;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: left;
+    min-width: 180px;
+    box-shadow: 3px 3px 0 rgba(20,55,69,.08);
+  }
+  .node .node-id {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: .06em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .node .node-id .dot-led {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--led);
+    box-shadow: 0 0 0 2px var(--led-glow);
+    flex: none;
+  }
+  .node .node-name {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 14.5px;
+    margin-top: 3px;
+    line-height: 1.25;
+  }
+  .node.node-root {
+    background: var(--navy);
+    border-color: var(--navy-deep);
+    box-shadow: 4px 4px 0 rgba(20,55,69,.18);
+  }
+  .node.node-root .node-id { color: #ffd88a; }
+  .node.node-root .node-name { color: #fff; }
+
+  .branch-line {
+    width: 1.5px;
+    height: 26px;
+    background: repeating-linear-gradient(to bottom, var(--navy) 0 4px, transparent 4px 8px);
+    margin: 0 auto;
+  }
+  .fan-row {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .fan-row::before {
+    content: "";
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 90px);
+    max-width: 560px;
+    height: 26px;
+    border-top: 1.5px dashed var(--navy);
+    border-left: 1.5px dashed var(--navy);
+    border-right: 1.5px dashed var(--navy);
+    border-radius: 10px 10px 0 0;
+  }
+  .fan-row .node { position: relative; }
+  .fan-row .node::before {
+    content: "";
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    width: 1.5px;
+    height: 26px;
+    background: repeating-linear-gradient(to bottom, var(--navy) 0 4px, transparent 4px 8px);
+  }
+
+  /* ===================== TABEL RINGKAS PENGURUS ===================== */
   .table-scroll {
     width: 100%;
     overflow-x: auto;
-    margin-bottom: 16px;
+    margin: 22px 0 16px;
     -webkit-overflow-scrolling: touch;
   }
   .content-box table.data-table {
     min-width: 320px;
   }
 
-  /* Kartu profil siswa */
+  /* ===================== DAFTAR SISWA / NODE DIRECTORY ===================== */
+  .directory-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 14px;
+    padding: 10px 14px;
+    background: var(--navy);
+    border-radius: 6px;
+    color: #fff;
+  }
+  .directory-toolbar .dt-title {
+    font-size: 12.5px;
+    letter-spacing: .04em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .directory-toolbar .dt-title .dot-live {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--led);
+    box-shadow: 0 0 0 3px rgba(61,220,151,.35);
+  }
+  .directory-toolbar .dt-count {
+    font-size: 11.5px;
+    opacity: .75;
+  }
+
   .student-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
+    gap: 14px;
     margin: 0 0 16px;
   }
   .student-card {
+    position: relative;
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 14px;
@@ -164,8 +297,15 @@
     display: flex;
     gap: 12px;
     align-items: center;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .student-card:hover {
+    border-color: var(--navy);
+    box-shadow: 2px 2px 0 rgba(20,55,69,.1);
+    transform: translateY(-1px);
   }
   .student-card .avatar {
+    position: relative;
     flex: 0 0 46px;
     width: 46px;
     height: 46px;
@@ -185,6 +325,16 @@
     object-fit: cover;
     display: block;
   }
+  .student-card .avatar .status-led {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--led);
+    border: 2px solid #fafafa;
+  }
   .student-card .student-info {
     flex: 1;
     min-width: 0;
@@ -196,8 +346,9 @@
   }
   .student-card .student-meta {
     display: block;
-    font-size: 12px;
-    color: #666;
+    font-size: 11px;
+    color: #888;
+    letter-spacing: .02em;
   }
   .student-card .student-role {
     display: inline-block;
@@ -205,6 +356,12 @@
     font-size: 11.5px;
     font-weight: 700;
     color: #b5872f;
+  }
+  .student-card .student-role.is-officer {
+    color: #fff;
+    background: var(--navy);
+    padding: 1px 8px;
+    border-radius: 20px;
   }
 
   .content-box .download-list {
@@ -302,7 +459,40 @@
     .student-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   }
 
-  /* ===================== RESPONSIF: HP ===================== */
+  /* ===================== RESPONSIF: TABLET / LAPTOP KECIL ===================== */
+  @media (max-width: 900px) {
+    .node { min-width: 160px; }
+  }
+
+  /* ===================== RESPONSIF: HP & TABLET SEMPIT ===================== */
+  @media (max-width: 768px) {
+    .topo-wrap { padding: 22px 10px 16px; }
+    .fan-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .fan-row::before { display: none; }
+    .fan-row .node::before {
+      content: "";
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1.5px;
+      height: 14px;
+      background: repeating-linear-gradient(to bottom, var(--navy) 0 4px, transparent 4px 8px);
+    }
+    .fan-row .node:first-child::before { display: none; }
+    .node { min-width: 200px; width: 100%; max-width: 280px; padding: 10px 14px; }
+    .node .node-name { font-size: 13.5px; }
+  }
+
+  @media (max-width: 480px) {
+    .node { min-width: 0; max-width: 100%; padding: 9px 12px; }
+    .node .node-name { font-size: 13px; }
+  }
+
   @media (max-width: 480px) {
     header.site-header .header-inner { padding: 26px 12px; }
     header.site-header img.logo { height: 48px; margin-bottom: 6px; }
@@ -322,16 +512,22 @@
     .stat-pill .stat-number { font-size: 20px; }
     .stat-pill .stat-label { font-size: 11.5px; }
 
+    .directory-toolbar { flex-direction: column; align-items: flex-start; }
+
     .student-grid { grid-template-columns: 1fr; gap: 10px; }
     .student-card { padding: 12px; gap: 10px; }
     .student-card .avatar { flex-basis: 40px; width: 40px; height: 40px; }
     .student-card h4 { font-size: 14px; }
-    .student-card .student-meta { font-size: 11.5px; }
+    .student-card .student-meta { font-size: 11px; }
     .student-card .student-role { font-size: 11px; }
 
     footer { font-size: 12px; padding: 16px 12px; }
     .social-links a { width: 34px; height: 34px; }
     .social-links svg { width: 16px; height: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
   }
 </style>
 </head>
@@ -384,7 +580,45 @@
     </div>
 
     <h3 class="section-heading">Struktur Pengurus Kelas</h3>
-    <p>Berikut susunan pengurus Kelas TKJ 1 yang bertugas membantu koordinasi kegiatan belajar dan administrasi kelas.</p>
+    <p>Susunan pengurus digambarkan sebagai topologi jaringan &mdash; sesuai identitas jurusan TKJ &mdash; dengan Ketua Kelas sebagai simpul pusat yang menghubungkan seluruh koordinasi kelas.</p>
+
+    <div class="topo-wrap">
+      <div class="topo-caption"><span class="dot-live"></span> STRUKTUR-ORGANISASI.NET &middot; 5 NODE AKTIF</div>
+
+      <div class="topo-tier">
+        <div class="node node-root">
+          <div class="node-id mono"><span class="dot-led"></span>NODE/ROOT</div>
+          <div class="node-name">Trytian Variyansyah<br><span style="font-weight:500;font-size:12px;opacity:.85;">Ketua Kelas</span></div>
+        </div>
+      </div>
+
+      <div class="branch-line"></div>
+
+      <div class="topo-tier">
+        <div class="node">
+          <div class="node-id mono"><span class="dot-led"></span>NODE/01</div>
+          <div class="node-name">Ingky Aldewa<br><span style="font-weight:500;font-size:12px;color:#666;">Wakil Ketua Kelas</span></div>
+        </div>
+      </div>
+
+      <div class="branch-line"></div>
+
+      <div class="fan-row">
+        <div class="node">
+          <div class="node-id mono"><span class="dot-led"></span>NODE/02</div>
+          <div class="node-name">Intan Chairiza<br><span style="font-weight:500;font-size:12px;color:#666;">Sekretaris</span></div>
+        </div>
+        <div class="node">
+          <div class="node-id mono"><span class="dot-led"></span>NODE/03</div>
+          <div class="node-name">Angel Airin<br><span style="font-weight:500;font-size:12px;color:#666;">Wakil Sekretaris</span></div>
+        </div>
+        <div class="node">
+          <div class="node-id mono"><span class="dot-led"></span>NODE/04</div>
+          <div class="node-name">Defi Efnisyah Bunga Hasibuan<br><span style="font-weight:500;font-size:12px;color:#666;">Bendahara</span></div>
+        </div>
+      </div>
+    </div>
+
     <div class="table-scroll">
       <table class="data-table" style="width:100%;border-collapse:collapse;margin-bottom:0;font-size:14px;">
         <thead>
@@ -406,316 +640,321 @@
     <h3 class="section-heading">Daftar Peserta Didik</h3>
     <p>Setiap kartu di bawah memiliki foto profil siswa. Foto akan ditambahkan menyusul; slot foto sudah disiapkan pada masing-masing kartu.</p>
 
+    <div class="directory-toolbar">
+      <div class="dt-title mono"><span class="dot-live"></span>DIRECTORY // TKJ-1</div>
+      <div class="dt-count mono">39 ENTRIES</div>
+    </div>
+
     <div class="student-grid">
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/adzra-marpung.jpg" alt="Foto Adzra Marpung"></div>
+        <div class="avatar"><img src="../images/siswa/adzra-marpung.jpg" alt="Foto Adzra Marpung"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Adzra Marpung</h4>
-          <span class="student-meta">No. Absen 1</span>
+          <span class="student-meta mono">ABSEN&nbsp;01</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/aidil-panusunan-siregar.jpg" alt="Foto Aidil Panusunan Siregar"></div>
+        <div class="avatar"><img src="../images/siswa/aidil-panusunan-siregar.jpg" alt="Foto Aidil Panusunan Siregar"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Aidil Panusunan Siregar</h4>
-          <span class="student-meta">No. Absen 2</span>
+          <span class="student-meta mono">ABSEN&nbsp;02</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/airil-efendi.jpg" alt="Foto Airil Efendi"></div>
+        <div class="avatar"><img src="../images/siswa/airil-efendi.jpg" alt="Foto Airil Efendi"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Airil Efendi</h4>
-          <span class="student-meta">No. Absen 3</span>
+          <span class="student-meta mono">ABSEN&nbsp;03</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/anda-mayasyah.jpg" alt="Foto Anda Mayasyah"></div>
+        <div class="avatar"><img src="../images/siswa/anda-mayasyah.jpg" alt="Foto Anda Mayasyah"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Anda Mayasyah</h4>
-          <span class="student-meta">No. Absen 4</span>
+          <span class="student-meta mono">ABSEN&nbsp;04</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/angel-airin.jpg" alt="Foto Angel Airin"></div>
+        <div class="avatar"><img src="../images/siswa/angel-airin.jpg" alt="Foto Angel Airin"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Angel Airin</h4>
-          <span class="student-meta">No. Absen 5</span>
-          <span class="student-role">Wakil Sekretaris</span>
+          <span class="student-meta mono">ABSEN&nbsp;05</span>
+          <span class="student-role is-officer">Wakil Sekretaris</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/aqbil-rapael-harahap.jpg" alt="Foto Aqbil Rapael Harahap"></div>
+        <div class="avatar"><img src="../images/siswa/aqbil-rapael-harahap.jpg" alt="Foto Aqbil Rapael Harahap"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Aqbil Rapael Harahap</h4>
-          <span class="student-meta">No. Absen 6</span>
+          <span class="student-meta mono">ABSEN&nbsp;06</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/alif-ananda-juan.jpg" alt="Foto Alif Ananda Juan"></div>
+        <div class="avatar"><img src="../images/siswa/alif-ananda-juan.jpg" alt="Foto Alif Ananda Juan"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Alif Ananda Juan</h4>
-          <span class="student-meta">No. Absen 7</span>
+          <span class="student-meta mono">ABSEN&nbsp;07</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/aliya-sofiah-raisyah.jpg" alt="Foto Aliya Sofiah Raisyah"></div>
+        <div class="avatar"><img src="../images/siswa/aliya-sofiah-raisyah.jpg" alt="Foto Aliya Sofiah Raisyah"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Aliya Sofiah Raisyah</h4>
-          <span class="student-meta">No. Absen 8</span>
+          <span class="student-meta mono">ABSEN&nbsp;08</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/cinta-manisyah-kwirala.jpg" alt="Foto Cinta Manisyah Kwirala"></div>
+        <div class="avatar"><img src="../images/siswa/cinta-manisyah-kwirala.jpg" alt="Foto Cinta Manisyah Kwirala"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Cinta Manisyah Kwirala</h4>
-          <span class="student-meta">No. Absen 9</span>
+          <span class="student-meta mono">ABSEN&nbsp;09</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/dede-firansyah.jpg" alt="Foto Dede Firansyah"></div>
+        <div class="avatar"><img src="../images/siswa/dede-firansyah.jpg" alt="Foto Dede Firansyah"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Dede Firansyah</h4>
-          <span class="student-meta">No. Absen 10</span>
+          <span class="student-meta mono">ABSEN&nbsp;10</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/defi-efnisyah-bunga-hasibua.jpg" alt="Foto Defi Efnisyah Bunga Hasibua"></div>
+        <div class="avatar"><img src="../images/siswa/defi-efnisyah-bunga-hasibua.jpg" alt="Foto Defi Efnisyah Bunga Hasibua"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Defi Efnisyah Bunga Hasibua</h4>
-          <span class="student-meta">No. Absen 11</span>
-          <span class="student-role">Bendahara</span>
+          <span class="student-meta mono">ABSEN&nbsp;11</span>
+          <span class="student-role is-officer">Bendahara</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/fenny-anggraini.jpg" alt="Foto Fenny Anggraini"></div>
+        <div class="avatar"><img src="../images/siswa/fenny-anggraini.jpg" alt="Foto Fenny Anggraini"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Fenny Anggraini</h4>
-          <span class="student-meta">No. Absen 12</span>
+          <span class="student-meta mono">ABSEN&nbsp;12</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/frans-aditya.jpg" alt="Foto Frans Aditya"></div>
+        <div class="avatar"><img src="../images/siswa/frans-aditya.jpg" alt="Foto Frans Aditya"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Frans Aditya</h4>
-          <span class="student-meta">No. Absen 13</span>
+          <span class="student-meta mono">ABSEN&nbsp;13</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/hanafi-isman-labalni.jpg" alt="Foto Hanafi Isman Labalni"></div>
+        <div class="avatar"><img src="../images/siswa/hanafi-isman-labalni.jpg" alt="Foto Hanafi Isman Labalni"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Hanafi Isman Labalni</h4>
-          <span class="student-meta">No. Absen 14</span>
+          <span class="student-meta mono">ABSEN&nbsp;14</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/hanzalah-el-zibril-shiddiq.jpg" alt="Foto Hanzalah El Zibril Shiddiq"></div>
+        <div class="avatar"><img src="../images/siswa/hanzalah-el-zibril-shiddiq.jpg" alt="Foto Hanzalah El Zibril Shiddiq"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Hanzalah El Zibril Shiddiq</h4>
-          <span class="student-meta">No. Absen 15</span>
+          <span class="student-meta mono">ABSEN&nbsp;15</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/ikhsan-khairil.jpg" alt="Foto Ikhsan Khairil"></div>
+        <div class="avatar"><img src="../images/siswa/ikhsan-khairil.jpg" alt="Foto Ikhsan Khairil"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Ikhsan Khairil</h4>
-          <span class="student-meta">No. Absen 16</span>
+          <span class="student-meta mono">ABSEN&nbsp;16</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/ingky-aldewa.jpg" alt="Foto Ingky Aldewa"></div>
+        <div class="avatar"><img src="../images/siswa/ingky-aldewa.jpg" alt="Foto Ingky Aldewa"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Ingky Aldewa</h4>
-          <span class="student-meta">No. Absen 17</span>
-          <span class="student-role">Wakil Ketua Kelas</span>
+          <span class="student-meta mono">ABSEN&nbsp;17</span>
+          <span class="student-role is-officer">Wakil Ketua Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/intan-chairiza.jpg" alt="Foto Intan Chairiza"></div>
+        <div class="avatar"><img src="../images/siswa/intan-chairiza.jpg" alt="Foto Intan Chairiza"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Intan Chairiza</h4>
-          <span class="student-meta">No. Absen 18</span>
-          <span class="student-role">Sekretaris</span>
+          <span class="student-meta mono">ABSEN&nbsp;18</span>
+          <span class="student-role is-officer">Sekretaris</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/jossi-prasetyo.jpg" alt="Foto Jossi Prasetyo"></div>
+        <div class="avatar"><img src="../images/siswa/jossi-prasetyo.jpg" alt="Foto Jossi Prasetyo"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Jossi Prasetyo</h4>
-          <span class="student-meta">No. Absen 19</span>
+          <span class="student-meta mono">ABSEN&nbsp;19</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/kayla-nafasya.jpg" alt="Foto Kayla Nafasya"></div>
+        <div class="avatar"><img src="../images/siswa/kayla-nafasya.jpg" alt="Foto Kayla Nafasya"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Kayla Nafasya</h4>
-          <span class="student-meta">No. Absen 20</span>
+          <span class="student-meta mono">ABSEN&nbsp;20</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/keyzia-aulia-rahman.jpg" alt="Foto Keyzia Aulia Rahman"></div>
+        <div class="avatar"><img src="../images/siswa/keyzia-aulia-rahman.jpg" alt="Foto Keyzia Aulia Rahman"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Keyzia Aulia Rahman</h4>
-          <span class="student-meta">No. Absen 21</span>
+          <span class="student-meta mono">ABSEN&nbsp;21</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/m-fauzan-zamzami.jpg" alt="Foto M. Fauzan Zamzami"></div>
+        <div class="avatar"><img src="../images/siswa/m-fauzan-zamzami.jpg" alt="Foto M. Fauzan Zamzami"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>M. Fauzan Zamzami</h4>
-          <span class="student-meta">No. Absen 22</span>
+          <span class="student-meta mono">ABSEN&nbsp;22</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/m-rifqy-al-ghifari.jpg" alt="Foto M. Rifqy Al Ghifari"></div>
+        <div class="avatar"><img src="../images/siswa/m-rifqy-al-ghifari.jpg" alt="Foto M. Rifqy Al Ghifari"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>M. Rifqy Al Ghifari</h4>
-          <span class="student-meta">No. Absen 23</span>
+          <span class="student-meta mono">ABSEN&nbsp;23</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/muhyi-al-rasyid-lubis.jpg" alt="Foto Muhyi Al Rasyid Lubis"></div>
+        <div class="avatar"><img src="../images/siswa/muhyi-al-rasyid-lubis.jpg" alt="Foto Muhyi Al Rasyid Lubis"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Muhyi Al Rasyid Lubis</h4>
-          <span class="student-meta">No. Absen 24</span>
+          <span class="student-meta mono">ABSEN&nbsp;24</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/nabila-syaidina-alif.jpg" alt="Foto Nabila Syaidina Alif"></div>
+        <div class="avatar"><img src="../images/siswa/nabila-syaidina-alif.jpg" alt="Foto Nabila Syaidina Alif"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Nabila Syaidina Alif</h4>
-          <span class="student-meta">No. Absen 25</span>
+          <span class="student-meta mono">ABSEN&nbsp;25</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/nur-sahara.jpg" alt="Foto Nur Sahara"></div>
+        <div class="avatar"><img src="../images/siswa/nur-sahara.jpg" alt="Foto Nur Sahara"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Nur Sahara</h4>
-          <span class="student-meta">No. Absen 26</span>
+          <span class="student-meta mono">ABSEN&nbsp;26</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/panji-arya-sandewa.jpg" alt="Foto Panji Arya Sandewa"></div>
+        <div class="avatar"><img src="../images/siswa/panji-arya-sandewa.jpg" alt="Foto Panji Arya Sandewa"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Panji Arya Sandewa</h4>
-          <span class="student-meta">No. Absen 27</span>
+          <span class="student-meta mono">ABSEN&nbsp;27</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/raffi-tri-sandi.jpg" alt="Foto Raffi Tri Sandi"></div>
+        <div class="avatar"><img src="../images/siswa/raffi-tri-sandi.jpg" alt="Foto Raffi Tri Sandi"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Raffi Tri Sandi</h4>
-          <span class="student-meta">No. Absen 28</span>
+          <span class="student-meta mono">ABSEN&nbsp;28</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/rayhan-al-farabi-siregar.jpg" alt="Foto Rayhan Al Farabi Siregar"></div>
+        <div class="avatar"><img src="../images/siswa/rayhan-al-farabi-siregar.jpg" alt="Foto Rayhan Al Farabi Siregar"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Rayhan Al Farabi Siregar</h4>
-          <span class="student-meta">No. Absen 29</span>
+          <span class="student-meta mono">ABSEN&nbsp;29</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/rehan-saputra.jpg" alt="Foto Rehan Saputra"></div>
+        <div class="avatar"><img src="../images/siswa/rehan-saputra.jpg" alt="Foto Rehan Saputra"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Rehan Saputra</h4>
-          <span class="student-meta">No. Absen 30</span>
+          <span class="student-meta mono">ABSEN&nbsp;30</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/rini-dania-putri.jpg" alt="Foto Rini Dania Putri"></div>
+        <div class="avatar"><img src="../images/siswa/rini-dania-putri.jpg" alt="Foto Rini Dania Putri"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Rini Dania Putri</h4>
-          <span class="student-meta">No. Absen 31</span>
+          <span class="student-meta mono">ABSEN&nbsp;31</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/riska-amelia-pucki.jpg" alt="Foto Riska Amelia Pucki"></div>
+        <div class="avatar"><img src="../images/siswa/riska-amelia-pucki.jpg" alt="Foto Riska Amelia Pucki"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Riska Amelia Pucki</h4>
-          <span class="student-meta">No. Absen 32</span>
+          <span class="student-meta mono">ABSEN&nbsp;32</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/rizky-aditya-pratama.jpg" alt="Foto Rizky Aditya Pratama"></div>
+        <div class="avatar"><img src="../images/siswa/rizky-aditya-pratama.jpg" alt="Foto Rizky Aditya Pratama"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Rizky Aditya Pratama</h4>
-          <span class="student-meta">No. Absen 33</span>
+          <span class="student-meta mono">ABSEN&nbsp;33</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/trytian-variyansyah.jpg" alt="Foto Trytian Variyansyah"></div>
+        <div class="avatar"><img src="../images/siswa/trytian-variyansyah.jpg" alt="Foto Trytian Variyansyah"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Trytian Variyansyah</h4>
-          <span class="student-meta">No. Absen 34</span>
-          <span class="student-role">Ketua Kelas</span>
+          <span class="student-meta mono">ABSEN&nbsp;34</span>
+          <span class="student-role is-officer">Ketua Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/zaidan-alif.jpg" alt="Foto Zaidan Alif"></div>
+        <div class="avatar"><img src="../images/siswa/zaidan-alif.jpg" alt="Foto Zaidan Alif"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Zaidan Alif</h4>
-          <span class="student-meta">No. Absen 35</span>
+          <span class="student-meta mono">ABSEN&nbsp;35</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/alya-salfani.jpg" alt="Foto Alya Salfani"></div>
+        <div class="avatar"><img src="../images/siswa/alya-salfani.jpg" alt="Foto Alya Salfani"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Alya Salfani</h4>
-          <span class="student-meta">No. Absen 36</span>
+          <span class="student-meta mono">ABSEN&nbsp;36</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/bagus-pribadi-ananda.jpg" alt="Foto Bagus Pribadi Ananda"></div>
+        <div class="avatar"><img src="../images/siswa/bagus-pribadi-ananda.jpg" alt="Foto Bagus Pribadi Ananda"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Bagus Pribadi Ananda</h4>
-          <span class="student-meta">No. Absen 37</span>
+          <span class="student-meta mono">ABSEN&nbsp;37</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/dimas-setiawan.jpg" alt="Foto Dimas Setiawan"></div>
+        <div class="avatar"><img src="../images/siswa/dimas-setiawan.jpg" alt="Foto Dimas Setiawan"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Dimas Setiawan</h4>
-          <span class="student-meta">No. Absen 38</span>
+          <span class="student-meta mono">ABSEN&nbsp;38</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
       <div class="student-card">
-        <div class="avatar"><img src="../images/siswa/nindi-aulia.jpg" alt="Foto Nindi Aulia"></div>
+        <div class="avatar"><img src="../images/siswa/nindi-aulia.jpg" alt="Foto Nindi Aulia"><span class="status-led"></span></div>
         <div class="student-info">
           <h4>Nindi Aulia</h4>
-          <span class="student-meta">No. Absen 39</span>
+          <span class="student-meta mono">ABSEN&nbsp;39</span>
           <span class="student-role">Anggota Kelas</span>
         </div>
       </div>
