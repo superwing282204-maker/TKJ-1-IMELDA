@@ -264,9 +264,9 @@
               </div>
             </article>
             <article class="post-card-small">
-              <a href="#"><img src="images/post-placeholder.jpg" alt="[Judul Berita]" /></a>
+              <a href="#"><img src="images/fotobukber.jpeg" alt="[Judul Berita]" /></a>
               <div class="post-card-small-meta">
-                <span class="post-cat"><a href="#">[Kategori]</a></span>
+                <span class="post-cat"><a href="#">Acara</a></span>
                 <h5><a href="#">[Judul Berita Populer 2]</a></h5>
               </div>
             </article>
@@ -492,6 +492,10 @@
       <div class="chat-head">
         <h1><i class="fas fa-comments"></i> Chat Anonim</h1>
         <p>Ruang ngobrol terbuka untuk semua pengunjung website TKJ 1. Nama kamu otomatis disamarkan. Tetap sopan dan jaga etika ya!</p>
+        <div class="chat-admin-row">
+          <span class="chat-admin-badge" id="chat-admin-badge"><i class="fas fa-shield-alt"></i> Mode Admin Aktif</span>
+          <button type="button" class="chat-admin-btn" id="chat-admin-btn"><i class="fas fa-user-shield"></i> Admin</button>
+        </div>
       </div>
 
       <div class="chat-box">
@@ -518,6 +522,54 @@
       </p>
 
     </div>
+  </div>
+
+  <!-- ===== MODAL LOGIN ADMIN ===== -->
+  <div class="admin-modal-overlay" id="admin-modal-overlay">
+    <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title">
+      <button type="button" class="admin-modal-close" id="admin-modal-close" aria-label="Tutup">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="admin-modal-icon"><i class="fas fa-shield-alt"></i></div>
+      <h2 class="admin-modal-title" id="admin-modal-title">Masuk sebagai Admin</h2>
+      <p class="admin-modal-desc">Masukkan password admin untuk mengaktifkan mode kelola pesan.</p>
+
+      <form class="admin-modal-form" id="admin-modal-form">
+        <div class="admin-pass-field">
+          <i class="fas fa-lock admin-pass-icon"></i>
+          <input type="password" id="admin-modal-input" class="admin-pass-input" placeholder="Password admin" autocomplete="current-password" />
+          <button type="button" class="admin-pass-toggle" id="admin-pass-toggle" aria-label="Tampilkan password">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <p class="admin-modal-error" id="admin-modal-error">Password salah, coba lagi.</p>
+        <button type="submit" class="admin-modal-submit">
+          <i class="fas fa-arrow-right-to-bracket"></i> Masuk
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== MODAL KONFIRMASI HAPUS PESAN ===== -->
+  <div class="delete-confirm-overlay" id="delete-confirm-overlay">
+    <div class="delete-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="delete-confirm-title">
+      <div class="delete-confirm-icon"><i class="fas fa-trash-alt"></i></div>
+      <h2 class="delete-confirm-title" id="delete-confirm-title">Hapus pesan ini?</h2>
+      <p class="delete-confirm-preview" id="delete-confirm-preview"></p>
+      <p class="delete-confirm-desc">Pesan akan hilang untuk semua orang secara permanen.</p>
+      <div class="delete-confirm-actions">
+        <button type="button" class="delete-confirm-cancel" id="delete-confirm-cancel">Batal</button>
+        <button type="button" class="delete-confirm-yes" id="delete-confirm-yes">
+          <i class="fas fa-trash"></i> <span>Hapus</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST NOTIFIKASI ===== -->
+  <div class="chat-toast" id="chat-toast">
+    <i class="fas fa-check-circle"></i> <span id="chat-toast-text">Pesan dihapus</span>
   </div>
 </section>
 

@@ -24,18 +24,248 @@ const firebaseConfig = {
   appId: "1:62388081598:web:c2fe65eaa9f18f8785dfef"
 };
 
+// ===================================================
+// MODE ADMIN
+// ===================================================
+// Ganti password di bawah ini sesuka kamu.
+// CATATAN PENTING: ini hanya password "gerbang" di sisi tampilan
+// (biar orang iseng nggak asal klik hapus). Ini BUKAN keamanan
+// sungguhan, karena semua kode JS bisa dilihat & diubah lewat
+// DevTools browser siapa pun. Supaya benar-benar aman (orang lain
+// tidak bisa hapus pesan walau lewat DevTools/console), atur juga
+// Firebase Realtime Database Rules di Firebase Console, misalnya:
+//
+// {
+//   "rules": {
+//     "chat-anonim-tkj1": {
+//       ".read": true,
+//       ".write": true,
+//       "$msgId": { ".write": "!data.exists() || newData.val() === null" }
+//     }
+//   }
+// }
+// (Baris terakhir itu artinya: siapapun boleh kirim pesan baru,
+// tapi untuk MENGHAPUS/MENGUBAH pesan yang sudah ada, itu tetap
+// diizinkan di rules dasar ini — kalau mau benar-benar dikunci
+// hanya admin, perlu Firebase Authentication. Untuk chat kelas
+// sederhana, password gerbang ini biasanya sudah cukup.)
+const ADMIN_CONFIG = {
+  password: "tkj1admin", // <-- ganti password ini
+  sessionKey: "chat-admin-mode"
+};
+
 document.addEventListener('DOMContentLoaded', function () {
 
-  const messagesEl = document.getElementById('chat-messages');
-  const loadingEl  = document.getElementById('chat-loading');
-  const formEl     = document.getElementById('chat-form');
-  const inputEl    = document.getElementById('chat-input');
-  const myNameEl   = document.getElementById('chat-my-name');
+  const messagesEl  = document.getElementById('chat-messages');
+  const loadingEl   = document.getElementById('chat-loading');
+  const formEl      = document.getElementById('chat-form');
+  const inputEl     = document.getElementById('chat-input');
+  const myNameEl    = document.getElementById('chat-my-name');
+  const sendBtn     = document.getElementById('chat-send-btn');
+  const charCountEl = document.getElementById('chat-char-count');
+  const jumpBtn     = document.getElementById('chat-jump-btn');
+  const adminBtn    = document.getElementById('chat-admin-btn');
+  const adminBadge  = document.getElementById('chat-admin-badge');
+  const adminOverlay   = document.getElementById('admin-modal-overlay');
+  const adminModalForm = document.getElementById('admin-modal-form');
+  const adminInput     = document.getElementById('admin-modal-input');
+  const adminErrorEl   = document.getElementById('admin-modal-error');
+  const adminCloseBtn  = document.getElementById('admin-modal-close');
+  const adminPassToggle = document.getElementById('admin-pass-toggle');
+  const adminPassField  = adminInput ? adminInput.closest('.admin-pass-field') : null;
+  const deleteOverlay  = document.getElementById('delete-confirm-overlay');
+  const deletePreview  = document.getElementById('delete-confirm-preview');
+  const deleteCancel   = document.getElementById('delete-confirm-cancel');
+  const deleteYesBtn   = document.getElementById('delete-confirm-yes');
+  const chatToast      = document.getElementById('chat-toast');
+  const chatToastText  = document.getElementById('chat-toast-text');
 
   if (!formEl || !messagesEl) return; // bukan halaman chat
 
+  // ===== STATUS ADMIN =====
+  let isAdmin = sessionStorage.getItem(ADMIN_CONFIG.sessionKey) === 'yes';
+
+  function updateAdminUI() {
+    document.body.classList.toggle('admin-mode', isAdmin);
+    if (adminBadge) adminBadge.style.display = isAdmin ? 'inline-flex' : 'none';
+    if (adminBtn) {
+      adminBtn.innerHTML = isAdmin
+        ? '<i class="fas fa-user-shield"></i> Keluar Admin'
+        : '<i class="fas fa-user-shield"></i> Admin';
+      adminBtn.classList.toggle('is-admin', isAdmin);
+    }
+    // Tombol hapus di tiap pesan ditampilkan/disembunyikan otomatis lewat CSS
+    // berdasarkan class "admin-mode" di <body> (lihat style.css).
+  }
+
+  function loginAdmin() {
+    if (!adminOverlay || !adminInput) return;
+    adminErrorEl.classList.remove('show');
+    adminInput.value = '';
+    adminPassField.classList.remove('shake');
+    adminOverlay.classList.add('show');
+    setTimeout(function () { adminInput.focus(); }, 50);
+  }
+
+  function closeAdminModal() {
+    if (adminOverlay) adminOverlay.classList.remove('show');
+  }
+
+  function attemptAdminLogin() {
+    const pass = adminInput.value;
+    if (pass === ADMIN_CONFIG.password) {
+      isAdmin = true;
+      sessionStorage.setItem(ADMIN_CONFIG.sessionKey, 'yes');
+      updateAdminUI();
+      closeAdminModal();
+    } else {
+      adminErrorEl.classList.add('show');
+      adminPassField.classList.remove('shake');
+      void adminPassField.offsetWidth; // restart animasi
+      adminPassField.classList.add('shake');
+      adminInput.value = '';
+      adminInput.focus();
+    }
+  }
+
+  function logoutAdmin() {
+    isAdmin = false;
+    sessionStorage.removeItem(ADMIN_CONFIG.sessionKey);
+    updateAdminUI();
+  }
+
+  if (adminBtn) {
+    adminBtn.addEventListener('click', function () {
+      isAdmin ? logoutAdmin() : loginAdmin();
+    });
+  }
+
+  if (adminModalForm) {
+    adminModalForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      attemptAdminLogin();
+    });
+  }
+  if (adminCloseBtn) adminCloseBtn.addEventListener('click', closeAdminModal);
+  if (adminOverlay) {
+    adminOverlay.addEventListener('click', function (e) {
+      if (e.target === adminOverlay) closeAdminModal();
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && adminOverlay && adminOverlay.classList.contains('show')) closeAdminModal();
+  });
+  if (adminPassToggle && adminInput) {
+    adminPassToggle.addEventListener('click', function () {
+      const showing = adminInput.type === 'text';
+      adminInput.type = showing ? 'password' : 'text';
+      adminPassToggle.innerHTML = showing ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    });
+  }
+  if (adminInput) {
+    adminInput.addEventListener('input', function () {
+      adminErrorEl.classList.remove('show');
+    });
+  }
+
+  // ===== KONFIRMASI HAPUS PESAN (modal custom, bukan confirm() bawaan) =====
+  let pendingDeleteKey = null;
+
+  function truncate(str, max) {
+    return str.length > max ? str.slice(0, max) + '…' : str;
+  }
+
+  function showToast(msg) {
+    if (!chatToast) return;
+    chatToastText.textContent = msg;
+    chatToast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function () { chatToast.classList.remove('show'); }, 2400);
+  }
+
+  function openDeleteConfirm(key, previewText) {
+    pendingDeleteKey = key;
+    if (deletePreview) deletePreview.textContent = '"' + truncate(previewText || '', 90) + '"';
+    if (deleteYesBtn) {
+      deleteYesBtn.disabled = false;
+      deleteYesBtn.innerHTML = '<i class="fas fa-trash"></i> <span>Hapus</span>';
+    }
+    if (deleteOverlay) deleteOverlay.classList.add('show');
+  }
+
+  function closeDeleteConfirm() {
+    pendingDeleteKey = null;
+    if (deleteOverlay) deleteOverlay.classList.remove('show');
+  }
+
+  if (deleteCancel) deleteCancel.addEventListener('click', closeDeleteConfirm);
+  if (deleteOverlay) {
+    deleteOverlay.addEventListener('click', function (e) {
+      if (e.target === deleteOverlay) closeDeleteConfirm();
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && deleteOverlay && deleteOverlay.classList.contains('show')) closeDeleteConfirm();
+  });
+
+  if (deleteYesBtn) {
+    deleteYesBtn.addEventListener('click', function () {
+      if (!pendingDeleteKey) return;
+      const key = pendingDeleteKey;
+      deleteYesBtn.disabled = true;
+      deleteYesBtn.innerHTML = '<i class="fas fa-spinner"></i> <span>Menghapus...</span>';
+
+      chatRef.child(key).remove().then(function () {
+        closeDeleteConfirm();
+        showToast('Pesan berhasil dihapus');
+        // Elemen pesan akan hilang dengan animasi lewat listener 'child_removed' di bawah.
+      }).catch(function (err) {
+        console.error('Gagal menghapus pesan:', err);
+        deleteYesBtn.disabled = false;
+        deleteYesBtn.innerHTML = '<i class="fas fa-trash"></i> <span>Hapus</span>';
+        showToast('Gagal menghapus pesan, coba lagi');
+      });
+    });
+  }
+
+  // Animasi elegan saat sebuah pesan hilang dari layar (collapse + fade)
+  function animateRemoveMessage(el) {
+    if (!el) return;
+    const height = el.getBoundingClientRect().height;
+    el.style.maxHeight = height + 'px';
+    el.style.overflow = 'hidden';
+    void el.offsetHeight; // paksa reflow supaya transisi berikutnya kepakai
+    el.classList.add('chat-msg-removing');
+
+    requestAnimationFrame(function () {
+      el.style.maxHeight = '0px';
+      el.style.marginTop = '0px';
+      el.style.marginBottom = '0px';
+      el.style.paddingTop = '0px';
+      el.style.paddingBottom = '0px';
+    });
+
+    let done = false;
+    function finish() {
+      if (done) return;
+      done = true;
+      el.remove();
+    }
+    el.addEventListener('transitionend', function handler(e) {
+      if (e.propertyName === 'max-height') {
+        el.removeEventListener('transitionend', handler);
+        finish();
+      }
+    });
+    setTimeout(finish, 500); // jaring pengaman kalau transitionend tidak terpicu
+  }
+
+  function hapusPesan(key, btn, previewText) {
+    openDeleteConfirm(key, previewText);
+  }
+
   // Kalau config belum diganti, kasih tahu di halaman (bukan cuma di console)
-  if (firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_ANDA") {
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_ANDA") {
     loadingEl.innerHTML =
       '<div class="chat-setup-warning">' +
       '⚠️ Chat belum aktif. Admin website perlu memasukkan konfigurasi Firebase ' +
@@ -44,10 +274,26 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
+  // Kalau library Firebase gagal dimuat (CDN diblokir, koneksi bermasalah, dll)
+  if (typeof firebase === 'undefined') {
+    loadingEl.innerHTML =
+      '<div class="chat-setup-warning">' +
+      '⚠️ Gagal memuat layanan chat. Periksa koneksi internet kamu, lalu muat ulang halaman ini.' +
+      '</div>';
+    return;
+  }
+
   // ===== INIT FIREBASE =====
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-  const chatRef = db.ref('chat-anonim-tkj1');
+  let db, chatRef;
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    chatRef = db.ref('chat-anonim-tkj1');
+  } catch (err) {
+    console.error('Gagal menginisialisasi Firebase:', err);
+    loadingEl.innerHTML = '<div class="chat-setup-warning">⚠️ Chat sedang bermasalah. Coba lagi beberapa saat lagi.</div>';
+    return;
+  }
 
   // ===== NAMA ANONIM PER SESI BROWSER =====
   let myName = sessionStorage.getItem('chat-anon-name');
@@ -77,6 +323,18 @@ document.addEventListener('DOMContentLoaded', function () {
     return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
   }
 
+  // Cek apakah user sedang berada (atau dekat) di bagian paling bawah chat.
+  // Kalau ya, auto-scroll boleh jalan. Kalau user lagi baca chat lama di atas,
+  // jangan paksa geser layarnya.
+  function isNearBottom() {
+    return messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight < 80;
+  }
+
+  function scrollToBottom(smooth) {
+    messagesEl.scrollTo({ top: messagesEl.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
+    if (jumpBtn) jumpBtn.classList.remove('show');
+  }
+
   function renderMessage(key, data) {
     const wrap = document.createElement('div');
     wrap.className = 'chat-msg' + (data.name === myName ? ' me' : '');
@@ -90,9 +348,14 @@ document.addEventListener('DOMContentLoaded', function () {
         '<div class="chat-meta"><span class="chat-name">' + escapeHtml(data.name) + '</span>' +
         '<span class="chat-time">' + formatTime(data.time) + '</span></div>' +
         '<div class="chat-text"></div>' +
-      '</div>';
+      '</div>' +
+      '<button type="button" class="chat-delete-btn" title="Hapus pesan (admin)"><i class="fas fa-trash"></i></button>';
 
     wrap.querySelector('.chat-text').textContent = data.text;
+
+    const delBtn = wrap.querySelector('.chat-delete-btn');
+    delBtn.addEventListener('click', function () { hapusPesan(key, delBtn, data.text); });
+
     return wrap;
   }
 
@@ -101,37 +364,99 @@ document.addEventListener('DOMContentLoaded', function () {
   const last200 = chatRef.limitToLast(200);
 
   last200.on('child_added', function (snapshot) {
-    if (firstLoad && loadingEl) loadingEl.remove();
+    const wasNearBottom = isNearBottom();
+    if (firstLoad && loadingEl && loadingEl.parentNode) loadingEl.remove();
+
     const el = renderMessage(snapshot.key, snapshot.val());
     messagesEl.appendChild(el);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+
+    const isMyOwnMessage = snapshot.val().name === myName;
+
+    if (firstLoad || wasNearBottom || isMyOwnMessage) {
+      scrollToBottom(!firstLoad);
+    } else if (jumpBtn) {
+      // Ada pesan baru masuk tapi user sedang scroll ke atas — kasih tombol pemberitahuan
+      jumpBtn.classList.add('show');
+    }
   });
 
   last200.once('value', function () {
     firstLoad = false;
     if (loadingEl && loadingEl.parentNode) loadingEl.remove();
+    scrollToBottom(false);
   });
+
+  // Saat pesan dihapus (oleh admin ini atau admin lain di sesi lain),
+  // elemen pesannya hilang dengan animasi halus di layar semua orang secara real-time.
+  chatRef.on('child_removed', function (snapshot) {
+    const el = messagesEl.querySelector('.chat-msg[data-key="' + snapshot.key + '"]');
+    animateRemoveMessage(el);
+  });
+
+  // Kalau koneksi ke database bermasalah setelah halaman terbuka
+  chatRef.on('value', function () {}, function (error) {
+    console.error('Firebase error:', error);
+    if (loadingEl && !loadingEl.parentNode) {
+      messagesEl.insertAdjacentHTML('afterbegin',
+        '<div class="chat-setup-warning">⚠️ Koneksi chat terputus. Pesan baru mungkin tidak muncul otomatis — coba muat ulang halaman.</div>');
+    }
+  });
+
+  if (jumpBtn) {
+    jumpBtn.addEventListener('click', function () { scrollToBottom(true); });
+  }
+
+  updateAdminUI();
+
+  // ===== PENGHITUNG KARAKTER =====
+  function updateCharCount() {
+    if (!charCountEl) return;
+    const remaining = 300 - inputEl.value.length;
+    charCountEl.textContent = remaining;
+    charCountEl.classList.toggle('warn', remaining <= 30);
+  }
+  if (inputEl) {
+    inputEl.addEventListener('input', updateCharCount);
+    updateCharCount();
+  }
 
   // ===== KIRIM PESAN =====
   let lastSent = 0;
+  let sending  = false;
+
   formEl.addEventListener('submit', function (e) {
     e.preventDefault();
     const text = inputEl.value.trim();
-    if (!text) return;
+    if (!text || sending) return;
 
-    // batas sederhana anti-spam: 1 pesan per 2 detik
+    // Batas sederhana anti-spam: 1 pesan per 2 detik
     const now = Date.now();
-    if (now - lastSent < 2000) return;
-    lastSent = now;
+    if (now - lastSent < 2000) {
+      inputEl.classList.add('shake');
+      setTimeout(() => inputEl.classList.remove('shake'), 400);
+      return;
+    }
+
+    sending = true;
+    if (sendBtn) sendBtn.disabled = true;
 
     chatRef.push({
       name: myName,
       text: text.slice(0, 300),
       time: now
+    }).then(function () {
+      lastSent = now;
+      inputEl.value = '';
+      updateCharCount();
+      inputEl.focus();
+    }).catch(function (err) {
+      console.error('Gagal mengirim pesan:', err);
+      inputEl.classList.add('shake');
+      setTimeout(() => inputEl.classList.remove('shake'), 400);
+    }).finally(function () {
+      sending = false;
+      if (sendBtn) sendBtn.disabled = false;
     });
-
-    inputEl.value = '';
-    inputEl.focus();
   });
 
 });
