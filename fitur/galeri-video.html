@@ -230,6 +230,72 @@
   .confirm-cancel:hover{background:#f1f2f4;}
   .confirm-ok{background:var(--navy); border-color:var(--navy); color:#fff;}
   .confirm-ok:hover{background:var(--navy-deep);}
+
+  /* Mode pilih (multi-select) — hanya untuk video lokal */
+  .select-toggle{
+    border:1px solid var(--line); background:#fff; color:var(--navy);
+    font-family:'Inter',sans-serif; font-size:13px; font-weight:600;
+    padding:8px 16px; border-radius:999px; cursor:pointer; transition:.18s;
+    display:inline-flex; align-items:center; gap:7px; margin-left:auto;
+  }
+  .select-toggle svg{width:15px; height:15px;}
+  .select-toggle:hover{border-color:var(--navy);}
+  .select-toggle.active{background:var(--navy); border-color:var(--navy); color:#fff;}
+
+  .g-item .check-circle{
+    position:absolute; top:10px; left:10px; z-index:4;
+    width:24px; height:24px; border-radius:50%;
+    background:rgba(255,255,255,.9); border:2px solid #fff;
+    display:none; align-items:center; justify-content:center;
+    box-shadow:0 2px 8px rgba(7,11,17,.25);
+  }
+  .g-item .check-circle svg{width:13px; height:13px; color:#fff; opacity:0;}
+  .g-item.not-selectable .check-circle{background:rgba(120,120,120,.6); cursor:not-allowed;}
+  .gallery.selecting .g-item{cursor:pointer;}
+  .gallery.selecting .g-item.not-selectable{cursor:not-allowed;}
+  .gallery.selecting .tag,
+  .gallery.selecting .dl-btn,
+  .gallery.selecting .play-btn{display:none !important;}
+  .gallery.selecting .check-circle{display:flex;}
+  .gallery.selecting .g-item.selected .check-circle{background:var(--gold); border-color:var(--gold);}
+  .gallery.selecting .g-item.selected .check-circle svg{opacity:1;}
+  .gallery.selecting .g-item.selected{outline:3px solid var(--gold); outline-offset:-3px; border-radius:12px;}
+  .gallery.selecting .g-item.not-selectable img{filter:brightness(.55);}
+  .gallery.selecting .g-item.not-selectable::after{
+    content:"Tidak bisa diunduh"; position:absolute; inset:0; z-index:3;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    color:#fff; font-size:11.5px; font-weight:600; padding:10px;
+  }
+  .gallery.selecting .g-item:not(.selected):not(.not-selectable) img{filter:brightness(.9);}
+
+  .select-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:60;
+    background:var(--navy-deep); color:#fff;
+    padding:14px 20px; display:none; align-items:center; justify-content:center; gap:16px;
+    box-shadow:0 -10px 30px rgba(0,0,0,.2);
+  }
+  .select-bar.active{display:flex;}
+  .select-bar-inner{
+    max-width:1100px; width:100%; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  }
+  .select-count{font-size:13.5px; font-weight:600;}
+  .select-count b{color:var(--gold);}
+  .select-bar-actions{display:flex; gap:10px; flex-wrap:wrap;}
+  .select-bar-actions button{
+    border-radius:999px; padding:9px 18px; font-family:'Inter',sans-serif;
+    font-size:13px; font-weight:600; cursor:pointer; border:1px solid transparent;
+  }
+  .select-all-btn{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3) !important; color:#fff;}
+  .select-all-btn:hover{background:rgba(255,255,255,.18);}
+  .select-cancel-btn{background:transparent; border-color:rgba(255,255,255,.3) !important; color:rgba(255,255,255,.85);}
+  .select-cancel-btn:hover{background:rgba(255,255,255,.08);}
+  .select-download-btn{background:var(--gold); color:#0a1420;}
+  .select-download-btn:hover{background:#e3ab3f;}
+  .select-download-btn:disabled{opacity:.5; cursor:not-allowed;}
+  @media (max-width:560px){
+    .select-bar-inner{flex-direction:column; align-items:stretch; text-align:center;}
+    .select-bar-actions{justify-content:center;}
+  }
 </style>
 </head>
 <body>
@@ -250,11 +316,26 @@
   <div class="filter-bar">
     <div class="filter-inner" id="filterBar">
       <button class="chip active" data-filter="all">Semua</button>
+      <button class="select-toggle" id="selectToggle" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Pilih Video
+      </button>
     </div>
   </div>
 
   <div class="gallery-wrap">
     <div class="gallery" id="gallery"></div>
+  </div>
+
+  <div class="select-bar" id="selectBar">
+    <div class="select-bar-inner">
+      <div class="select-count"><b id="selectCount">0</b> video dipilih</div>
+      <div class="select-bar-actions">
+        <button class="select-all-btn" id="selectAllBtn" type="button">Pilih Semua</button>
+        <button class="select-cancel-btn" id="selectCancelBtn" type="button">Batal</button>
+        <button class="select-download-btn" id="selectDownloadBtn" type="button" disabled>Unduh Terpilih</button>
+      </div>
+    </div>
   </div>
 
   <div class="vmodal" id="vmodal">
@@ -365,24 +446,42 @@ const videos = [
 const galleryEl = document.getElementById('gallery');
 const MORE_CARD = `<div class="more-card"><span><b>+</b>Tambahkan video baru dengan mengisi array <code>videos</code> di bagian atas kode &mdash; kartu ini otomatis akan bergeser ke akhir.</span></div>`;
 
+/* Mode pilih (multi-select) — hanya video lokal yang bisa dipilih & diunduh */
+let selecting = false;
+let selected = new Set();
+let currentFilter = 'all';
+let currentFilteredForSelectAll = [];
+function fileKey(item){ return item.src || item.cap; }
+
 function render(filter){
   galleryEl.innerHTML = '';
   const filtered = videos.filter(v => filter==='all' || v.cat===filter);
   filtered.forEach((v, i) => {
     const div = document.createElement('div');
-    div.className = 'g-item';
     const canDownload = v.type === 'local' && v.src;
+    const key = fileKey(v);
+    div.className = 'g-item' + (canDownload && selected.has(key) ? ' selected' : '') + (canDownload ? '' : ' not-selectable');
+    div.dataset.key = key;
     div.innerHTML = `
       <span class="tag">${labelFor(v.cat)}</span>
       ${canDownload ? `<span class="dl-btn" title="Unduh video">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </span>` : ''}
+      <span class="check-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
       ${v.duration ? `<span class="duration${canDownload ? ' has-dl' : ''}">${v.duration}</span>` : ''}
       <img src="${v.poster}" alt="${v.cap}" loading="lazy">
       <div class="play-btn"></div>
       <div class="cap">${v.cap}</div>
     `;
-    div.addEventListener('click', () => openModal(filtered, i));
+    div.addEventListener('click', () => {
+      if(selecting){
+        if(canDownload) toggleSelect(key);
+      } else {
+        openModal(filtered, i);
+      }
+    });
     if(canDownload){
       div.querySelector('.dl-btn').addEventListener('click', (e) => {
         e.stopPropagation();
@@ -392,6 +491,7 @@ function render(filter){
     galleryEl.appendChild(div);
   });
   galleryEl.insertAdjacentHTML('beforeend', MORE_CARD);
+  currentFilteredForSelectAll = filtered.filter(v => v.type === 'local' && v.src);
 }
 
 function labelFor(cat){
@@ -439,8 +539,73 @@ document.getElementById('filterBar').addEventListener('click', e => {
   if(!btn) return;
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
-  render(btn.dataset.filter);
+  currentFilter = btn.dataset.filter;
+  render(currentFilter);
 });
+
+/* Tombol "Pilih Video" — masuk/keluar mode pilih */
+const selectToggleBtn = document.getElementById('selectToggle');
+const selectBar = document.getElementById('selectBar');
+const selectCountEl = document.getElementById('selectCount');
+const selectDownloadBtn = document.getElementById('selectDownloadBtn');
+
+function setSelecting(on){
+  selecting = on;
+  galleryEl.classList.toggle('selecting', on);
+  selectToggleBtn.classList.toggle('active', on);
+  selectToggleBtn.innerHTML = on
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg> Selesai'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Pilih Video';
+  selectBar.classList.toggle('active', on);
+  if(!on){
+    selected.clear();
+    render(currentFilter);
+  }
+  updateSelectCount();
+}
+selectToggleBtn.addEventListener('click', () => setSelecting(!selecting));
+
+function toggleSelect(key){
+  if(selected.has(key)) selected.delete(key);
+  else selected.add(key);
+  const item = galleryEl.querySelector(`[data-key="${CSS.escape(key)}"]`);
+  if(item) item.classList.toggle('selected', selected.has(key));
+  updateSelectCount();
+}
+
+function updateSelectCount(){
+  selectCountEl.textContent = selected.size;
+  selectDownloadBtn.disabled = selected.size === 0;
+}
+
+document.getElementById('selectAllBtn').addEventListener('click', () => {
+  const allSelected = currentFilteredForSelectAll.length > 0 && currentFilteredForSelectAll.every(v => selected.has(fileKey(v)));
+  if(allSelected){
+    currentFilteredForSelectAll.forEach(v => selected.delete(fileKey(v)));
+  } else {
+    currentFilteredForSelectAll.forEach(v => selected.add(fileKey(v)));
+  }
+  render(currentFilter);
+  updateSelectCount();
+});
+
+document.getElementById('selectCancelBtn').addEventListener('click', () => setSelecting(false));
+
+selectDownloadBtn.addEventListener('click', () => {
+  if(selected.size === 0) return;
+  const items = videos.filter(v => v.type === 'local' && v.src && selected.has(fileKey(v)));
+  askDownloadConfirmBulk(items);
+});
+
+/* Unduh banyak file sekaligus, satu per satu dengan jeda singkat
+   supaya browser tidak memblokirnya sebagai popup/download beruntun. */
+async function downloadMultiple(items){
+  for(let i = 0; i < items.length; i++){
+    const it = items[i];
+    downloadFile(it.src, fileNameFor(it.src, it.cap));
+    await new Promise(res => setTimeout(res, 450));
+  }
+}
 
 /* Modal player */
 let currentSet = [], currentIndex = 0;
@@ -522,21 +687,38 @@ render('all');
 /* Modal konfirmasi sebelum download */
 const confirmOverlay = document.getElementById('confirmOverlay');
 const confirmDesc = document.getElementById('confirmDesc');
+const confirmTitle = document.querySelector('#confirmOverlay .confirm-title');
 const confirmOk = document.getElementById('confirmOk');
 const confirmCancel = document.getElementById('confirmCancel');
 let pendingDownload = null;
+let pendingBulk = null;
 
 function askDownloadConfirm(src, filename, cap){
   pendingDownload = { src, filename };
+  pendingBulk = null;
+  confirmTitle.textContent = 'Unduh video ini?';
   confirmDesc.textContent = cap ? `"${cap}" akan disimpan ke perangkat Anda.` : 'File akan disimpan ke perangkat Anda.';
+  confirmOverlay.classList.add('active');
+}
+function askDownloadConfirmBulk(items){
+  pendingBulk = items;
+  pendingDownload = null;
+  confirmTitle.textContent = `Unduh ${items.length} video ini?`;
+  confirmDesc.textContent = `${items.length} video yang dipilih akan disimpan satu per satu ke perangkat Anda.`;
   confirmOverlay.classList.add('active');
 }
 function closeConfirm(){
   confirmOverlay.classList.remove('active');
   pendingDownload = null;
+  pendingBulk = null;
 }
 confirmOk.addEventListener('click', () => {
-  if(pendingDownload) downloadFile(pendingDownload.src, pendingDownload.filename);
+  if(pendingBulk){
+    downloadMultiple(pendingBulk);
+    setSelecting(false);
+  } else if(pendingDownload){
+    downloadFile(pendingDownload.src, pendingDownload.filename);
+  }
   closeConfirm();
 });
 confirmCancel.addEventListener('click', closeConfirm);

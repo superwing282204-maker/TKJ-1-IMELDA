@@ -54,6 +54,45 @@ const ADMIN_CONFIG = {
   sessionKey: "chat-admin-mode"
 };
 
+// ===================================================
+// FILTER KATA KOTOR (moderasi otomatis, tanpa server)
+// ===================================================
+// Kalau pesan mengandung salah satu kata di bawah ini, pesan tetap
+// terkirim & sempat muncul sebentar, lalu OTOMATIS terhapus sendiri
+// setelah beberapa detik (lihat AUTO_MOD_DELAY).
+//
+// CATATAN: karena situs ini tidak punya server (cuma HTML/JS + Firebase
+// gratis), pengecekan & penghapusan ini dijalankan lewat browser siapa pun
+// yang sedang membuka halaman chat ini (termasuk pengirimnya sendiri).
+// Jadi paling ampuh selama minimal ada satu orang yang tab chat-nya
+// terbuka. Ini cukup untuk moderasi santai chat kelas, tapi bukan
+// sistem anti-spam/anti-kata-kotor tingkat server yang 100% pasti.
+//
+// Tambah/hapus kata sesuka kamu di daftar ini (huruf kecil semua):
+const BAD_WORDS = [
+  'anjing', 'cuki', 'anjrit', 'asu', 'babi', 'bangsat', 'bego', 'goblok',
+  'tolol', 'idiot', 'kontol', 'memek', 'pepek', 'ngentot', 'ngewe',
+  'pukimak', 'kampret', 'sialan', 'brengsek', 'tai', 'kunyuk', 'jancok',
+  'jancuk', 'bajingan', 'keparat', 'lonte', 'pelacur',
+  'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'dick', 'pussy', 'slut', 'whore','anj','lol'
+];
+const AUTO_MOD_DELAY = 4000; // jeda (ms) sebelum pesan kotor dihapus otomatis
+
+// Membersihkan teks sebelum dicek, biar akal-akalan seperti
+// "b4ngs4t" atau "b a n g s a t" tetap kena filter.
+function normalizeForFilter(str) {
+  return str
+    .toLowerCase()
+    .replace(/4/g, 'a').replace(/3/g, 'e').replace(/1/g, 'i')
+    .replace(/0/g, 'o').replace(/5/g, 's')
+    .replace(/[^a-z0-9]/g, '');
+}
+
+function containsBadWord(text) {
+  const clean = normalizeForFilter(text || '');
+  return BAD_WORDS.some(function (w) { return clean.indexOf(w) !== -1; });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
   const messagesEl  = document.getElementById('chat-messages');
@@ -84,6 +123,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ===== STATUS ADMIN =====
   let isAdmin = sessionStorage.getItem(ADMIN_CONFIG.sessionKey) === 'yes';
+
+  // Menyimpan key pesan yang sedang "dihitung mundur" untuk dihapus
+  // otomatis karena kena filter kata kotor.
+  const flaggedKeys = new Set();
 
   function updateAdminUI() {
     document.body.classList.toggle('admin-mode', isAdmin);
@@ -337,15 +380,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderMessage(key, data) {
     const wrap = document.createElement('div');
-    wrap.className = 'chat-msg' + (data.name === myName ? ' me' : '');
+    const isAdminMsg = !!data.admin;
+    wrap.className = 'chat-msg' + (data.name === myName ? ' me' : '') + (isAdminMsg ? ' admin' : '');
     wrap.dataset.key = key;
 
     const initials = data.name.replace('Anon-', '').slice(0, 2);
 
+    // Pesan dari admin (dikirim saat mode admin aktif) tampil beda:
+    // avatar berbentuk perisai + label "Admin" di sebelah nama pengirim.
+    const avatarInner = isAdminMsg
+      ? '<i class="fas fa-shield-halved"></i>'
+      : escapeHtml(initials);
+    const avatarAttr = isAdminMsg
+      ? ' class="chat-avatar chat-avatar-admin"'
+      : ' class="chat-avatar" style="background:' + nameToColor(data.name) + '"';
+    // Pesan admin tidak memakai nama anonim aslinya, tapi ditampilkan sebagai "SISTEM"
+    const displayName = isAdminMsg ? 'SISTEM' : escapeHtml(data.name);
+
     wrap.innerHTML =
-      '<div class="chat-avatar" style="background:' + nameToColor(data.name) + '">' + escapeHtml(initials) + '</div>' +
+      '<div' + avatarAttr + '>' + avatarInner + '</div>' +
       '<div class="chat-bubble">' +
-        '<div class="chat-meta"><span class="chat-name">' + escapeHtml(data.name) + '</span>' +
+        '<div class="chat-meta"><span class="chat-name">' + displayName + '</span>' +
         '<span class="chat-time">' + formatTime(data.time) + '</span></div>' +
         '<div class="chat-text"></div>' +
       '</div>' +
@@ -359,6 +414,29 @@ document.addEventListener('DOMContentLoaded', function () {
     return wrap;
   }
 
+  // ===== AUTO-MOD: tandai & jadwalkan hapus pesan yang kena filter =====
+  function flagAndScheduleRemoval(key, el) {
+    if (flaggedKeys.has(key)) return; // sudah dijadwalkan, jangan dobel
+    flaggedKeys.add(key);
+
+    if (el) {
+      el.classList.add('chat-msg-flagged');
+      const bubble = el.querySelector('.chat-bubble');
+      if (bubble) {
+        const warn = document.createElement('div');
+        warn.className = 'chat-flag-note';
+        warn.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Terdeteksi kata tidak pantas, pesan akan dihapus otomatis…';
+        bubble.appendChild(warn);
+      }
+    }
+
+    setTimeout(function () {
+      chatRef.child(key).remove().catch(function (err) {
+        console.error('Gagal menghapus otomatis pesan bermasalah:', err);
+      });
+    }, AUTO_MOD_DELAY);
+  }
+
   // ===== TAMPILKAN PESAN (LIVE) =====
   let firstLoad = true;
   const last200 = chatRef.limitToLast(200);
@@ -367,16 +445,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const wasNearBottom = isNearBottom();
     if (firstLoad && loadingEl && loadingEl.parentNode) loadingEl.remove();
 
-    const el = renderMessage(snapshot.key, snapshot.val());
+    const key  = snapshot.key;
+    const data = snapshot.val();
+    const el   = renderMessage(key, data);
     messagesEl.appendChild(el);
 
-    const isMyOwnMessage = snapshot.val().name === myName;
+    const isMyOwnMessage = data.name === myName;
 
     if (firstLoad || wasNearBottom || isMyOwnMessage) {
       scrollToBottom(!firstLoad);
     } else if (jumpBtn) {
       // Ada pesan baru masuk tapi user sedang scroll ke atas — kasih tombol pemberitahuan
       jumpBtn.classList.add('show');
+    }
+
+    // Kalau pesan mengandung kata kotor, tandai dan jadwalkan hapus otomatis.
+    if (containsBadWord(data.text)) {
+      flagAndScheduleRemoval(key, el);
     }
   });
 
@@ -386,11 +471,16 @@ document.addEventListener('DOMContentLoaded', function () {
     scrollToBottom(false);
   });
 
-  // Saat pesan dihapus (oleh admin ini atau admin lain di sesi lain),
-  // elemen pesannya hilang dengan animasi halus di layar semua orang secara real-time.
+  // Saat pesan dihapus (oleh admin ini atau admin lain di sesi lain, ATAU
+  // otomatis oleh filter kata kotor), elemen pesannya hilang dengan animasi
+  // halus di layar semua orang secara real-time.
   chatRef.on('child_removed', function (snapshot) {
     const el = messagesEl.querySelector('.chat-msg[data-key="' + snapshot.key + '"]');
     animateRemoveMessage(el);
+    if (flaggedKeys.has(snapshot.key)) {
+      flaggedKeys.delete(snapshot.key);
+      showToast('Pesan dihapus otomatis karena mengandung kata tidak pantas');
+    }
   });
 
   // Kalau koneksi ke database bermasalah setelah halaman terbuka
@@ -443,7 +533,8 @@ document.addEventListener('DOMContentLoaded', function () {
     chatRef.push({
       name: myName,
       text: text.slice(0, 300),
-      time: now
+      time: now,
+      admin: isAdmin // true kalau pesan ini dikirim saat mode admin aktif
     }).then(function () {
       lastSent = now;
       inputEl.value = '';
