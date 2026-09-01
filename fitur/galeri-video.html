@@ -115,6 +115,25 @@
     font-size:11px; font-weight:600; letter-spacing:.02em;
     padding:4px 8px; border-radius:6px; z-index:2;
   }
+  .g-item .duration.has-dl{ top:48px; } /* geser ke bawah kalau ada tombol download */
+  .dl-btn{
+    position:absolute; top:10px; right:10px; z-index:3;
+    width:32px; height:32px; border-radius:50%;
+    background:rgba(7,11,17,.6); border:1px solid rgba(255,255,255,.4);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; opacity:0; transform:translateY(-4px);
+    transition:.2s; backdrop-filter:blur(2px);
+  }
+  .dl-btn svg{width:15px; height:15px;}
+  .g-item:hover .dl-btn{opacity:1; transform:translateY(0);}
+  .dl-btn:hover{background:var(--gold); border-color:var(--gold);}
+  @media (hover:none){ .dl-btn{opacity:1;} }
+  .vmodal .lb-download{
+    position:absolute; top:-56px; left:0;
+  }
+  @media (max-width:760px){
+    .vmodal .lb-download{ left:56px; top:-56px; }
+  }
   .play-btn{
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
     width:56px; height:56px; border-radius:50%;
@@ -206,6 +225,9 @@
         <div class="lb-nav lb-prev" id="lbPrev">‹</div>
         <div class="lb-nav lb-next" id="lbNext">›</div>
       </div>
+      <div class="lb-nav lb-download" id="vDownload" title="Unduh video" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </div>
       <p class="v-cap" id="vCap"></p>
     </div>
   </div>
@@ -296,14 +318,24 @@ function render(filter){
   filtered.forEach((v, i) => {
     const div = document.createElement('div');
     div.className = 'g-item';
+    const canDownload = v.type === 'local' && v.src;
     div.innerHTML = `
       <span class="tag">${labelFor(v.cat)}</span>
-      ${v.duration ? `<span class="duration">${v.duration}</span>` : ''}
+      ${canDownload ? `<span class="dl-btn" title="Unduh video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </span>` : ''}
+      ${v.duration ? `<span class="duration${canDownload ? ' has-dl' : ''}">${v.duration}</span>` : ''}
       <img src="${v.poster}" alt="${v.cap}" loading="lazy">
       <div class="play-btn"></div>
       <div class="cap">${v.cap}</div>
     `;
     div.addEventListener('click', () => openModal(filtered, i));
+    if(canDownload){
+      div.querySelector('.dl-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        downloadFile(v.src, fileNameFor(v.src, v.cap));
+      });
+    }
     galleryEl.appendChild(div);
   });
   galleryEl.insertAdjacentHTML('beforeend', MORE_CARD);
@@ -311,6 +343,42 @@ function render(filter){
 
 function labelFor(cat){
   return {kegiatan:'Kegiatan', prestasi:'Prestasi', kunjungan:'Kunjungan', civitas:'Civitas'}[cat] || cat;
+}
+
+/* Ambil nama file dari src, atau dari caption kalau src tidak jelas namanya */
+function fileNameFor(src, cap){
+  try{
+    const clean = src.split('?')[0].split('#')[0];
+    const base = clean.substring(clean.lastIndexOf('/') + 1);
+    if(base) return base;
+  }catch(e){}
+  const safeCap = (cap || 'video').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+  return safeCap + '.mp4';
+}
+
+/* Unduh file video lokal (mp4 di server sendiri) sebagai blob supaya
+   browser benar-benar mengunduh, bukan cuma membuka tab baru.
+   Catatan: ini hanya untuk video type "local". Video YouTube tidak
+   didukung karena YouTube tidak menyediakan file mp4 langsung. */
+function downloadFile(src, filename){
+  fetch(src)
+    .then(res => {
+      if(!res.ok) throw new Error('Gagal mengambil file');
+      return res.blob();
+    })
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    })
+    .catch(() => {
+      window.open(src, '_blank');
+    });
 }
 
 document.getElementById('filterBar').addEventListener('click', e => {
@@ -352,12 +420,24 @@ function loadCurrent(){
   }
   vFrame.appendChild(media);
   vCap.textContent = v.cap;
+
+  const dlBtn = document.getElementById('vDownload');
+  if(v.type === 'local' && v.src){
+    dlBtn.style.display = 'flex';
+  } else {
+    dlBtn.style.display = 'none'; // video YouTube tidak bisa diunduh langsung
+  }
 }
 function closeModal(){
   vmodal.classList.remove('active');
   const old = vFrame.querySelector('video, iframe');
   if(old) old.remove(); // hentikan pemutaran saat modal ditutup
 }
+document.getElementById('vDownload').addEventListener('click', (e) => {
+  e.stopPropagation();
+  const v = currentSet[currentIndex];
+  if(v.type === 'local' && v.src) downloadFile(v.src, fileNameFor(v.src, v.cap));
+});
 document.getElementById('lbClose').addEventListener('click', closeModal);
 vmodal.addEventListener('click', e => { if(e.target === vmodal) closeModal(); });
 document.getElementById('lbPrev').addEventListener('click', () => {
