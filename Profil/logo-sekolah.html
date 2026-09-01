@@ -34,30 +34,32 @@
   header.site-header .header-inner {
     position: relative;
     z-index: 1;
-    padding: 40px 16px;
+    padding: clamp(24px, 6vw, 40px) 16px;
   }
   header.site-header img.logo {
-    height: 70px;
+    height: clamp(50px, 10vw, 70px);
     margin-bottom: 8px;
   }
   header.site-header h1.site-title {
     margin: 0;
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
+    line-height: 1.25;
   }
   header.site-header p.site-description {
     margin: 4px 0 0;
-    font-size: 14px;
+    font-size: clamp(12px, 3vw, 14px);
     opacity: 0.85;
   }
   .breadcrumb {
     background: #143745;
     color: #fff;
     text-align: center;
-    padding: 30px 0;
+    padding: clamp(18px, 4vw, 30px) 16px;
   }
   .breadcrumb h2 {
     margin: 0;
     font-weight: 600;
+    font-size: clamp(18px, 4.5vw, 24px);
   }
   main {
     max-width: 1100px;
@@ -66,13 +68,15 @@
   }
   .content-box {
     background: #fff;
-    padding: 24px;
-    padding-right: 64px;
+    padding: clamp(16px, 4vw, 24px);
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow-x: hidden;
   }
   .content-box h2.page-heading {
     margin-top: 0;
+    font-size: clamp(18px, 4.5vw, 24px);
+    line-height: 1.3;
   }
   .content-box h3.section-heading {
     margin-top: 28px;
@@ -80,6 +84,7 @@
     color: #143745;
     border-left: 4px solid #143745;
     padding-left: 10px;
+    font-size: clamp(16px, 3.5vw, 19px);
   }
   .content-box img.feature-img {
     max-width: 100%;
@@ -91,11 +96,13 @@
     text-align: justify;
     line-height: 1.7;
     margin: 0 0 14px;
+    font-size: clamp(14px, 3vw, 16px);
   }
   .content-box ol, .content-box ul {
     margin: 0 0 16px;
     padding-left: 22px;
     line-height: 1.7;
+    font-size: clamp(14px, 3vw, 16px);
   }
 
   /* Panel logo utama */
@@ -111,7 +118,7 @@
     margin: 0 0 20px;
   }
   .logo-showcase .logo-img-wrap {
-    flex: 0 0 220px;
+    flex: 1 1 180px;
     text-align: center;
   }
   .logo-showcase .logo-img-wrap img {
@@ -120,19 +127,23 @@
     height: auto;
   }
   .logo-showcase .logo-caption {
-    flex: 1;
-    min-width: 240px;
+    flex: 2 1 240px;
+    min-width: 0;
   }
   .logo-showcase .logo-caption h3 {
     margin: 0 0 8px;
     color: #143745;
+    font-size: clamp(16px, 3.5vw, 19px);
+  }
+  .logo-showcase .logo-caption p {
+    font-size: clamp(14px, 3vw, 16px);
   }
 
   /* Kartu arti warna / elemen logo */
   .meaning-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
     margin: 0 0 16px;
   }
   .meaning-card {
@@ -163,11 +174,18 @@
     text-align: left;
   }
 
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 16px;
+  }
   .content-box table.data-table {
     width: 100%;
+    min-width: 480px;
     border-collapse: collapse;
-    margin-bottom: 16px;
-    font-size: 14px;
+    margin-bottom: 0;
+    font-size: clamp(12px, 2.8vw, 14px);
   }
   .content-box table.data-table th,
   .content-box table.data-table td {
@@ -234,10 +252,6 @@
     height: 18px;
     fill: currentColor;
   }
-  .placeholder {
-    color: #999;
-    font-style: italic;
-  }
   .back-button-wrap {
     background: #143745;
     padding: 14px 16px;
@@ -266,6 +280,50 @@
     width: 16px;
     height: 16px;
     fill: currentColor;
+  }
+
+  /* ===================== RESPONSIVE BREAKPOINTS ===================== */
+  @media (max-width: 768px) {
+    main {
+      margin: 16px auto;
+    }
+    .logo-showcase {
+      padding: 16px;
+      gap: 16px;
+    }
+    .meaning-card {
+      padding: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    header.site-header img.logo {
+      height: 50px;
+    }
+    .back-button-wrap {
+      padding: 10px 12px;
+    }
+    .back-button {
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+    .logo-showcase {
+      flex-direction: column;
+      text-align: center;
+    }
+    .logo-showcase .logo-caption {
+      text-align: left;
+    }
+    .meaning-grid {
+      grid-template-columns: 1fr;
+    }
+    footer {
+      padding: 16px 0;
+    }
+    .social-links a {
+      width: 34px;
+      height: 34px;
+    }
   }
 </style>
 </head>
@@ -299,8 +357,8 @@
 <main>
   <div class="content-box">
 
-    <h2 class="page-heading">[Judul Halaman - misalnya: Logo dan Filosofi SMK Imelda Medan]</h2>
-    <p class="placeholder">[Paragraf pembuka - jelaskan secara singkat bahwa logo sekolah merupakan identitas visual yang mencerminkan visi, misi, dan nilai-nilai yang dijunjung sekolah]</p>
+    <h2 class="page-heading">Logo dan Filosofi TKJ 1 SMK IMELDA MEDAN</h2>
+    <p>Logo merupakan identitas visual yang mencerminkan karakter, semangat, dan nilai-nilai yang dijunjung oleh Kelas TKJ 1 SMK Imelda Medan. Melalui perpaduan warna, bentuk, dan pola khas dunia teknologi, logo ini menggambarkan jati diri siswa-siswi Teknik Komputer dan Jaringan yang inovatif, adaptif, dan siap menghadapi perkembangan zaman digital.</p>
 
     <!-- Panel logo utama -->
     <div class="logo-showcase">
@@ -308,87 +366,94 @@
         <img src="../images/logo.png" alt="Logo Sekolah">
       </div>
       <div class="logo-caption">
-        <h3 class="placeholder">[Nama Resmi Sekolah]</h3>
-        <p class="placeholder">[Deskripsi singkat logo - bentuk, warna dominan, dan kesan umum yang ingin disampaikan melalui logo ini]</p>
+        <h3>TKJ 1 - SMK IMELDA MEDAN</h3>
+        <p>Logo berbentuk perisai dengan latar gelap bernuansa navy-hitam, dihiasi garis-garis neon berwarna biru (cyan) dan ungu magenta yang membentuk pola sirkuit elektronik. Di bagian tengah terdapat tulisan "TKJ 1" dan "SMK IMELDA MEDAN" dengan efek cahaya (glow) yang memberi kesan futuristik, modern, dan berteknologi tinggi.</p>
       </div>
     </div>
 
     <h3 class="section-heading">Sejarah & Filosofi Logo</h3>
-    <p class="placeholder">[Jelaskan sejarah terbentuknya logo, siapa yang merancang, tahun penetapan, dan filosofi umum di balik desainnya]</p>
+    <p>Logo ini dirancang oleh siswa-siswi Kelas TKJ 1 sebagai identitas resmi kelas dalam Program Keahlian Teknik Komputer dan Jaringan di SMK Imelda Medan. Desain mengangkat tema dunia digital dan jaringan komputer, sesuai dengan bidang keahlian yang dipelajari, sekaligus menonjolkan semangat kebersamaan dan kebanggaan sebagai bagian dari TKJ 1.</p>
 
     <h3 class="section-heading">Arti Elemen dan Warna Logo</h3>
-    <p class="placeholder">[Pengantar singkat sebelum penjelasan detail arti setiap elemen dan warna pada logo]</p>
+    <p>Setiap warna dan elemen pada logo memiliki makna tersendiri yang merepresentasikan nilai, karakter, dan bidang keahlian TKJ 1. Berikut penjelasannya:</p>
 
     <!-- Kartu arti elemen/warna logo -->
     <div class="meaning-grid">
       <div class="meaning-card">
-        <div class="swatch" style="background:#143745;"></div>
+        <div class="swatch" style="background:#00e5ff;"></div>
         <div>
-          <h4 class="placeholder">[Nama Warna 1, misalnya: Biru Tua]</h4>
-          <p class="placeholder">[Arti/makna warna ini bagi sekolah]</p>
+          <h4>Biru Cyan Neon</h4>
+          <p>Melambangkan teknologi, jaringan komunikasi, kecerdasan, serta ketelitian dan kedisiplinan yang menjadi ciri khas siswa TKJ.</p>
         </div>
       </div>
       <div class="meaning-card">
-        <div class="swatch" style="background:#f2c14e;"></div>
+        <div class="swatch" style="background:#d946ef;"></div>
         <div>
-          <h4 class="placeholder">[Nama Warna 2, misalnya: Kuning Emas]</h4>
-          <p class="placeholder">[Arti/makna warna ini bagi sekolah]</p>
+          <h4>Ungu Magenta Neon</h4>
+          <p>Melambangkan kreativitas, inovasi, dan semangat generasi muda dalam mengembangkan ide dan solusi di bidang teknologi.</p>
+        </div>
+      </div>
+      <div class="meaning-card">
+        <div class="swatch" style="background:#0a0e27;"></div>
+        <div>
+          <h4>Latar Belakang Hitam/Navy Gelap</h4>
+          <p>Melambangkan keseriusan, profesionalisme, dan kesiapan menghadapi tantangan dunia teknologi yang terus berkembang.</p>
         </div>
       </div>
       <div class="meaning-card">
         <div class="swatch" style="background:#fff; border:1px solid #999;"></div>
         <div>
-          <h4 class="placeholder">[Nama Elemen 1, misalnya: Bentuk Perisai]</h4>
-          <p class="placeholder">[Arti/makna bentuk atau simbol ini bagi sekolah]</p>
+          <h4>Bentuk Perisai (Shield)</h4>
+          <p>Melambangkan perlindungan, keamanan sistem dan data, serta ketahanan dan kekompakan siswa-siswi TKJ 1 sebagai satu kesatuan.</p>
         </div>
       </div>
       <div class="meaning-card">
-        <div class="swatch" style="background:#8bc34a;"></div>
+        <div class="swatch" style="background:#22d3ee;"></div>
         <div>
-          <h4 class="placeholder">[Nama Elemen 2, misalnya: Buku Terbuka]</h4>
-          <p class="placeholder">[Arti/makna elemen ini bagi sekolah]</p>
+          <h4>Pola Garis Sirkuit (Jalur PCB)</h4>
+          <p>Merepresentasikan jaringan komputer, konektivitas, dan alur data, sesuai dengan inti kompetensi Teknik Komputer dan Jaringan.</p>
         </div>
       </div>
-      <!-- Salin blok .meaning-card di atas untuk menambah elemen/warna lain -->
+      <div class="meaning-card">
+        <div class="swatch" style="background:#f5f5f5; border:1px solid #999;"></div>
+        <div>
+          <h4>Tulisan "TKJ 1"</h4>
+          <p>Menunjukkan identitas program keahlian dan nama kelas, sebagai simbol kebanggaan dan pengenal utama dalam logo.</p>
+        </div>
+      </div>
     </div>
 
     <h3 class="section-heading">Ketentuan Penggunaan Logo</h3>
-    <p class="placeholder">[Jelaskan aturan penggunaan logo resmi sekolah, misalnya ukuran minimum, ruang kosong di sekitar logo, dan larangan mengubah warna atau proporsi]</p>
+    <p>Agar identitas visual kelas tetap terjaga konsistensinya, penggunaan logo TKJ 1 mengikuti beberapa ketentuan dasar berikut:</p>
 
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Ketentuan</th>
-          <th>Keterangan</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="placeholder">1</td>
-          <td class="placeholder">[Contoh: Proporsi Logo]</td>
-          <td class="placeholder">[Keterangan aturan]</td>
-        </tr>
-        <tr>
-          <td class="placeholder">2</td>
-          <td class="placeholder">[Contoh: Warna Resmi]</td>
-          <td class="placeholder">[Keterangan aturan]</td>
-        </tr>
-        <tr>
-          <td class="placeholder">3</td>
-          <td class="placeholder">[Contoh: Ruang Kosong Minimum]</td>
-          <td class="placeholder">[Keterangan aturan]</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Unduhan file logo resmi -->
-    <h3 class="section-heading">Unduh Logo Resmi</h3>
-    <ul class="download-list">
-      <li><a href="#" target="_blank">[Nama File, misalnya: Logo Sekolah (PNG).zip]</a></li>
-      <li><a href="#" target="_blank">[Nama File, misalnya: Logo Sekolah (Vector/AI).zip]</a></li>
-      <li><a href="#" target="_blank">[Nama File, misalnya: Pedoman Penggunaan Logo.pdf]</a></li>
-    </ul>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Ketentuan</th>
+            <th>Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Proporsi Logo</td>
+            <td>Logo tidak boleh diubah proporsi, ditarik, atau dipipihkan agar bentuk asli tetap terjaga.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Warna Resmi</td>
+            <td>Gunakan warna asli logo (navy gelap, cyan, dan magenta) tanpa mengganti dengan warna lain.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Ruang Kosong Minimum</td>
+            <td>Sisakan ruang kosong di sekeliling logo agar tidak berhimpitan dengan elemen atau teks lain.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </main>
@@ -396,17 +461,17 @@
 <!-- ===================== FOOTER ===================== -->
 <footer>
   <div class="social-links">
-    <a href="#" target="_blank" rel="noopener" aria-label="Instagram">
+    <a href="https://www.instagram.com/elevenclass_tkjone?igsh=MWRidDhmdWV1ZjhnbA==" target="_blank" rel="noopener" aria-label="Instagram">
       <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.06 2.2.27 3.03.6.85.34 1.57.79 2.27 1.49.7.7 1.15 1.42 1.49 2.27.33.83.54 1.86.6 3.03.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.17-.27 2.2-.6 3.03-.34.85-.79 1.57-1.49 2.27-.7.7-1.42 1.15-2.27 1.49-.83.33-1.86.54-3.03.6-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.17-.06-2.2-.27-3.03-.6-.85-.34-1.57-.79-2.27-1.49-.7-.7-1.15-1.42-1.49-2.27-.33-.83-.54-1.86-.6-3.03C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.06-1.17.27-2.2.6-3.03.34-.85.79-1.57 1.49-2.27.7-.7 1.42-1.15 2.27-1.49.83-.33 1.86-.54 3.03-.6C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1 .05-1.74.22-2.28.43-.57.22-.99.49-1.42.92-.43.43-.7.85-.92 1.42-.21.54-.38 1.28-.43 2.28C2.13 9.96 2.13 10.33 2.13 12s0 3.52.07 4.76c.05 1 .22 1.74.43 2.28.22.57.49.99.92 1.42.43.43.85.7 1.42.92.54.21 1.28.38 2.28.43 1.24.07 1.61.07 4.76.07s3.52 0 4.76-.07c1-.05 1.74-.22 2.28-.43.57-.22.99-.49 1.42-.92.43-.43.7-.85.92-1.42.21-.54.38-1.28.43-2.28.07-1.24.07-1.61.07-4.76s0-3.52-.07-4.76c-.05-1-.22-1.74-.43-2.28-.22-.57-.49-.99-.92-1.42a3.6 3.6 0 0 0-1.42-.92c-.54-.21-1.28-.38-2.28-.43C15.52 4 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm5.85-3.4a1.08 1.08 0 1 1-2.16 0 1.08 1.08 0 0 1 2.16 0z"/></svg>
     </a>
-    <a href="#" target="_blank" rel="noopener" aria-label="Facebook">
+    <a href="https://www.facebook.com/smkimeldamedan" target="_blank" rel="noopener" aria-label="Facebook">
       <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg>
     </a>
-    <a href="#" target="_blank" rel="noopener" aria-label="TikTok">
+    <a href="https://www.tiktok.com/@smkkesehatanimeldamedan?_r=1&_t=ZS-98OjkclB153" target="_blank" rel="noopener" aria-label="TikTok">
       <svg viewBox="0 0 24 24"><path d="M16.5 2h-3v13.6a2.9 2.9 0 1 1-2.05-2.77V9.7a6 6 0 1 0 5.05 5.92V8.32a6.9 6.9 0 0 0 4.2 1.43V6.6a4.07 4.07 0 0 1-4.2-3.6V2z"/></svg>
     </a>
   </div>
-  <p>&copy; Copyright - [Nama Tim/Sekolah] [Tahun] | All Rights reserved.</p>
+  <p>&copy; Copyright - TKJ 1 SMK IMELDA MEDAN 2026 | All Rights reserved.</p>
 </footer>
 
 </body>
