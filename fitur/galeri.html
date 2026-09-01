@@ -219,6 +219,45 @@
   footer{
     text-align:center; padding:26px 20px 40px; color:var(--slate); font-size:12.5px;
   }
+
+  /* Modal konfirmasi download */
+  .confirm-overlay{
+    position:fixed; inset:0; background:rgba(7,11,17,.55);
+    display:none; align-items:center; justify-content:center; z-index:100;
+    padding:20px;
+  }
+  .confirm-overlay.active{display:flex;}
+  .confirm-box{
+    background:#fff; border-radius:16px; max-width:340px; width:100%;
+    padding:26px 24px 22px; text-align:center;
+    box-shadow:0 30px 60px rgba(7,11,17,.3);
+    animation:confirmPop .18s ease;
+  }
+  @keyframes confirmPop{ from{transform:scale(.94); opacity:0;} to{transform:scale(1); opacity:1;} }
+  .confirm-icon{
+    width:52px; height:52px; border-radius:50%; margin:0 auto 14px;
+    background:rgba(10,61,98,.08); display:flex; align-items:center; justify-content:center;
+    color:var(--navy);
+  }
+  .confirm-icon svg{width:24px; height:24px;}
+  .confirm-title{
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:16px;
+    color:var(--ink); margin:0 0 6px;
+  }
+  .confirm-desc{
+    font-size:13px; color:var(--slate); line-height:1.5; margin:0 0 20px;
+    word-break:break-word;
+  }
+  .confirm-actions{display:flex; gap:10px;}
+  .confirm-actions button{
+    flex:1; border-radius:10px; padding:11px 12px; font-family:'Inter',sans-serif;
+    font-size:13.5px; font-weight:600; cursor:pointer; border:1px solid var(--line);
+    transition:.15s;
+  }
+  .confirm-cancel{background:#fff; color:var(--slate);}
+  .confirm-cancel:hover{background:#f1f2f4;}
+  .confirm-ok{background:var(--navy); border-color:var(--navy); color:#fff;}
+  .confirm-ok:hover{background:var(--navy-deep);}
 </style>
 </head>
 <body>
@@ -260,6 +299,20 @@
   </div>
 
   <footer>© SMA Negeri 1 Yogyakarta — Galeri disusun untuk keperluan dokumentasi sekolah</footer>
+
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </div>
+      <p class="confirm-title">Unduh foto ini?</p>
+      <p class="confirm-desc" id="confirmDesc">File akan disimpan ke perangkat Anda.</p>
+      <div class="confirm-actions">
+        <button class="confirm-cancel" id="confirmCancel">Batal</button>
+        <button class="confirm-ok" id="confirmOk">Ya, Unduh</button>
+      </div>
+    </div>
+  </div>
 
 <script>
 /* =========================================================================
@@ -365,7 +418,7 @@ function render(filter){
     div.addEventListener('click', () => openLightbox(filtered, i));
     div.querySelector('.dl-btn').addEventListener('click', (e) => {
       e.stopPropagation();
-      downloadFile(p.src, fileNameFor(p.src, p.cap));
+      askDownloadConfirm(p.src, fileNameFor(p.src, p.cap), p.cap);
     });
     galleryEl.appendChild(div);
   });
@@ -412,6 +465,32 @@ function downloadFile(src, filename){
     });
 }
 
+/* Modal konfirmasi sebelum download */
+const confirmOverlay = document.getElementById('confirmOverlay');
+const confirmDesc = document.getElementById('confirmDesc');
+const confirmOk = document.getElementById('confirmOk');
+const confirmCancel = document.getElementById('confirmCancel');
+let pendingDownload = null;
+
+function askDownloadConfirm(src, filename, cap){
+  pendingDownload = { src, filename };
+  confirmDesc.textContent = cap ? `"${cap}" akan disimpan ke perangkat Anda.` : 'File akan disimpan ke perangkat Anda.';
+  confirmOverlay.classList.add('active');
+}
+function closeConfirm(){
+  confirmOverlay.classList.remove('active');
+  pendingDownload = null;
+}
+confirmOk.addEventListener('click', () => {
+  if(pendingDownload) downloadFile(pendingDownload.src, pendingDownload.filename);
+  closeConfirm();
+});
+confirmCancel.addEventListener('click', closeConfirm);
+confirmOverlay.addEventListener('click', (e) => { if(e.target === confirmOverlay) closeConfirm(); });
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape' && confirmOverlay.classList.contains('active')) closeConfirm();
+});
+
 document.getElementById('filterBar').addEventListener('click', e => {
   const btn = e.target.closest('.chip');
   if(!btn) return;
@@ -440,7 +519,7 @@ function updateLightbox(){
 document.getElementById('lbDownload').addEventListener('click', (e) => {
   e.stopPropagation();
   const p = currentSet[currentIndex];
-  downloadFile(p.src, fileNameFor(p.src, p.cap));
+  askDownloadConfirm(p.src, fileNameFor(p.src, p.cap), p.cap);
 });
 document.getElementById('lbClose').addEventListener('click', () => lb.classList.remove('active'));
 lb.addEventListener('click', e => { if(e.target === lb) lb.classList.remove('active'); });
