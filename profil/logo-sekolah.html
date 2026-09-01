@@ -34,30 +34,32 @@
   header.site-header .header-inner {
     position: relative;
     z-index: 1;
-    padding: 40px 16px;
+    padding: clamp(24px, 6vw, 40px) 16px;
   }
   header.site-header img.logo {
-    height: 70px;
+    height: clamp(50px, 10vw, 70px);
     margin-bottom: 8px;
   }
   header.site-header h1.site-title {
     margin: 0;
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
+    line-height: 1.25;
   }
   header.site-header p.site-description {
     margin: 4px 0 0;
-    font-size: 14px;
+    font-size: clamp(12px, 3vw, 14px);
     opacity: 0.85;
   }
   .breadcrumb {
     background: #143745;
     color: #fff;
     text-align: center;
-    padding: 30px 0;
+    padding: clamp(18px, 4vw, 30px) 16px;
   }
   .breadcrumb h2 {
     margin: 0;
     font-weight: 600;
+    font-size: clamp(18px, 4.5vw, 24px);
   }
   main {
     max-width: 1100px;
@@ -66,13 +68,15 @@
   }
   .content-box {
     background: #fff;
-    padding: 24px;
-    padding-right: 64px;
+    padding: clamp(16px, 4vw, 24px);
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow-x: hidden;
   }
   .content-box h2.page-heading {
     margin-top: 0;
+    font-size: clamp(18px, 4.5vw, 24px);
+    line-height: 1.3;
   }
   .content-box h3.section-heading {
     margin-top: 28px;
@@ -80,6 +84,7 @@
     color: #143745;
     border-left: 4px solid #143745;
     padding-left: 10px;
+    font-size: clamp(16px, 3.5vw, 19px);
   }
   .content-box img.feature-img {
     max-width: 100%;
@@ -91,11 +96,13 @@
     text-align: justify;
     line-height: 1.7;
     margin: 0 0 14px;
+    font-size: clamp(14px, 3vw, 16px);
   }
   .content-box ol, .content-box ul {
     margin: 0 0 16px;
     padding-left: 22px;
     line-height: 1.7;
+    font-size: clamp(14px, 3vw, 16px);
   }
 
   /* Panel logo utama */
@@ -111,7 +118,7 @@
     margin: 0 0 20px;
   }
   .logo-showcase .logo-img-wrap {
-    flex: 0 0 220px;
+    flex: 1 1 180px;
     text-align: center;
   }
   .logo-showcase .logo-img-wrap img {
@@ -120,19 +127,23 @@
     height: auto;
   }
   .logo-showcase .logo-caption {
-    flex: 1;
-    min-width: 240px;
+    flex: 2 1 240px;
+    min-width: 0;
   }
   .logo-showcase .logo-caption h3 {
     margin: 0 0 8px;
     color: #143745;
+    font-size: clamp(16px, 3.5vw, 19px);
+  }
+  .logo-showcase .logo-caption p {
+    font-size: clamp(14px, 3vw, 16px);
   }
 
   /* Kartu arti warna / elemen logo */
   .meaning-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
     margin: 0 0 16px;
   }
   .meaning-card {
@@ -163,11 +174,18 @@
     text-align: left;
   }
 
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 16px;
+  }
   .content-box table.data-table {
     width: 100%;
+    min-width: 480px;
     border-collapse: collapse;
-    margin-bottom: 16px;
-    font-size: 14px;
+    margin-bottom: 0;
+    font-size: clamp(12px, 2.8vw, 14px);
   }
   .content-box table.data-table th,
   .content-box table.data-table td {
@@ -262,6 +280,50 @@
     width: 16px;
     height: 16px;
     fill: currentColor;
+  }
+
+  /* ===================== RESPONSIVE BREAKPOINTS ===================== */
+  @media (max-width: 768px) {
+    main {
+      margin: 16px auto;
+    }
+    .logo-showcase {
+      padding: 16px;
+      gap: 16px;
+    }
+    .meaning-card {
+      padding: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    header.site-header img.logo {
+      height: 50px;
+    }
+    .back-button-wrap {
+      padding: 10px 12px;
+    }
+    .back-button {
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+    .logo-showcase {
+      flex-direction: column;
+      text-align: center;
+    }
+    .logo-showcase .logo-caption {
+      text-align: left;
+    }
+    .meaning-grid {
+      grid-template-columns: 1fr;
+    }
+    footer {
+      padding: 16px 0;
+    }
+    .social-links a {
+      width: 34px;
+      height: 34px;
+    }
   }
 </style>
 </head>
@@ -364,32 +426,34 @@
     <h3 class="section-heading">Ketentuan Penggunaan Logo</h3>
     <p>Agar identitas visual kelas tetap terjaga konsistensinya, penggunaan logo TKJ 1 mengikuti beberapa ketentuan dasar berikut:</p>
 
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Ketentuan</th>
-          <th>Keterangan</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Proporsi Logo</td>
-          <td>Logo tidak boleh diubah proporsi, ditarik, atau dipipihkan agar bentuk asli tetap terjaga.</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Warna Resmi</td>
-          <td>Gunakan warna asli logo (navy gelap, cyan, dan magenta) tanpa mengganti dengan warna lain.</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Ruang Kosong Minimum</td>
-          <td>Sisakan ruang kosong di sekeliling logo agar tidak berhimpitan dengan elemen atau teks lain.</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Ketentuan</th>
+            <th>Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Proporsi Logo</td>
+            <td>Logo tidak boleh diubah proporsi, ditarik, atau dipipihkan agar bentuk asli tetap terjaga.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Warna Resmi</td>
+            <td>Gunakan warna asli logo (navy gelap, cyan, dan magenta) tanpa mengganti dengan warna lain.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Ruang Kosong Minimum</td>
+            <td>Sisakan ruang kosong di sekeliling logo agar tidak berhimpitan dengan elemen atau teks lain.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </main>
