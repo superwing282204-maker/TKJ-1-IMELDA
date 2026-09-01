@@ -112,6 +112,25 @@
     letter-spacing:.04em; text-transform:uppercase;
     padding:4px 9px; border-radius:999px;
   }
+  .dl-btn{
+    position:absolute; top:10px; right:10px; z-index:3;
+    width:32px; height:32px; border-radius:50%;
+    background:rgba(7,43,71,.55); border:1px solid rgba(255,255,255,.4);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; opacity:0; transform:translateY(-4px);
+    transition:.2s; backdrop-filter:blur(2px);
+  }
+  .dl-btn svg{width:15px; height:15px;}
+  .g-item:hover .dl-btn{opacity:1; transform:translateY(0);}
+  .dl-btn:hover{background:var(--gold); border-color:var(--gold);}
+  @media (hover:none){ .dl-btn{opacity:1;} } /* selalu tampil di layar sentuh */
+  .lightbox .lb-download{
+    position:absolute; top:24px; left:24px;
+  }
+  @media (max-width:640px){
+    .dl-btn{width:28px; height:28px; top:8px; right:8px;}
+    .dl-btn svg{width:13px; height:13px;}
+  }
 
   /* Wide items for rhythm */
   .g-item.wide{grid-column: span 2;}
@@ -228,6 +247,9 @@
   </div>
 
   <div class="lightbox" id="lightbox">
+    <div class="lb-nav lb-download" id="lbDownload" title="Unduh foto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </div>
     <div class="lb-close" id="lbClose">✕</div>
     <div class="lb-nav lb-prev" id="lbPrev">‹</div>
     <div class="lb-nav lb-next" id="lbNext">›</div>
@@ -334,10 +356,17 @@ function render(filter){
     div.className = 'g-item' + (p.size ? ' '+p.size : '');
     div.innerHTML = `
       <span class="tag">${labelFor(p.cat)}</span>
+      <span class="dl-btn" title="Unduh foto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </span>
       <img src="${p.src}" alt="${p.cap}" loading="lazy">
       <div class="cap">${p.cap}</div>
     `;
     div.addEventListener('click', () => openLightbox(filtered, i));
+    div.querySelector('.dl-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      downloadFile(p.src, fileNameFor(p.src, p.cap));
+    });
     galleryEl.appendChild(div);
   });
   galleryEl.insertAdjacentHTML('beforeend', MORE_CARD);
@@ -345,6 +374,42 @@ function render(filter){
 
 function labelFor(cat){
   return {kegiatan:'Kegiatan', prestasi:'Prestasi', kunjungan:'Kunjungan', civitas:'Civitas'}[cat] || cat;
+}
+
+/* Ambil nama file dari src, atau dari caption kalau src tidak jelas namanya */
+function fileNameFor(src, cap){
+  try{
+    const clean = src.split('?')[0].split('#')[0];
+    const base = clean.substring(clean.lastIndexOf('/') + 1);
+    if(base) return base;
+  }catch(e){}
+  const safeCap = (cap || 'foto').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+  return safeCap + '.jpg';
+}
+
+/* Unduh file gambar. Karena file gambar berasal dari server yang sama
+   (folder ../images/...), kita bisa fetch sebagai blob supaya browser
+   benar-benar MENGUNDUH filenya, bukan cuma membuka tab baru. */
+function downloadFile(src, filename){
+  fetch(src)
+    .then(res => {
+      if(!res.ok) throw new Error('Gagal mengambil file');
+      return res.blob();
+    })
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    })
+    .catch(() => {
+      // Fallback: kalau fetch gagal (misalnya CORS), buka di tab baru
+      window.open(src, '_blank');
+    });
 }
 
 document.getElementById('filterBar').addEventListener('click', e => {
@@ -372,6 +437,11 @@ function updateLightbox(){
   lbImg.alt = p.cap;
   lbCap.textContent = p.cap;
 }
+document.getElementById('lbDownload').addEventListener('click', (e) => {
+  e.stopPropagation();
+  const p = currentSet[currentIndex];
+  downloadFile(p.src, fileNameFor(p.src, p.cap));
+});
 document.getElementById('lbClose').addEventListener('click', () => lb.classList.remove('active'));
 lb.addEventListener('click', e => { if(e.target === lb) lb.classList.remove('active'); });
 document.getElementById('lbPrev').addEventListener('click', () => {
