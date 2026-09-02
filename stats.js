@@ -41,12 +41,22 @@
     const el = document.getElementById('total-pengunjung');
     if (!el) return;
 
+    const badge = el.closest('.footer-visitor-count');
+    let nilaiSebelumnya = null;
     const ref = db.ref('stats/total-pengunjung');
 
-    // Tampilkan angka realtime
+    // Tampilkan angka realtime + efek "kedip" saat berubah
     ref.on('value', function (snapshot) {
       const total = snapshot.val() || 0;
       el.textContent = total.toLocaleString('id-ID');
+
+      if (nilaiSebelumnya !== null && total !== nilaiSebelumnya && badge) {
+        badge.classList.remove('pulse');
+        // Trigger reflow supaya animasi bisa diulang
+        void badge.offsetWidth;
+        badge.classList.add('pulse');
+      }
+      nilaiSebelumnya = total;
     });
 
     // Tambah 1 hanya kalau sesi browser ini belum dihitung

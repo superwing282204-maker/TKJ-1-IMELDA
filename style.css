@@ -1775,3 +1775,43 @@ img, video, iframe, table { max-width: 100%; }
   .dropdown li a { color: #ffffff; }
   .submenu { left: 0; position: static; }
 }
+
+/* ===================================================
+   BADGE TOTAL PENGUNJUNG (REALTIME)
+   =================================================== */
+.footer-visitor-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.18);
+}
+.footer-visitor-count i {
+  font-size: 15px;
+}
+.footer-visitor-count .visitor-number {
+  font-size: 17px;
+  letter-spacing: .3px;
+  display: inline-block;
+  transition: transform .25s ease;
+}
+
+/* Efek "kedip" halus tiap kali angka pengunjung bertambah */
+.footer-visitor-count.pulse .visitor-number {
+  animation: visitor-pulse .6s ease;
+}
+@keyframes visitor-pulse {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-visitor-count.pulse .visitor-number { animation: none; }
+}
