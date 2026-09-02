@@ -105,13 +105,6 @@
     opacity:0; transform:translateY(6px); transition:.25s;
   }
   .g-item:hover .cap{opacity:1; transform:translateY(0);}
-  .g-item .tag{
-    position:absolute; top:10px; left:10px;
-    background:rgba(255,255,255,.92); color:var(--navy);
-    font-family:'Poppins',sans-serif; font-weight:600; font-size:10.5px;
-    letter-spacing:.04em; text-transform:uppercase;
-    padding:4px 9px; border-radius:999px;
-  }
   .dl-btn{
     position:absolute; top:10px; right:10px; z-index:3;
     width:32px; height:32px; border-radius:50%;
@@ -168,7 +161,6 @@
 
     .gallery-wrap{margin:24px auto 56px; padding:0 12px;}
     .g-item .cap{font-size:11.5px; padding:12px 10px 8px;}
-    .g-item .tag{font-size:10px; padding:3px 8px; top:8px; left:8px;}
 
     .lightbox{padding:16px 8px 90px;}
     .lightbox img{max-width:94vw; max-height:60vh;}
@@ -279,7 +271,6 @@
   }
   .g-item .check-circle svg{width:13px; height:13px; color:#fff; opacity:0;}
   .gallery.selecting .g-item{cursor:pointer;}
-  .gallery.selecting .tag,
   .gallery.selecting .dl-btn{display:none !important;}
   .gallery.selecting .check-circle{display:flex;}
   .gallery.selecting .g-item.selected .check-circle{background:var(--gold); border-color:var(--gold);}
@@ -393,6 +384,8 @@
    Tambahkan foto baru cukup dengan menambah satu object di array ini:
    { src: "URL_FOTO", cat: "kegiatan|prestasi|kunjungan|civitas", cap: "Judul foto" }
    Tandai size:"wide" atau size:"tall" (opsional) untuk variasi grid.
+   Catatan: "cat" masih dipakai secara internal untuk fitur filter/unduh,
+   tapi labelnya sudah tidak ditampilkan lagi di atas foto.
    ========================================================================= */
 const photos = [
   { src:"../images/fot70.jpeg",              cat:"kegiatan", cap:"Ganti dengan judul foto" },
@@ -490,7 +483,6 @@ function render(filter){
     div.className = 'g-item' + (p.size ? ' '+p.size : '') + (selected.has(key) ? ' selected' : '');
     div.dataset.key = key;
     div.innerHTML = `
-      <span class="tag">${labelFor(p.cat)}</span>
       <span class="dl-btn" title="Unduh foto">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </span>
@@ -512,10 +504,6 @@ function render(filter){
   });
   galleryEl.insertAdjacentHTML('beforeend', MORE_CARD);
   currentFilteredForSelectAll = filtered;
-}
-
-function labelFor(cat){
-  return {kegiatan:'Kegiatan', prestasi:'Prestasi', kunjungan:'Kunjungan', civitas:'Civitas'}[cat] || cat;
 }
 
 /* Ambil nama file dari src, atau dari caption kalau src tidak jelas namanya */
