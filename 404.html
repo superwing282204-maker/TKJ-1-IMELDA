@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Halaman Tidak Ditemukan | TKJ 1 SMK IMELDA MEDAN</title>
+<meta name="description" content="Halaman yang kamu cari tidak ditemukan di website TKJ 1 SMK Imelda Medan.">
+<style>
+  :root {
+    --bg: #f4f7f8;
+    --surface: #ffffff;
+    --text: #1a2b30;
+    --text-muted: #5a6f75;
+    --teal: #143745;
+    --teal-light: #1e4f61;
+    --accent: #2fa4a9;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d2129;
+      --surface: #143745;
+      --text: #eef4f5;
+      --text-muted: #a8bfc4;
+      --teal: #1e4f61;
+      --teal-light: #2b6478;
+      --accent: #3fc4c9;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 2rem);
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .container {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: clamp(2rem, 6vw, 3.5rem);
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .logo {
+    width: clamp(56px, 12vw, 72px);
+    height: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .code {
+    font-size: clamp(4rem, 15vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--teal-light), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-size: clamp(1.15rem, 4vw, 1.5rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  p {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(20, 55, 69, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: var(--teal-light);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--teal-light);
+    border: 1.5px solid var(--accent);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(47, 164, 169, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .btn-secondary {
+      color: var(--accent);
+    }
+  }
+
+  .footer-note {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <img src="/images/logo.png" alt="Logo SMK IMELDA MEDAN" class="logo" onerror="this.style.display='none'">
+    <div class="code">404</div>
+    <h1>Waduh, halaman ini nyasar entah ke mana 🧭</h1>
+    <p>Halaman yang kamu cari mungkin sudah dipindahkan, dihapus, atau alamatnya salah ketik. Yuk balik lagi ke beranda TKJ 1.</p>
+    <div class="actions">
+      <a href="index.html" class="btn btn-primary">⬅ Kembali ke Beranda</a>
+      <a href="javascript:history.back()" class="btn btn-secondary">Halaman Sebelumnya</a>
+    </div>
+    <div class="footer-note">TKJ 1 - SMK IMELDA MEDAN</div>
+  </div>
+</body>
+</html>
