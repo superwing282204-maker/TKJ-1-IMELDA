@@ -39,6 +39,7 @@
   // ===== 1. TOTAL PENGUNJUNG SITUS =====
   function initTotalPengunjung() {
     const el = document.getElementById('total-pengunjung');
+    console.log('[stats.js] Elemen #total-pengunjung ditemukan?', !!el);
     if (!el) return;
 
     const badge = el.closest('.footer-visitor-count');
@@ -48,6 +49,7 @@
     // Tampilkan angka realtime + efek "kedip" saat berubah
     ref.on('value', function (snapshot) {
       const total = snapshot.val() || 0;
+      console.log('[stats.js] Nilai total-pengunjung dari Firebase:', total);
       el.textContent = total.toLocaleString('id-ID');
 
       if (nilaiSebelumnya !== null && total !== nilaiSebelumnya && badge) {
@@ -57,14 +59,23 @@
         badge.classList.add('pulse');
       }
       nilaiSebelumnya = total;
+    }, function (error) {
+      console.error('[stats.js] GAGAL membaca stats/total-pengunjung:', error.message);
     });
 
     // Tambah 1 hanya kalau sesi browser ini belum dihitung
     // (biar refresh halaman berkali-kali tidak menggandakan hitungan)
     const sudahDihitung = sessionStorage.getItem('tkj1-sesi-dihitung');
+    console.log('[stats.js] Sesi ini sudah dihitung sebelumnya?', !!sudahDihitung);
     if (!sudahDihitung) {
       ref.transaction(function (current) {
         return (current || 0) + 1;
+      }, function (error, committed) {
+        if (error) {
+          console.error('[stats.js] GAGAL menambah total-pengunjung:', error.message);
+        } else {
+          console.log('[stats.js] Berhasil menambah total-pengunjung. Committed:', committed);
+        }
       });
       sessionStorage.setItem('tkj1-sesi-dihitung', '1');
     }
