@@ -8,11 +8,13 @@
 
 <style>
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     font-family: 'Work Sans', Arial, sans-serif;
     color: #313131;
     background: #eee;
+    overflow-x: hidden;
   }
   header.site-header {
     background-color: #143745;
@@ -42,11 +44,11 @@
   }
   header.site-header h1.site-title {
     margin: 0;
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
   }
   header.site-header p.site-description {
     margin: 4px 0 0;
-    font-size: 14px;
+    font-size: clamp(12.5px, 3vw, 14px);
     opacity: 0.85;
   }
   .breadcrumb {
@@ -58,6 +60,8 @@
   .breadcrumb h2 {
     margin: 0;
     font-weight: 600;
+    font-size: clamp(18px, 4vw, 24px);
+    padding: 0 16px;
   }
   main {
     max-width: 1100px;
@@ -67,12 +71,12 @@
   .content-box {
     background: #fff;
     padding: 24px;
-    padding-right: 64px;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
   .content-box h2.page-heading {
     margin-top: 0;
+    font-size: clamp(19px, 4vw, 24px);
   }
   .content-box h3.section-heading {
     margin-top: 28px;
@@ -80,6 +84,7 @@
     color: #143745;
     border-left: 4px solid #143745;
     padding-left: 10px;
+    font-size: clamp(16px, 3.4vw, 19px);
   }
   .content-box img.feature-img {
     max-width: 100%;
@@ -91,6 +96,7 @@
     text-align: justify;
     line-height: 1.7;
     margin: 0 0 14px;
+    font-size: clamp(14px, 2vw, 16px);
   }
   .content-box ol, .content-box ul {
     margin: 0 0 16px;
@@ -98,7 +104,7 @@
     line-height: 1.7;
   }
 
-  /* Filter kelompok guru */
+  /* Filter kelompok guru: bisa digeser (scroll) horizontal di layar sempit */
   .filter-row {
     display: flex;
     flex-wrap: wrap;
@@ -113,6 +119,7 @@
     font-weight: 600;
     padding: 7px 14px;
     border-radius: 20px;
+    white-space: nowrap;
   }
   .filter-pill.active {
     background: #143745;
@@ -136,6 +143,7 @@
     gap: 14px;
     align-items: flex-start;
     position: relative;
+    min-width: 0;
   }
   .teacher-card .avatar {
     flex: 0 0 46px;
@@ -166,6 +174,8 @@
     margin: 0 0 3px;
     color: #143745;
     font-size: 16px;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   .teacher-card .teacher-role {
     display: block;
@@ -173,12 +183,15 @@
     color: #b5872f;
     font-weight: 600;
     margin-bottom: 8px;
+    overflow-wrap: break-word;
   }
   .teacher-card p {
     font-size: 13.5px;
     margin: 0;
     text-align: left;
     line-height: 1.6;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   .teacher-card .badge-wali {
     position: absolute;
@@ -190,12 +203,25 @@
     font-weight: 700;
     padding: 3px 9px;
     border-radius: 20px;
+    white-space: nowrap;
+  }
+  /* Beri ruang supaya nama tidak ketiban badge saat kartu punya lebar pas-pasan */
+  .teacher-card:has(.badge-wali) h4,
+  .teacher-card:has(.badge-wali) .teacher-role {
+    padding-right: 78px;
   }
 
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
   .content-box table.data-table {
     width: 100%;
+    min-width: 620px;
     border-collapse: collapse;
-    margin-bottom: 16px;
+    margin-bottom: 0;
     font-size: 14px;
   }
   .content-box table.data-table th,
@@ -212,7 +238,7 @@
     background: #143745;
     color: #fff;
     text-align: center;
-    padding: 20px 0;
+    padding: 20px 16px;
     margin-top: 24px;
     font-size: 13px;
   }
@@ -276,6 +302,95 @@
     width: 16px;
     height: 16px;
     fill: currentColor;
+  }
+
+  /* ===================== RESPONSIF: LAYAR BESAR / LAPTOP LEBAR (>=1200px) ===================== */
+  @media (min-width: 1200px) {
+    main { max-width: 1180px; }
+    .content-box { padding: 32px 36px; }
+    .teacher-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  }
+
+  /* ===================== RESPONSIF: LAPTOP KECIL / TABLET BESAR (<=1024px) ===================== */
+  @media (max-width: 1024px) {
+    main { max-width: 900px; }
+  }
+
+  /* ===================== RESPONSIF: TABLET (<=768px) ===================== */
+  @media (max-width: 768px) {
+    header.site-header .header-inner { padding: 32px 16px; }
+    header.site-header img.logo { height: 56px; }
+    .breadcrumb { padding: 22px 0; }
+    main { margin: 18px auto; }
+    .content-box { padding: 20px; }
+    .teacher-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .teacher-card { padding: 16px; }
+  }
+
+  /* ===================== RESPONSIF: HP (<=600px) ===================== */
+  @media (max-width: 600px) {
+    .content-box { padding: 16px; }
+    .teacher-grid { grid-template-columns: 1fr; gap: 12px; }
+
+    /* Filter kelompok jadi bisa digeser horizontal, tidak menumpuk banyak baris */
+    .filter-row {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+      margin-bottom: 18px;
+      scrollbar-width: thin;
+    }
+    .filter-pill { font-size: 12px; padding: 6px 12px; flex: 0 0 auto; }
+
+    .teacher-card .badge-wali { position: static; display: inline-block; margin-bottom: 8px; }
+    .teacher-card:has(.badge-wali) h4,
+    .teacher-card:has(.badge-wali) .teacher-role { padding-right: 0; }
+    .teacher-card { flex-wrap: wrap; }
+
+    /* Tabel: kasih sedikit hint bisa digeser */
+    .table-scroll { position: relative; }
+  }
+
+  /* ===================== RESPONSIF: HP KECIL (<=480px) ===================== */
+  @media (max-width: 480px) {
+    header.site-header .header-inner { padding: 26px 12px; }
+    header.site-header img.logo { height: 48px; margin-bottom: 6px; }
+    header.site-header p.site-description { font-size: 12.5px; }
+
+    .back-button-wrap { padding: 10px 12px; }
+    .back-button { font-size: 12.5px; padding: 8px 13px; }
+
+    .breadcrumb { padding: 18px 0; }
+
+    main { padding: 0 12px; margin: 14px auto; }
+    .content-box p { text-align: left; line-height: 1.65; font-size: 14px; }
+
+    /* Kartu guru: avatar & nama disusun berdampingan tapi lebih ringkas */
+    .teacher-card { padding: 14px; gap: 10px; }
+    .teacher-card .avatar { flex: 0 0 40px; width: 40px; height: 40px; font-size: 13px; }
+    .teacher-card h4 { font-size: 14.5px; }
+    .teacher-card .teacher-role { font-size: 11.5px; }
+    .teacher-card p { font-size: 12.5px; }
+
+    .content-box table.data-table { font-size: 12.5px; }
+    .content-box table.data-table th,
+    .content-box table.data-table td { padding: 6px; }
+
+    footer { font-size: 12px; padding: 16px 12px; }
+    .social-links a { width: 34px; height: 34px; }
+    .social-links svg { width: 16px; height: 16px; }
+  }
+
+  /* ===================== RESPONSIF: HP SANGAT KECIL (<=360px) ===================== */
+  @media (max-width: 360px) {
+    header.site-header h1.site-title { font-size: 17px; }
+
+    /* Di layar paling sempit, avatar naik ke atas biar teks tidak sesak */
+    .teacher-card { flex-direction: column; align-items: center; text-align: center; }
+    .teacher-card .avatar { flex: 0 0 40px; width: 40px; height: 40px; margin-top: 0; }
+    .teacher-card .teacher-info { width: 100%; }
+    .teacher-card p { text-align: center; }
   }
 </style>
 </head>
@@ -414,41 +529,43 @@
     </div>
 
     <h3 class="section-heading">Ringkasan Data Guru</h3>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama Guru</th>
-          <th>Jabatan / Mapel</th>
-          <th>Pendidikan</th>
-          <th>Sertifikasi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td class="placeholder">[Nama Guru 1]</td>
-          <td class="placeholder">[Jabatan / Mapel]</td>
-          <td class="placeholder">[Pendidikan]</td>
-          <td class="placeholder">[Sertifikasi]</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td class="placeholder">[Nama Guru 2]</td>
-          <td class="placeholder">[Jabatan / Mapel]</td>
-          <td class="placeholder">[Pendidikan]</td>
-          <td class="placeholder">[Sertifikasi]</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td class="placeholder">[Nama Guru 3]</td>
-          <td class="placeholder">[Jabatan / Mapel]</td>
-          <td class="placeholder">[Pendidikan]</td>
-          <td class="placeholder">[Sertifikasi]</td>
-        </tr>
-        <!-- Salin baris <tr> di atas untuk menambah data guru lain -->
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Guru</th>
+            <th>Jabatan / Mapel</th>
+            <th>Pendidikan</th>
+            <th>Sertifikasi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="placeholder">[Nama Guru 1]</td>
+            <td class="placeholder">[Jabatan / Mapel]</td>
+            <td class="placeholder">[Pendidikan]</td>
+            <td class="placeholder">[Sertifikasi]</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="placeholder">[Nama Guru 2]</td>
+            <td class="placeholder">[Jabatan / Mapel]</td>
+            <td class="placeholder">[Pendidikan]</td>
+            <td class="placeholder">[Sertifikasi]</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="placeholder">[Nama Guru 3]</td>
+            <td class="placeholder">[Jabatan / Mapel]</td>
+            <td class="placeholder">[Pendidikan]</td>
+            <td class="placeholder">[Sertifikasi]</td>
+          </tr>
+          <!-- Salin baris <tr> di atas untuk menambah data guru lain -->
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </main>
