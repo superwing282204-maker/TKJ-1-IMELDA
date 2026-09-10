@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Berita - TKJ 1</title>
+<link rel="shortcut icon" href="images/logo.png">
+<style>
+  :root{
+    --brand-dark:#143745;
+    --brand-teal:#1e5f6e;
+    --brand-green:#2ECC71;
+    --border-color:#e5e5e5;
+    --bg-light:#f5f5f5;
+    --danger:#e74c3c;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:"Work Sans", Arial, sans-serif; background:#eee; color:#333;}
+  header.topbar{
+    background:var(--brand-dark); color:#fff; padding:16px 20px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+  }
+  header.topbar h1{margin:0; font-size:18px;}
+  header.topbar a{color:#fff; font-size:13px; opacity:.85;}
+  .wrapper{max-width:900px; margin:20px auto; padding:0 15px 60px;}
+
+  /* ===== LOGIN GATE ===== */
+  #loginBox{
+    max-width:360px; margin:80px auto; background:#fff; padding:30px;
+    border-radius:6px; box-shadow:0 4px 20px rgba(0,0,0,.08); text-align:center;
+  }
+  #loginBox h2{margin-top:0; color:var(--brand-dark);}
+  #loginBox input{
+    width:100%; padding:10px 12px; border:1px solid var(--border-color);
+    border-radius:4px; margin-bottom:12px; font-size:14px;
+  }
+  #loginBox button, .btn{
+    background:var(--brand-dark); color:#fff; border:none; padding:10px 18px;
+    border-radius:4px; cursor:pointer; font-size:14px; transition:background .2s;
+  }
+  #loginBox button:hover, .btn:hover{background:var(--brand-teal);}
+  #loginError{color:var(--danger); font-size:13px; min-height:18px;}
+
+  /* ===== PANEL ===== */
+  .card{background:#fff; padding:20px; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,.05); margin-bottom:20px;}
+  .card h2{margin-top:0; font-size:17px; color:var(--brand-dark); border-bottom:2px solid var(--brand-green); padding-bottom:8px;}
+  label{display:block; font-size:13px; font-weight:600; margin:12px 0 4px;}
+  input[type=text], textarea{
+    width:100%; padding:9px 10px; border:1px solid var(--border-color); border-radius:4px;
+    font-size:14px; font-family:inherit;
+  }
+  textarea{resize:vertical; min-height:60px;}
+  .hint{font-size:12px; color:#888; margin-top:2px;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:600px){.row2{grid-template-columns:1fr;}}
+
+  .section-block{border:1px dashed var(--border-color); border-radius:4px; padding:12px; margin-top:12px; background:var(--bg-light);}
+  .section-block .sec-head{display:flex; justify-content:space-between; align-items:center;}
+  .para-item{display:flex; gap:6px; margin-top:6px;}
+  .para-item textarea{flex:1;}
+  .mini-btn{
+    background:none; border:1px solid var(--border-color); border-radius:4px; padding:5px 9px;
+    cursor:pointer; font-size:12px; color:#555;
+  }
+  .mini-btn:hover{background:#fff;}
+  .mini-btn.danger{color:var(--danger); border-color:#f2c2bc;}
+  .add-btn{
+    background:#fff; border:1px dashed var(--brand-teal); color:var(--brand-teal);
+    padding:8px 12px; border-radius:4px; cursor:pointer; font-size:13px; margin-top:10px;
+  }
+  .add-btn:hover{background:#eafaf5;}
+
+  .foto-item{display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:6px; margin-top:6px;}
+  @media (max-width:700px){.foto-item{grid-template-columns:1fr;}}
+
+  .form-actions{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;}
+  .btn.secondary{background:#fff; color:var(--brand-dark); border:1px solid var(--brand-dark);}
+  .btn.secondary:hover{background:var(--bg-light);}
+  .msg{font-size:13px; margin-top:10px; min-height:18px;}
+  .msg.ok{color:#1e8e3e;}
+  .msg.err{color:var(--danger);}
+
+  /* ===== LIST ===== */
+  .list-item{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:10px 0; border-bottom:1px solid var(--border-color);
+  }
+  .list-item:last-child{border-bottom:none;}
+  .list-item .info{flex:1; min-width:0;}
+  .list-item .info .t{font-weight:600; font-size:14px; color:#222; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .list-item .info .d{font-size:12px; color:#999;}
+  .list-item .actions{display:flex; gap:6px; flex-shrink:0;}
+  .empty-note{color:#999; font-size:13px; padding:10px 0;}
+
+  .import-box{background:#fff8e6; border:1px solid #f0e0a0; border-radius:6px; padding:14px 16px; margin-bottom:20px;}
+  .import-box p{margin:0 0 10px; font-size:13px; color:#664d00;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <h1>🛠 Admin Berita - TKJ 1</h1>
+  <div>
+    <a href="index.html">Lihat situs</a>
+    &nbsp;|&nbsp;
+    <a href="#" id="logoutLink" style="display:none;">Keluar</a>
+  </div>
+</header>
+
+<!-- ===== LOGIN GATE ===== -->
+<div id="loginBox">
+  <h2>Masuk Admin</h2>
+  <p style="font-size:13px; color:#888;">Masukkan password admin untuk mengelola berita.</p>
+  <input type="password" id="loginPass" placeholder="Password admin">
+  <div id="loginError"></div>
+  <button id="loginBtn">Masuk</button>
+</div>
+
+<!-- ===== PANEL (muncul setelah login) ===== -->
+<div class="wrapper" id="panel" style="display:none;">
+
+  <div class="import-box" id="importBox">
+    <p>📦 <strong>Migrasi berita lama</strong> — 4 berita lama (berita-sekolah-1 s/d 4) belum ada di database.
+    Klik tombol ini <em>sekali saja</em> untuk memindahkannya ke database supaya bisa dikelola dari sini.</p>
+    <button class="btn" id="importBtn">Impor Berita Lama</button>
+    <span class="msg" id="importMsg"></span>
+  </div>
+
+  <div class="card">
+    <h2 id="formTitle">Tambah Berita Baru</h2>
+    <form id="beritaForm">
+      <label>Judul Berita</label>
+      <input type="text" id="f-judul" required>
+
+      <div class="row2">
+        <div>
+          <label>Tanggal</label>
+          <input type="text" id="f-tanggal" placeholder="contoh: sabtu/27-06-2026" required>
+        </div>
+        <div>
+          <label>Kategori / Tag (pisahkan dengan koma)</label>
+          <input type="text" id="f-tags" placeholder="contoh: LIBURAN, HEALING">
+        </div>
+      </div>
+
+      <label>Foto Utama (path atau URL gambar)</label>
+      <input type="text" id="f-foto" placeholder="images/nama-file.jpeg">
+      <div class="hint">Untuk foto baru, upload dulu ke folder images/ lewat GitHub, lalu tulis nama filenya di sini.</div>
+
+      <label style="margin-top:18px;">Isi Berita (per bagian)</label>
+      <div id="sectionsWrap"></div>
+      <button type="button" class="add-btn" id="addSectionBtn">+ Tambah Bagian Cerita</button>
+
+      <label>Daftar Kegiatan (satu baris = satu kegiatan)</label>
+      <textarea id="f-daftar" placeholder="MAKAN BARENG&#10;BERENANG&#10;PULANG"></textarea>
+
+      <label>Catatan Penutup (kotak hijau, opsional)</label>
+      <textarea id="f-catatan"></textarea>
+
+      <label>Paragraf Penutup (satu baris = satu paragraf, opsional)</label>
+      <textarea id="f-penutup"></textarea>
+
+      <label>Notulis / Penulis</label>
+      <input type="text" id="f-notulis" placeholder="NOTULIS : Admin TKJ 1" value="NOTULIS : Admin TKJ 1">
+
+      <label style="margin-top:18px;">Foto Terkait (opsional, tampil di bawah artikel)</label>
+      <div id="fotoWrap"></div>
+      <button type="button" class="add-btn" id="addFotoBtn">+ Tambah Foto Terkait</button>
+
+      <div class="form-actions">
+        <button type="submit" class="btn" id="submitBtn">Simpan Berita</button>
+        <button type="button" class="btn secondary" id="cancelEditBtn" style="display:none;">Batal Edit</button>
+      </div>
+      <div class="msg" id="formMsg"></div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Daftar Berita (<span id="jumlahBerita">0</span>)</h2>
+    <div id="listWrap"><div class="empty-note">Memuat...</div></div>
+  </div>
+
+</div>
+
+<script>
+  const ADMIN_CONFIG = { password: "tkj1admin", sessionKey: "berita-admin-mode" };
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="berita-db.js"></script>
+<script src="berita-seed.js"></script>
+<script>
+  // ---------------------------------------------------
+  // LOGIN
+  // ---------------------------------------------------
+  const loginBox = document.getElementById('loginBox');
+  const panel = document.getElementById('panel');
+  const logoutLink = document.getElementById('logoutLink');
+
+  function showPanel() {
+    loginBox.style.display = 'none';
+    panel.style.display = '';
+    logoutLink.style.display = '';
+  }
+
+  if (sessionStorage.getItem(ADMIN_CONFIG.sessionKey) === 'yes') {
+    showPanel();
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', tryLogin);
+  document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+  function tryLogin() {
+    const val = document.getElementById('loginPass').value;
+    if (val === ADMIN_CONFIG.password) {
+      sessionStorage.setItem(ADMIN_CONFIG.sessionKey, 'yes');
+      document.getElementById('loginError').textContent = '';
+      showPanel();
+      initAfterLogin();
+    } else {
+      document.getElementById('loginError').textContent = 'Password salah.';
+    }
+  }
+
+  logoutLink.addEventListener('click', e => {
+    e.preventDefault();
+    sessionStorage.removeItem(ADMIN_CONFIG.sessionKey);
+    location.reload();
+  });
+
+  // ---------------------------------------------------
+  // STATE
+  // ---------------------------------------------------
+  let editingId = null; // null = mode tambah baru
+  let dbReady = false;
+  let pendingInit = false;
+
+  window.addEventListener('beritadb-ready', () => {
+    dbReady = true;
+    if (pendingInit) initAfterLogin();
+  });
+
+  function initAfterLogin() {
+    if (!dbReady) { pendingInit = true; return; }
+    window.BeritaDB.subscribeAllBerita(renderList);
+  }
+  if (sessionStorage.getItem(ADMIN_CONFIG.sessionKey) === 'yes') {
+    pendingInit = true;
+    if (dbReady) initAfterLogin();
+  }
+
+  // ---------------------------------------------------
+  // IMPOR BERITA LAMA
+  // ---------------------------------------------------
+  document.getElementById('importBtn').addEventListener('click', async () => {
+    const msg = document.getElementById('importMsg');
+    msg.textContent = 'Mengimpor...';
+    msg.className = 'msg';
+    try {
+      const jumlah = await window.BeritaDB.importBeritaLama(window.BERITA_LAMA || []);
+      msg.textContent = jumlah > 0
+        ? `Berhasil mengimpor ${jumlah} berita lama.`
+        : 'Semua berita lama sudah pernah diimpor sebelumnya.';
+      msg.className = 'msg ok';
+    } catch (err) {
+      console.error(err);
+      msg.textContent = 'Gagal mengimpor: ' + err.message;
+      msg.className = 'msg err';
+    }
+  });
+
+  // ---------------------------------------------------
+  // BAGIAN CERITA (dinamis)
+  // ---------------------------------------------------
+  const sectionsWrap = document.getElementById('sectionsWrap');
+
+  function buatSectionBlock(judul = '', paragraf = ['']) {
+    const block = document.createElement('div');
+    block.className = 'section-block';
+    block.innerHTML = `
+      <div class="sec-head">
+        <input type="text" class="sec-judul" placeholder="Judul bagian, contoh: Awal Cerita" value="${escAttr(judul)}" style="flex:1; margin-right:8px;">
+        <button type="button" class="mini-btn danger sec-remove">Hapus Bagian</button>
+      </div>
+      <div class="sec-paragraf"></div>
+      <button type="button" class="mini-btn sec-add-p" style="margin-top:8px;">+ Tambah paragraf</button>
+    `;
+    const pWrap = block.querySelector('.sec-paragraf');
+    paragraf.forEach(p => pWrap.appendChild(buatParaItem(p)));
+    block.querySelector('.sec-remove').addEventListener('click', () => block.remove());
+    block.querySelector('.sec-add-p').addEventListener('click', () => pWrap.appendChild(buatParaItem('')));
+    return block;
+  }
+
+  function buatParaItem(text) {
+    const item = document.createElement('div');
+    item.className = 'para-item';
+    item.innerHTML = `<textarea rows="2" placeholder="Isi paragraf...">${escHtml(text)}</textarea>
+      <button type="button" class="mini-btn danger">✕</button>`;
+    item.querySelector('button').addEventListener('click', () => item.remove());
+    return item;
+  }
+
+  document.getElementById('addSectionBtn').addEventListener('click', () => {
+    sectionsWrap.appendChild(buatSectionBlock());
+  });
+
+  // ---------------------------------------------------
+  // FOTO TERKAIT (dinamis)
+  // ---------------------------------------------------
+  const fotoWrap = document.getElementById('fotoWrap');
+
+  function buatFotoItem(src = '', judul = '', tanggal = '') {
+    const item = document.createElement('div');
+    item.className = 'foto-item';
+    item.innerHTML = `
+      <input type="text" class="foto-src" placeholder="path foto" value="${escAttr(src)}">
+      <input type="text" class="foto-judul" placeholder="judul foto" value="${escAttr(judul)}">
+      <input type="text" class="foto-tanggal" placeholder="tanggal" value="${escAttr(tanggal)}">
+      <button type="button" class="mini-btn danger">✕</button>
+    `;
+    item.querySelector('button').addEventListener('click', () => item.remove());
+    return item;
+  }
+
+  document.getElementById('addFotoBtn').addEventListener('click', () => {
+    fotoWrap.appendChild(buatFotoItem());
+  });
+
+  function escHtml(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function escAttr(s) { return escHtml(s).replace(/"/g,'&quot;'); }
+
+  // Mulai dengan satu bagian kosong secara default
+  sectionsWrap.appendChild(buatSectionBlock());
+
+  // ---------------------------------------------------
+  // AMBIL DATA DARI FORM -> objek config
+  // ---------------------------------------------------
+  function bacaForm() {
+    const sections = [...sectionsWrap.querySelectorAll('.section-block')].map(block => ({
+      judul: block.querySelector('.sec-judul').value.trim(),
+      paragraf: [...block.querySelectorAll('.sec-paragraf textarea')]
+        .map(t => t.value.trim()).filter(Boolean)
+    })).filter(s => s.judul || s.paragraf.length);
+
+    const fotoTerkait = [...fotoWrap.querySelectorAll('.foto-item')].map(item => ({
+      src: item.querySelector('.foto-src').value.trim(),
+      judul: item.querySelector('.foto-judul').value.trim(),
+      tanggal: item.querySelector('.foto-tanggal').value.trim()
+    })).filter(f => f.src);
+
+    const judul = document.getElementById('f-judul').value.trim();
+    const tanggal = document.getElementById('f-tanggal').value.trim();
+    const tags = document.getElementById('f-tags').value.split(',').map(t => t.trim().toUpperCase()).filter(Boolean);
+    const daftarKegiatan = document.getElementById('f-daftar').value.split('\n').map(l => l.trim()).filter(Boolean);
+    const penutup = document.getElementById('f-penutup').value.split('\n').map(l => l.trim()).filter(Boolean);
+
+    return {
+      judulTab: judul + ' - Circle TKJ 1',
+      deskripsiKecil: 'Berita Sekolah',
+      judulCerita: judul,
+      tanggal,
+      tags,
+      kategori: tags[0] || 'BERITA',
+      fotoUtama: document.getElementById('f-foto').value.trim(),
+      sections,
+      daftarKegiatan,
+      catatanPenutup: document.getElementById('f-catatan').value.trim(),
+      penutup,
+      notulis: document.getElementById('f-notulis').value.trim() || 'NOTULIS : Admin TKJ 1',
+      fotoTerkait,
+      tahunCopy: new Date().getFullYear().toString()
+    };
+  }
+
+  function isiForm(data) {
+    document.getElementById('f-judul').value = data.judulCerita || '';
+    document.getElementById('f-tanggal').value = data.tanggal || '';
+    document.getElementById('f-tags').value = (data.tags || []).join(', ');
+    document.getElementById('f-foto').value = data.fotoUtama || '';
+    document.getElementById('f-daftar').value = (data.daftarKegiatan || []).join('\n');
+    document.getElementById('f-catatan').value = data.catatanPenutup || '';
+    document.getElementById('f-penutup').value = (data.penutup || []).join('\n');
+    document.getElementById('f-notulis').value = data.notulis || 'NOTULIS : Admin TKJ 1';
+
+    sectionsWrap.innerHTML = '';
+    (data.sections && data.sections.length ? data.sections : [{judul:'', paragraf:['']}])
+      .forEach(s => sectionsWrap.appendChild(buatSectionBlock(s.judul, s.paragraf.length ? s.paragraf.map(stripTags) : [''])));
+
+    fotoWrap.innerHTML = '';
+    (data.fotoTerkait || []).forEach(f => fotoWrap.appendChild(buatFotoItem(f.src, f.judul, f.tanggal)));
+  }
+
+  function stripTags(s) { return (s || '').replace(/<[^>]+>/g, ''); }
+
+  function resetForm() {
+    editingId = null;
+    document.getElementById('beritaForm').reset();
+    sectionsWrap.innerHTML = '';
+    sectionsWrap.appendChild(buatSectionBlock());
+    fotoWrap.innerHTML = '';
+    document.getElementById('f-notulis').value = 'NOTULIS : Admin TKJ 1';
+    document.getElementById('formTitle').textContent = 'Tambah Berita Baru';
+    document.getElementById('submitBtn').textContent = 'Simpan Berita';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+    document.getElementById('formMsg').textContent = '';
+  }
+
+  document.getElementById('cancelEditBtn').addEventListener('click', resetForm);
+
+  // ---------------------------------------------------
+  // SUBMIT (tambah / update)
+  // ---------------------------------------------------
+  document.getElementById('beritaForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = document.getElementById('formMsg');
+    const data = bacaForm();
+    if (!data.judulCerita) { msg.textContent = 'Judul wajib diisi.'; msg.className = 'msg err'; return; }
+
+    msg.textContent = 'Menyimpan...';
+    msg.className = 'msg';
+    try {
+      if (editingId) {
+        await window.BeritaDB.replaceBerita(editingId, { ...data, dibuatPada: currentDibuatPada || Date.now() });
+        msg.textContent = 'Berita berhasil diperbarui.';
+      } else {
+        await window.BeritaDB.addBerita(data);
+        msg.textContent = 'Berita berhasil ditambahkan.';
+      }
+      msg.className = 'msg ok';
+      resetForm();
+    } catch (err) {
+      console.error(err);
+      msg.textContent = 'Gagal menyimpan: ' + err.message;
+      msg.className = 'msg err';
+    }
+  });
+
+  // ---------------------------------------------------
+  // DAFTAR BERITA + AKSI EDIT/HAPUS
+  // ---------------------------------------------------
+  let currentDibuatPada = null;
+  const listWrap = document.getElementById('listWrap');
+  const jumlahEl = document.getElementById('jumlahBerita');
+
+  function renderList(list) {
+    jumlahEl.textContent = list.length;
+    if (!list.length) {
+      listWrap.innerHTML = '<div class="empty-note">Belum ada berita di database.</div>';
+      return;
+    }
+    listWrap.innerHTML = '';
+    list.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'list-item';
+      row.innerHTML = `
+        <div class="info">
+          <div class="t">${escHtml(item.judulCerita || '(tanpa judul)')}</div>
+          <div class="d">${escHtml(item.tanggal || '')}</div>
+        </div>
+        <div class="actions">
+          <a class="mini-btn" href="berita-template.html?id=${encodeURIComponent(item.id)}" target="_blank">Lihat</a>
+          <button type="button" class="mini-btn edit-btn">Edit</button>
+          <button type="button" class="mini-btn danger del-btn">Hapus</button>
+        </div>
+      `;
+      row.querySelector('.edit-btn').addEventListener('click', () => {
+        editingId = item.id;
+        currentDibuatPada = item.dibuatPada || Date.now();
+        isiForm(item);
+        document.getElementById('formTitle').textContent = 'Edit Berita';
+        document.getElementById('submitBtn').textContent = 'Simpan Perubahan';
+        document.getElementById('cancelEditBtn').style.display = '';
+        window.scrollTo({top:0, behavior:'smooth'});
+      });
+      row.querySelector('.del-btn').addEventListener('click', async () => {
+        if (!confirm(`Hapus berita "${item.judulCerita}"? Tindakan ini tidak bisa dibatalkan.`)) return;
+        try {
+          await window.BeritaDB.deleteBerita(item.id);
+          if (editingId === item.id) resetForm();
+        } catch (err) {
+          alert('Gagal menghapus: ' + err.message);
+        }
+      });
+      listWrap.appendChild(row);
+    });
+  }
+</script>
+</body>
+</html>

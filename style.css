@@ -1815,3 +1815,263 @@ img, video, iframe, table { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .footer-visitor-count.pulse .visitor-number { animation: none; }
 }
+/* ===================================================
+   TEMA BARU HALAMAN UTAMA (index.html)
+   Terinspirasi desain navy + emas (Bebas Neue / Plus
+   Jakarta Sans). Header, topbar, dan navigasi SENGAJA
+   TIDAK disentuh di sini supaya tampilannya tetap persis
+   seperti sebelumnya — semua aturan di bawah ini hanya
+   menimpa bagian konten setelah header/nav.
+   =================================================== */
+
+:root {
+  --nt-navy:        #16233d;
+  --nt-navy-2:       #1f3a68;
+  --nt-navy-grad:    linear-gradient(135deg, #16233d, #2b4a86);
+  --nt-gold:         #e8b437;
+  --nt-gold-2:       #dc9a35;
+  --nt-gold-grad:    linear-gradient(100deg, #f0c04b, #dc9a35);
+  --nt-gold-fg:      #2a2410;
+  --nt-card:         #ffffff;
+  --nt-card-border:  #e2e6ee;
+  --nt-muted:        #6b7488;
+  --nt-shadow:       0 1px 2px rgba(22,35,61,.06), 0 8px 24px -12px rgba(22,35,61,.2);
+  --nt-shadow-lift:  0 18px 40px -20px rgba(22,35,61,.4);
+}
+[data-theme="dark"] {
+  --nt-card:         #18202e;
+  --nt-card-border:  rgba(255,255,255,.12);
+  --nt-muted:        #a3adc0;
+  --nt-shadow:       0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.55);
+}
+
+/* Font baru untuk seluruh halaman; panel pilihan tema tetap font lama biar ikonnya presisi */
+body { font-family: "Plus Jakarta Sans", "Segoe UI", Arial, sans-serif; }
+.theme-switch, .theme-menu {
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Judul-judul section pakai Bebas Neue ala tema baru */
+.chat-head h1,
+.footer-school-name,
+.widget-title-plain,
+.widget-title {
+  font-family: "Bebas Neue", "Plus Jakarta Sans", sans-serif;
+  letter-spacing: .03em;
+}
+
+/* ---------------- Tombol geser hero & dots ---------------- */
+.slider-btn { background: rgba(22,35,61,.55); }
+.slider-btn:hover { background: var(--nt-gold); color: var(--nt-gold-fg); }
+.slider-dots .dot.active { background: var(--nt-gold); }
+
+/* ---------------- Ticker berita berjalan ---------------- */
+.berita-headline {
+  background: var(--nt-navy-grad);
+  color: #f2f5fb;
+}
+.berita-scroll-label {
+  background: var(--nt-gold-grad);
+  color: var(--nt-gold-fg);
+}
+.berita-scroll-items a { color: rgba(255,255,255,.88); }
+.berita-scroll-items a:hover { color: var(--nt-gold); }
+#berita-db-section h3 { color: var(--nt-navy-2) !important; }
+
+/* ---------------- Tab Terbaru / Populer / Trending ---------------- */
+.posts-tabs {
+  border-bottom: none;
+  display: inline-flex;
+  gap: .25rem;
+  padding: .25rem;
+  border: 1px solid var(--nt-card-border);
+  border-radius: .85rem;
+  background: var(--nt-card);
+  box-shadow: var(--nt-shadow);
+}
+.tab-btn { border-radius: .6rem; }
+.tab-btn.active, .tab-btn:hover {
+  background: var(--nt-navy-2);
+  color: #f5f8ff;
+}
+
+/* ---------------- Kartu berita (grid kecil & grid utama) ---------------- */
+.post-card-small img { border-radius: .85rem; transition: transform .35s ease; }
+.post-card-small a:hover img { transform: scale(1.05); }
+.post-card-small-meta .post-cat { color: var(--nt-gold-2); }
+
+.divider { border-top: 1px solid var(--nt-card-border); }
+
+.post-card-item {
+  background: var(--nt-card);
+  border: 1px solid var(--nt-card-border);
+  border-radius: 1rem;
+  box-shadow: var(--nt-shadow);
+  overflow: hidden;
+}
+.post-card-item:hover { box-shadow: var(--nt-shadow-lift); transform: translateY(-4px); }
+.post-card-thumb { border-radius: 0; overflow: hidden; }
+.post-card-thumb img { transition: transform .5s ease; }
+.post-card-item:hover .post-card-thumb img { transform: scale(1.06); }
+
+.badge-cat {
+  background: var(--nt-gold-grad);
+  color: var(--nt-gold-fg);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-radius: 999px;
+}
+.badge-cat:hover { filter: brightness(1.05); background: var(--nt-gold-grad); }
+.badge-time {
+  background: rgba(22,35,61,.75);
+  color: #f2f5fb;
+  border-radius: 999px;
+}
+.post-card-body h4 a:hover { color: var(--nt-navy-2); }
+
+/* ---------------- Widget sidebar ---------------- */
+.widget {
+  border: 1px solid var(--nt-card-border);
+  border-radius: 1rem;
+  box-shadow: var(--nt-shadow);
+  background: var(--nt-card);
+}
+.widget-title,
+.widget-title-plain {
+  background: transparent;
+  color: var(--nt-navy-2);
+  text-transform: none;
+  letter-spacing: .02em;
+  padding: 0 0 10px;
+  margin: -2px 0 14px;
+  border-bottom: 2px solid var(--nt-gold);
+  font-size: 18px;
+}
+[data-theme="dark"] .widget-title,
+[data-theme="dark"] .widget-title-plain { color: var(--nt-gold); }
+
+.search-btn { background: var(--nt-navy-2); }
+.search-btn:hover { background: var(--nt-gold); color: var(--nt-gold-fg); }
+.populer-cat { color: var(--nt-navy-2); }
+.cal-grid .cal-day.today { background: var(--nt-navy-2); }
+.cal-grid .cal-day.has-post a { color: var(--nt-gold-2); }
+
+/* ---------------- Footer ---------------- */
+.site-footer { background: var(--nt-navy-grad); }
+.footer-socials a:hover { background: var(--nt-gold); color: var(--nt-gold-fg); }
+.footer-bottom a { color: var(--nt-gold); }
+.footer-visitor-count { background: var(--nt-gold-grad); color: var(--nt-gold-fg); }
+
+/* ---------------- Tombol kembali ke atas ---------------- */
+.back-to-top { background: var(--nt-gold-grad); color: var(--nt-gold-fg); }
+.back-to-top:hover { background: var(--nt-gold-grad); filter: brightness(1.06); }
+
+/* ---------------- Chat Anonim ---------------- */
+.chat-page {
+  background: var(--nt-navy-grad);
+  border-radius: 1.25rem;
+  margin-inline: 8px;
+  padding: 48px 20px 56px;
+}
+.chat-head h1 { color: #ffffff; }
+.chat-head h1 i { color: var(--nt-gold); }
+.chat-head p { color: rgba(255,255,255,.75); }
+
+.chat-admin-btn { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); border-color: rgba(255,255,255,.25); }
+.chat-admin-btn:hover { background: rgba(255,255,255,.22); color: #fff; }
+.chat-admin-btn.is-admin { background: var(--nt-gold-grad); color: var(--nt-gold-fg); border-color: transparent; }
+.chat-admin-badge { background: rgba(255,255,255,.12); color: var(--nt-gold); border-color: var(--nt-gold); }
+
+.chat-box {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 1rem;
+  box-shadow: none;
+}
+.chat-messages { background: transparent; }
+.chat-bubble { background: rgba(255,255,255,.9); border: none; }
+.chat-msg.me .chat-bubble { background: var(--nt-gold-grad); }
+.chat-name { color: var(--nt-navy-2); }
+.chat-msg.me .chat-name { color: var(--nt-gold-fg); }
+.chat-text { color: #1f2634; }
+.chat-msg.me .chat-text { color: var(--nt-gold-fg); }
+
+.chat-form { background: rgba(255,255,255,.06); border-top: 1px solid rgba(255,255,255,.14); }
+.chat-input { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: #fff; }
+.chat-input::placeholder { color: rgba(255,255,255,.55); }
+.chat-input:focus { border-color: var(--nt-gold); }
+.chat-send-btn { background: var(--nt-gold-grad); color: var(--nt-gold-fg); }
+.chat-send-btn:hover { filter: brightness(1.05); background: var(--nt-gold-grad); }
+.chat-note { color: rgba(255,255,255,.6); }
+.chat-loading, .chat-setup-warning { color: rgba(255,255,255,.65); }
+
+@media (max-width: 600px) {
+  .chat-page { margin-inline: 0; border-radius: 0; }
+}
+
+/* ===================================================
+   TEMA BARU JUGA UNTUK BAGIAN ATAS (topbar, header, nav)
+   Hanya tampilan/warna yang diganti — struktur menu,
+   dropdown, dan isi Beranda/Profil/Kurikulum/dst TIDAK
+   diubah sama sekali, cuma dibungkus warna baru.
+   =================================================== */
+
+.topbar { background: var(--nt-navy-grad); }
+.topbar-date { color: rgba(255,255,255,.75); }
+.topbar-socials a { color: rgba(255,255,255,.85); }
+.topbar-socials a:hover { color: var(--nt-gold); opacity: 1; }
+.topbar-clock-face { stroke: rgba(255,255,255,.65); }
+.topbar-clock-tick { stroke: rgba(255,255,255,.65); }
+.topbar-clock-hand-hour, .topbar-clock-hand-minute { stroke: #ffffff; }
+.topbar-clock-hand-second { stroke: var(--nt-gold); }
+.topbar-clock-center { fill: var(--nt-gold); }
+.topbar-clock-text { color: rgba(255,255,255,.85); }
+.theme-toggle { background: rgba(255,255,255,.15); color: #fff; }
+.theme-toggle:hover { background: var(--nt-gold); color: var(--nt-gold-fg); }
+
+.site-header {
+  background: var(--nt-navy);
+  box-shadow: none;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.school-name {
+  color: #ffffff;
+  font-family: "Bebas Neue", "Plus Jakarta Sans", sans-serif;
+  letter-spacing: .03em;
+  font-size: 26px;
+}
+.school-name a:hover { color: var(--nt-gold); }
+.school-tagline {
+  color: rgba(255,255,255,.6);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.main-nav {
+  background: var(--nt-navy);
+  box-shadow: none;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.nav-menu { background: transparent; }
+.nav-menu > li > a { color: rgba(255,255,255,.85); }
+.nav-menu > li > a:hover,
+.nav-menu > li:hover > a { background: rgba(255,255,255,.08); color: var(--nt-gold); }
+.nav-toggle { color: #fff; }
+
+.nav-highlight { background: var(--nt-gold-grad) !important; color: var(--nt-gold-fg) !important; border-radius: 999px; }
+.nav-highlight:hover { background: var(--nt-gold-grad) !important; color: var(--nt-gold-fg) !important; filter: brightness(1.05); }
+
+.dropdown {
+  background: rgba(22, 35, 61, .92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 3px solid var(--nt-gold);
+  border-radius: 0 0 .75rem .75rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.35);
+  transition: all .3s ease;
+  overflow: visible;
+}
+.dropdown.submenu { border-radius: .75rem; }
+.dropdown li a { color: rgba(255,255,255,.85); border-bottom-color: rgba(255,255,255,.1); }
+.dropdown li a:hover { background: rgba(232,180,55,.16); color: var(--nt-gold); }

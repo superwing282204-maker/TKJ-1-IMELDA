@@ -17,6 +17,12 @@
       document.documentElement.setAttribute('data-theme-mode', mode);
     })();
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
@@ -185,6 +191,10 @@
 </section>
 
 <!-- ===== BERITA TERBARU HEADLINE ===== -->
+<!-- Isi ticker ini diambil otomatis dari database berita (lihat
+     berita-db.js + script di bagian bawah halaman). Link di bawah
+     ini cuma tampil sebentar sebagai cadangan sebelum data dari
+     database selesai dimuat. -->
 <section class="berita-headline">
   <div class="container">
     <div class="berita-scroll-bar">
@@ -193,8 +203,19 @@
         <a href="berita-sekolah/berita-sekolah-2.html">Bukber Bersama Teman Kelas X - TKJ 1.. </a>
         <a href="berita-sekolah/berita-sekolah-3.html">Abang Abang Magang Yang bertugas Untuk Mengajar Kami Selama..</a>
         <a href="berita-sekolah/berita-sekolah-4.html">Praktek Jaringan Komputer Yang di Lakukan Di Laboratorium Komputer...</a>
-        <a href="berita-sekolah/berita-sekolah-5.html">Rutinitas Wajib Dari sekolah setiap Bulan nya , yaitu berenang..</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BERITA DARI DATABASE (otomatis update) ===== -->
+<!-- Setiap berita baru yang ditambahkan lewat admin-berita.html
+     akan langsung muncul di sini tanpa perlu bikin file HTML baru. -->
+<section class="berita-headline" id="berita-db-section" style="padding-top:6px;">
+  <div class="container">
+    <h3 style="margin:14px 0 10px; color:#143745; font-size:17px;">📰 Berita Terbaru</h3>
+    <div class="posts-grid-small" id="berita-db-grid">
+      <div style="color:#999; font-size:13px; padding:10px 0;">Memuat berita...</div>
     </div>
   </div>
 </section>
@@ -593,10 +614,55 @@
 
 <script src="script.js"></script>
 <script src="calendar.js"></script>
-
-<!-- Firebase (untuk chat realtime yang bisa dilihat semua orang) -->
+<!-- Firebase (dipakai bareng oleh chat.js, stats.js, dan berita-db.js) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="berita-db.js"></script>
+<script>
+  // ===================================================
+  // Menampilkan berita dari database (Firebase) di beranda:
+  // - ticker #berita-scroll diisi ulang dengan berita terbaru
+  // - grid #berita-db-grid menampilkan kartu berita terbaru
+  // Keduanya otomatis update kalau ada berita baru/dihapus.
+  // ===================================================
+  window.addEventListener('beritadb-ready', () => {
+    window.BeritaDB.subscribeAllBerita(list => {
+      // --- Ticker ---
+      const scrollEl = document.getElementById('berita-scroll');
+      if (scrollEl) {
+        if (list.length) {
+          scrollEl.innerHTML = list.slice(0, 8).map(b =>
+            `<a href="berita-template.html?id=${encodeURIComponent(b.id)}">${escBeritaHtml(b.judulCerita || '(tanpa judul)')}</a>`
+          ).join('');
+        }
+      }
+
+      // --- Grid kartu ---
+      const grid = document.getElementById('berita-db-grid');
+      if (grid) {
+        if (!list.length) {
+          grid.innerHTML = '<div style="color:#999; font-size:13px; padding:10px 0;">Belum ada berita di database.</div>';
+          return;
+        }
+        grid.innerHTML = list.slice(0, 6).map(b => `
+          <article class="post-card-small">
+            <a href="berita-template.html?id=${encodeURIComponent(b.id)}">
+              <img src="${escBeritaAttr(b.fotoUtama || 'images/post-placeholder.jpg')}" alt="${escBeritaAttr(b.judulCerita || '')}" />
+            </a>
+            <div class="post-card-small-meta">
+              <span class="post-cat"><a href="#">${escBeritaHtml(b.kategori || 'berita sekolah')}</a></span>
+              <h5><a href="berita-template.html?id=${encodeURIComponent(b.id)}">${escBeritaHtml(b.judulCerita || '(tanpa judul)')}</a></h5>
+            </div>
+          </article>
+        `).join('');
+      }
+    });
+  });
+
+  function escBeritaHtml(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function escBeritaAttr(s) { return escBeritaHtml(s).replace(/"/g,'&quot;'); }
+</script>
+
 <script src="chat.js"></script>
 <script src="stats.js"></script>
 </body>
