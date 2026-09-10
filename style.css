@@ -1265,6 +1265,7 @@ body.admin-mode .chat-msg:hover .chat-delete-btn { display: flex; }
   padding: 16px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 12px;
   background: var(--bg);
 }
@@ -1395,8 +1396,10 @@ body.admin-mode .chat-msg:hover .chat-delete-btn { display: flex; }
 }
 
 @media (max-width: 600px) {
-  .chat-box { height: 70vh; }
+  .chat-box { height: 60vh; max-height: 520px; }
   .chat-msg { max-width: 92%; }
+  .chat-page { padding: 24px 0 36px; min-height: 0; }
+  .chat-head { margin-bottom: 14px; }
 }
 
 /* Spinner loading chat */
