@@ -1400,6 +1400,24 @@ body.admin-mode .chat-msg:hover .chat-delete-btn { display: flex; }
   .chat-msg { max-width: 92%; }
   .chat-page { padding: 24px 0 36px; min-height: 0; }
   .chat-head { margin-bottom: 14px; }
+  .chat-avatar { width: 28px; height: 28px; font-size: 10px; }
+  .chat-text { font-size: 12.5px; }
+}
+
+/* Pakai dvh saat didukung, biar tinggi kotak chat tidak "lompat"
+   ketika address bar browser HP muncul/hilang */
+@supports (height: 100dvh) {
+  @media (max-width: 600px) {
+    .chat-box { height: 60dvh; }
+  }
+}
+
+/* HP kecil: rapatkan form biar tombol kirim & input tidak sesak */
+@media (max-width: 400px) {
+  .chat-msg { max-width: 96%; gap: 6px; }
+  .chat-form { padding: 10px; gap: 6px; }
+  .chat-input { padding: 9px 14px; }
+  .chat-send-btn { width: 36px; height: 36px; font-size: 13px; }
 }
 
 /* Spinner loading chat */
@@ -1441,15 +1459,10 @@ body.admin-mode .chat-msg:hover .chat-delete-btn { display: flex; }
   100% { transform: translateY(0);   opacity: 1; }
 }
 
-/* Penghitung karakter di form chat */
-.chat-char-count {
-  align-self: center;
-  font-size: 11px;
-  color: var(--text-muted);
-  min-width: 26px;
-  text-align: right;
-}
-.chat-char-count.warn { color: var(--secondary); font-weight: 700; }
+/* Penghitung karakter di form chat: disembunyikan biar tombol kirim
+   kelihatan jelas & rapi. Batas 300 karakter tetap berlaku lewat
+   atribut maxlength di input, cuma angkanya yang tidak ditampilkan. */
+.chat-char-count { display: none; }
 
 /* Getar input saat kena limit anti-spam atau gagal kirim */
 .chat-input.shake { animation: chatShake .35s ease; border-color: var(--secondary); }
@@ -2009,7 +2022,21 @@ body { font-family: "Plus Jakarta Sans", "Segoe UI", Arial, sans-serif; }
 .chat-loading, .chat-setup-warning { color: rgba(255,255,255,.65); }
 
 @media (max-width: 600px) {
-  .chat-page { margin-inline: 0; border-radius: 0; }
+  .chat-page {
+    margin-inline: 0;
+    border-radius: 0;
+    /* Padding gede dari versi desktop (48px 20px 56px) bikin kotak chat
+       kepotong/turun jauh di layar HP — dikecilkan biar pas */
+    padding: 28px 16px 32px;
+  }
+  .chat-head h1 { font-size: 21px; }
+  .chat-admin-row { flex-wrap: wrap; row-gap: 6px; }
+}
+
+@media (max-width: 360px) {
+  .chat-page { padding: 22px 12px 26px; }
+  .chat-head h1 { font-size: 19px; }
+  .chat-head p { font-size: 12px; }
 }
 
 /* ===================================================
