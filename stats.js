@@ -1,11 +1,15 @@
 // ===================================================
-// STATS.JS - Penghitung Total Pengunjung
-// Pakai project Firebase terpisah: tkj1-pengunjung
-// (beda dari project Firebase yang dipakai chat.js / berita-db.js)
+// STATS.JS - Penghitung "Sedang Online"
+// Menghitung berapa orang yang SEDANG membuka website ini
+// sekarang juga (bukan total yang pernah buka sepanjang masa).
+// Pakai fitur "presence" Firebase Realtime Database:
+// - Saat browser terhubung, catat 1 entri unik di /statistik/online/{id}
+// - Kalau tab ditutup / koneksi putus, entri itu OTOMATIS terhapus
+//   sendiri oleh Firebase lewat onDisconnect() -- tidak perlu server.
+// - Angka yang ditampilkan = jumlah entri yang sedang ada di situ.
 // ===================================================
 
 (function () {
-  // Config khusus project "tkj1-pengunjung"
   const statsFirebaseConfig = {
     apiKey: "AIzaSyD5rtLPqJtP2XHLYvPDXwMtbZwy-2qmC8E",
     authDomain: "tkj1-pengunjung.firebaseapp.com",
@@ -20,24 +24,30 @@
   // supaya tidak bentrok dengan app default punya chat.js / berita-db.js
   const statsApp = firebase.initializeApp(statsFirebaseConfig, "statsApp");
   const db = statsApp.database();
-  const counterRef = db.ref("statistik/total_pengunjung");
 
-  // Biar 1 orang refresh berkali-kali nggak nambah hitungan berkali-kali dalam sesi yang sama
-  const SESSION_KEY = "tkj1_sudah_dihitung";
+  const onlineListRef = db.ref("statistik/online"); // daftar semua yang sedang online
+  const connectedRef  = db.ref(".info/connected");   // status koneksi browser ini
 
-  if (!sessionStorage.getItem(SESSION_KEY)) {
-    counterRef.transaction(function (nilaiSekarang) {
-      return (nilaiSekarang || 0) + 1;
-    });
-    sessionStorage.setItem(SESSION_KEY, "true");
-  }
+  connectedRef.on("value", function (snap) {
+    if (snap.val() === true) {
+      // Bikin entri unik buat browser/tab ini
+      const myEntryRef = onlineListRef.push();
 
-  // Tampilkan angkanya secara real-time ke elemen #total-pengunjung
-  counterRef.on("value", function (snapshot) {
-    const total = snapshot.val() || 0;
-    const elemen = document.getElementById("total-pengunjung");
+      // Kalau koneksi ini putus (tab ditutup, internet mati, dll),
+      // Firebase otomatis menghapus entri ini sendiri.
+      myEntryRef.onDisconnect().remove();
+
+      // Tandai entri ini "hadir" sekarang
+      myEntryRef.set(true);
+    }
+  });
+
+  // Tampilkan jumlah entri yang sedang online ke elemen #online-pengunjung
+  onlineListRef.on("value", function (snapshot) {
+    const jumlah = snapshot.numChildren();
+    const elemen = document.getElementById("online-pengunjung");
     if (elemen) {
-      elemen.textContent = total.toLocaleString("id-ID");
+      elemen.textContent = jumlah.toLocaleString("id-ID");
     }
   });
 })();

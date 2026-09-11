@@ -208,18 +208,6 @@
   </div>
 </section>
 
-<!-- ===== BERITA DARI DATABASE (otomatis update) ===== -->
-<!-- Setiap berita baru yang ditambahkan lewat admin-berita.html
-     akan langsung muncul di sini tanpa perlu bikin file HTML baru. -->
-<section class="berita-headline" id="berita-db-section" style="padding-top:6px;">
-  <div class="container">
-    <h3 style="margin:14px 0 10px; color:#143745; font-size:17px;">📰 Berita Terbaru</h3>
-    <div class="posts-grid-small" id="berita-db-grid">
-      <div style="color:#999; font-size:13px; padding:10px 0;">Memuat berita...</div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== MAIN CONTENT ===== -->
 <main class="main-content">
   <div class="container">
@@ -593,7 +581,7 @@
     <p>&copy; Hak Cipta : TKJ 1 - SMK IMELDA MEDAN 2026/2027 | Dibuat Oleh: <a href="index.html">TKJ 1</a> | All Rights Reserved.</p>
     <div class="footer-visitor-count">
       <i class="fas fa-users"></i>
-      <span>Total pengunjung: <span class="visitor-number" id="total-pengunjung">0</span></span>
+      <span>Sedang online: <span class="visitor-number" id="online-pengunjung">0</span></span>
     </div>
   </div>
 </footer>
@@ -613,8 +601,7 @@
   // ===================================================
   // Menampilkan berita dari database (Firebase) di beranda:
   // - ticker #berita-scroll diisi ulang dengan berita terbaru
-  // - grid #berita-db-grid menampilkan kartu berita terbaru
-  // Keduanya otomatis update kalau ada berita baru/dihapus.
+  // Otomatis update kalau ada berita baru/dihapus.
   // ===================================================
   window.addEventListener('beritadb-ready', () => {
     window.BeritaDB.subscribeAllBerita(list => {
@@ -626,26 +613,6 @@
             `<a href="berita-template.html?id=${encodeURIComponent(b.id)}">${escBeritaHtml(b.judulCerita || '(tanpa judul)')}</a>`
           ).join('');
         }
-      }
-
-      // --- Grid kartu ---
-      const grid = document.getElementById('berita-db-grid');
-      if (grid) {
-        if (!list.length) {
-          grid.innerHTML = '<div style="color:#999; font-size:13px; padding:10px 0;">Belum ada berita di database.</div>';
-          return;
-        }
-        grid.innerHTML = list.slice(0, 6).map(b => `
-          <article class="post-card-small">
-            <a href="berita-template.html?id=${encodeURIComponent(b.id)}">
-              <img src="${escBeritaAttr(b.fotoUtama || 'images/post-placeholder.jpg')}" alt="${escBeritaAttr(b.judulCerita || '')}" />
-            </a>
-            <div class="post-card-small-meta">
-              <span class="post-cat"><a href="#">${escBeritaHtml(b.kategori || 'berita sekolah')}</a></span>
-              <h5><a href="berita-template.html?id=${encodeURIComponent(b.id)}">${escBeritaHtml(b.judulCerita || '(tanpa judul)')}</a></h5>
-            </div>
-          </article>
-        `).join('');
       }
     });
   });
