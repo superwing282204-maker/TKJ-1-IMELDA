@@ -8,11 +8,13 @@
 
 <style>
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     font-family: 'Work Sans', Arial, sans-serif;
     color: #313131;
     background: #eee;
+    overflow-x: hidden;
   }
   header.site-header {
     background-color: #143745;
@@ -42,7 +44,7 @@
   }
   header.site-header h1.site-title {
     margin: 0;
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
   }
   header.site-header p.site-description {
     margin: 4px 0 0;
@@ -58,6 +60,8 @@
   .breadcrumb h2 {
     margin: 0;
     font-weight: 600;
+    font-size: clamp(18px, 4vw, 24px);
+    padding: 0 16px;
   }
   main {
     max-width: 1100px;
@@ -67,12 +71,12 @@
   .content-box {
     background: #fff;
     padding: 24px;
-    padding-right: 64px;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
   .content-box h2.page-heading {
     margin-top: 0;
+    font-size: clamp(19px, 4vw, 24px);
   }
   .content-box h3.section-heading {
     margin-top: 28px;
@@ -80,6 +84,7 @@
     color: #143745;
     border-left: 4px solid #143745;
     padding-left: 10px;
+    font-size: clamp(16px, 3.4vw, 19px);
   }
   .content-box p {
     text-align: justify;
@@ -174,22 +179,28 @@
     color: #143745;
     text-decoration: none;
     font-weight: 600;
+    word-break: break-word;
   }
   .contact-list a:hover {
     text-decoration: underline;
   }
+  .contact-list span:not(.contact-icon) {
+    word-break: break-word;
+  }
   .wa-button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: #25D366;
     color: #fff;
     text-decoration: none;
-    padding: 8px 16px;
+    padding: 10px 18px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 600;
     margin-bottom: 14px;
+    transition: background 0.2s ease;
   }
   .wa-button:hover {
     background: #1ebd5a;
@@ -198,12 +209,20 @@
     width: 16px;
     height: 16px;
     fill: #fff;
+    flex-shrink: 0;
   }
 
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
   .content-box table.data-table {
     width: 100%;
+    min-width: 480px;
     border-collapse: collapse;
-    margin-bottom: 16px;
+    margin-bottom: 0;
     font-size: 14px;
   }
   .content-box table.data-table th,
@@ -211,6 +230,7 @@
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    white-space: nowrap;
   }
   .content-box table.data-table th {
     background: #143745;
@@ -220,7 +240,7 @@
     background: #143745;
     color: #fff;
     text-align: center;
-    padding: 20px 0;
+    padding: 20px 16px;
     margin-top: 24px;
     font-size: 13px;
   }
@@ -282,11 +302,67 @@
     fill: currentColor;
   }
 
+  /* ===================== RESPONSIF: TABLET (<=1024px, layar sedang / laptop kecil) ===================== */
+  @media (max-width: 1024px) {
+    main { max-width: 900px; }
+  }
+
+  /* ===================== RESPONSIF: TABLET (<=768px) ===================== */
+  @media (max-width: 768px) {
+    header.site-header .header-inner { padding: 32px 16px; }
+    header.site-header img.logo { height: 56px; }
+    .breadcrumb { padding: 22px 0; }
+    main { margin: 18px auto; }
+    .content-box { padding: 20px; }
+    .teacher-showcase { gap: 18px; padding: 20px; }
+    .teacher-showcase .teacher-img-wrap { flex: 0 0 160px; }
+    .teacher-showcase .teacher-img-wrap img { max-width: 150px; height: 190px; }
+  }
+
+  /* ===================== RESPONSIF: HP (<=600px) ===================== */
   @media (max-width: 600px) {
-    .content-box { padding-right: 24px; }
-    .teacher-showcase { flex-direction: column; text-align: center; }
-    .teacher-showcase .teacher-caption { text-align: center; }
+    .content-box { padding: 16px; }
+    .teacher-showcase { flex-direction: column; text-align: center; padding: 16px; gap: 14px; }
+    .teacher-showcase .teacher-caption { text-align: center; min-width: 0; }
+    .teacher-showcase .teacher-img-wrap { flex-basis: auto; }
+    .teacher-showcase .teacher-img-wrap img { max-width: 150px; height: 180px; }
     .contact-list li { justify-content: center; }
+    .wa-button { width: 100%; }
+  }
+
+  /* ===================== RESPONSIF: HP KECIL (<=480px) ===================== */
+  @media (max-width: 480px) {
+    header.site-header .header-inner { padding: 26px 12px; }
+    header.site-header img.logo { height: 48px; margin-bottom: 6px; }
+    header.site-header p.site-description { font-size: 12.5px; }
+
+    .back-button-wrap { padding: 10px 12px; }
+    .back-button { font-size: 12.5px; padding: 8px 13px; }
+
+    .breadcrumb { padding: 18px 0; }
+
+    main { padding: 0 12px; margin: 14px auto; }
+    .content-box p { text-align: left; line-height: 1.65; font-size: 14.5px; }
+
+    .teacher-showcase .teacher-caption h3 { font-size: 17px; }
+    .teacher-showcase .teacher-caption p { font-size: 13.5px; text-align: left; }
+    .teacher-showcase .tingkat-badge { font-size: 11px; }
+    .contact-list li { font-size: 13px; }
+
+    .content-box table.data-table { font-size: 12.5px; }
+    .content-box table.data-table th,
+    .content-box table.data-table td { padding: 6px; }
+
+    footer { font-size: 12px; padding: 16px 12px; }
+    .social-links a { width: 34px; height: 34px; }
+    .social-links svg { width: 16px; height: 16px; }
+  }
+
+  /* ===================== RESPONSIF: HP SANGAT KECIL (<=360px) ===================== */
+  @media (max-width: 360px) {
+    header.site-header h1.site-title { font-size: 18px; }
+    .teacher-showcase .teacher-img-wrap img { max-width: 130px; height: 160px; }
+    .wa-button { font-size: 12.5px; padding: 9px 14px; }
   }
 </style>
 </head>
@@ -411,36 +487,38 @@
     </div>
 
     <h3 class="section-heading">Ringkasan Wali Kelas per Tingkat</h3>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Tingkat</th>
-          <th>Nama Wali Kelas</th>
-          <th>WhatsApp</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>X TKJ 1</td>
-          <td>Sri Rozi Anggraini, S.Pd.I</td>
-          <td>628126432240</td>
-          <td>sririzoanggraini@smkimeldamedan.sch.id</td>
-        </tr>
-        <tr>
-          <td>XI TKJ 1</td>
-          <td>Erfinawati Simamora, S.Kom.</td>
-          <td>6281374109727</td>
-          <td>erfinawatisimamora@smkimeldamedan.sch.id</td>
-        </tr>
-        <tr>
-          <td>XII TKJ 1</td>
-          <td>Debyana, S.S.</td>
-          <td>6281261822929</td>
-          <td>debyana@smkimeldamedan.sch.id</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tingkat</th>
+            <th>Nama Wali Kelas</th>
+            <th>WhatsApp</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>X TKJ 1</td>
+            <td>Sri Rozi Anggraini, S.Pd.I</td>
+            <td>628126432240</td>
+            <td>sririzoanggraini@smkimeldamedan.sch.id</td>
+          </tr>
+          <tr>
+            <td>XI TKJ 1</td>
+            <td>Erfinawati Simamora, S.Kom.</td>
+            <td>6281374109727</td>
+            <td>erfinawatisimamora@smkimeldamedan.sch.id</td>
+          </tr>
+          <tr>
+            <td>XII TKJ 1</td>
+            <td>Debyana, S.S.</td>
+            <td>6281261822929</td>
+            <td>debyana@smkimeldamedan.sch.id</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </main>
@@ -448,7 +526,7 @@
 <!-- ===================== FOOTER ===================== -->
 <footer>
   <div class="social-links">
-    <a href="https://www.instagram.com/elevenclass_tkjone?igsh=MWRidDhmdWV1ZjhnbA==" target="_blank" rel="noopener" aria-label="Instagram">
+    <a href="https://www.instagram.com/twelveclass_tkjone?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
       <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.06 2.2.27 3.03.6.85.34 1.57.79 2.27 1.49.7.7 1.15 1.42 1.49 2.27.33.83.54 1.86.6 3.03.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.17-.27 2.2-.6 3.03-.34.85-.79 1.57-1.49 2.27-.7.7-1.42 1.15-2.27 1.49-.83.33-1.86.54-3.03.6-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.17-.06-2.2-.27-3.03-.6-.85-.34-1.57-.79-2.27-1.49-.7-.7-1.15-1.42-1.49-2.27-.33-.83-.54-1.86-.6-3.03C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.06-1.17.27-2.2.6-3.03.34-.85.79-1.57 1.49-2.27.7-.7 1.42-1.15 2.27-1.49.83-.33 1.86-.54 3.03-.6C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1 .05-1.74.22-2.28.43-.57.22-.99.49-1.42.92-.43.43-.7.85-.92 1.42-.21.54-.38 1.28-.43 2.28C2.13 9.96 2.13 10.33 2.13 12s0 3.52.07 4.76c.05 1 .22 1.74.43 2.28.22.57.49.99.92 1.42.43.43.85.7 1.42.92.54.21 1.28.38 2.28.43 1.24.07 1.61.07 4.76.07s3.52 0 4.76-.07c1-.05 1.74-.22 2.28-.43.57-.22.99-.49 1.42-.92.43-.43.7-.85.92-1.42.21-.54.38-1.28.43-2.28.07-1.24.07-1.61.07-4.76s0-3.52-.07-4.76c-.05-1-.22-1.74-.43-2.28-.22-.57-.49-.99-.92-1.42a3.6 3.6 0 0 0-1.42-.92c-.54-.21-1.28-.38-2.28-.43C15.52 4 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm5.85-3.4a1.08 1.08 0 1 1-2.16 0 1.08 1.08 0 0 1 2.16 0z"/></svg>
     </a>
     <a href="https://www.facebook.com/smkimeldamedan" target="_blank" rel="noopener" aria-label="Facebook">
