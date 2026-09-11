@@ -1,20 +1,28 @@
-# Website Sekolah — TKJ 1 (SMK Imelda Medan)
+# Website TKJ 1 — SMK Imelda Medan
 
-Website profil kelas/jurusan TKJ 1, dibuat dengan HTML, CSS, dan JavaScript murni (tanpa framework atau build tool). Bisa langsung dibuka di browser atau dideploy sebagai situs statis (Vercel, GitHub Pages, dll).
+Website profil kelas/jurusan **TKJ 1 (Teknik Komputer dan Jaringan)** di SMK Imelda Medan. Dibuat murni dengan HTML, CSS, dan JavaScript (tanpa framework atau build tool), jadi bisa langsung dibuka di browser atau di-deploy sebagai situs statis (Vercel, GitHub Pages, dll).
 
 ## Struktur Folder
 
 ```
 .
 ├── index.html                          # Halaman beranda
-├── style.css                           # Semua styling
-├── script.js                           # Jam, tanggal, dan interaksi umum
-├── chat.js                             # Fitur chat anonim (Firebase Realtime Database)
+├── style.css                           # Semua styling situs
+├── script.js                           # Jam, tanggal, tema (gelap/terang), menu, dsb.
+├── chat.js                             # Fitur "Chat Anonim" (Firebase Realtime Database)
+├── stats.js                            # Penghitung "Sedang Online" (Firebase presence)
+├── calendar.js                         # Widget kalender akademik sederhana di sidebar
+├── berita-db.js                        # Ambil/simpan data berita sekolah dari Firebase
+├── berita-seed.js                      # Data awal/contoh untuk berita sekolah
+├── berita-template.html                # Template halaman satu berita
+├── admin-berita.html                   # Panel admin sederhana untuk kelola berita
+├── 404.html                            # Halaman "tidak ditemukan"
+├── ppdb.html                           # Info PPDB (penerimaan siswa baru)
 ├── vercel.json                         # Konfigurasi deploy Vercel
-├── ppdb.html                           # Info PPDB
+├── googleb30a8424bee93ec8.html         # File verifikasi Google Search Console
 │
-├── images/                             # Semua foto, video, dan favicon
-│   └── vidio/                          # Video (vid1.mp4, vid2.mp4)
+├── images/                             # Semua foto & favicon situs
+├── Vid/                                # Video (dipakai di Galeri Video)
 │
 ├── profil/                             # Profil sekolah
 │   ├── sejarah.html
@@ -26,7 +34,7 @@ Website profil kelas/jurusan TKJ 1, dibuat dengan HTML, CSS, dan JavaScript murn
 │   ├── program-sekolah.html
 │   ├── kesiswaan.html
 │   ├── kontak.html
-│   └── teknik-komputer-jaringan.html   # ⚠️ nama mirip dengan tkj/teknik-komputer-jaringan.html, lihat catatan di bawah
+│   └── teknik-komputer-jaringan.html   # ⚠️ isinya halaman "Kurikulum", judul file menyesatkan — lihat catatan
 │
 ├── tkj/
 │   └── teknik-komputer-jaringan.html   # Halaman jurusan TKJ (kompetensi, karir, dll)
@@ -68,17 +76,22 @@ Website profil kelas/jurusan TKJ 1, dibuat dengan HTML, CSS, dan JavaScript murn
 │   └── galeri-video.html
 │
 ├── berita-sekolah/
-│   ├── berita-sekolah-1.html … berita-sekolah-5.html
+│   └── berita-sekolah-1.html … berita-sekolah-8.html
 │
-└── Wali kelas/                         # ⚠️ nama folder pakai huruf kapital + spasi, lihat catatan di bawah
+└── wali kelas/                         # ⚠️ nama folder pakai spasi, lihat catatan di bawah
     └── walikelas.html
 ```
 
 ## Fitur
 
-- **Beranda dinamis**: jam & tanggal live di topbar (`script.js`).
-- **Chat anonim** (`chat.js`) di halaman beranda, pakai **Firebase Realtime Database** supaya pesan tersimpan online dan bisa dilihat semua pengunjung, bukan cuma di browser masing-masing. Config Firebase sudah terisi (project `tkj1-chat-a1f8e`) — kalau mau pindah ke project Firebase sendiri, tinggal ganti object `firebaseConfig` di awal `chat.js`. Pastikan **Realtime Database Rules** di Firebase Console dibatasi (misal hanya bisa tulis pesan pendek) supaya tidak disalahgunakan orang luar.
+- **Beranda dinamis**: jam & tanggal live di topbar, mode tampilan Terang/Gelap/Otomatis, dan slider foto (`script.js`).
+- **Chat Anonim** (`chat.js`) — pesan tersimpan online lewat **Firebase Realtime Database** (project `tkj1-chat-a1f8e`, node `pesan_anonim`) supaya terlihat oleh semua pengunjung, bukan cuma di satu browser. Ada mode admin untuk hapus pesan (dilindungi password).
+- **Penghitung "Sedang Online"** (`stats.js`) — pakai project Firebase terpisah (`tkj1-pengunjung`) dan fitur *presence*, jadi otomatis update tanpa server sendiri.
+- **Berita sekolah dinamis** (`berita-db.js`, `berita-seed.js`, `admin-berita.html`) — data berita disimpan di Firebase Realtime Database juga (node terpisah `berita`, project sama dengan chat), dengan panel admin sederhana untuk tambah/kelola berita.
+- **Widget kalender akademik** di sidebar beranda (`calendar.js`).
+- Footer beranda dengan info sekolah, tautan cepat, dan daftar layanan.
 - Halaman profil sekolah, kurikulum, guru, sarana-prasarana, hubungan industri, kesiswaan, program kerja/ekstrakurikuler, galeri foto/video, dan berita sekolah.
+- Halaman 404 kustom dan file verifikasi Google Search Console.
 
 ## Menjalankan di Lokal
 
@@ -115,14 +128,20 @@ Lalu buka `http://localhost:8000`.
 
 ## Catatan / Yang Perlu Diperhatikan
 
-Beberapa hal ditemukan saat pengecekan struktur project ini — belum diperbaiki, cuma dicatat supaya kamu yang putuskan:
+Beberapa hal berikut belum diperbaiki, cuma dicatat supaya kamu yang putuskan:
 
-- **Link rusak di `index.html`**: menu "Wali Kelas" mengarah ke `../website.real/Wali kelas/walikelas.html` (path keluar dari folder project, ke folder yang kemungkinan tidak ada di server). File aslinya justru ada di dalam project ini, di `Wali kelas/walikelas.html`. Perlu diganti jadi `Wali kelas/walikelas.html`.
-- **Nama folder berspasi/berkapital**: `Wali kelas/` dan `program sekolah/` memakai spasi (dan `Wali kelas` juga huruf kapital di awal kata). Ini bisa menyebabkan masalah saat diakses lewat URL atau saat deploy ke server yang case-sensitive. Sebaiknya diganti jadi `wali-kelas/` dan `program-sekolah/`, lalu semua `href` yang menunjuk ke sana disesuaikan.
+- **Nama folder berspasi**: `wali kelas/` dan `program sekolah/` memakai spasi di namanya. Ini bisa menyebabkan masalah saat diakses lewat URL atau saat deploy ke server yang case-sensitive. Sebaiknya diganti jadi `wali-kelas/` dan `program-sekolah/`, lalu semua `href` yang menunjuk ke sana disesuaikan.
 - **Dua folder mirip fungsi**: `program/` dan `program sekolah/` isinya beda-beda tapi namanya membingungkan — kemungkinan salah satu peninggalan versi lama. Perlu dicek mana yang masih dipakai di menu navigasi sebelum salah satunya dihapus/digabung.
 - **Dua file dengan topik mirip**: `tkj/teknik-komputer-jaringan.html` (halaman jurusan TKJ) dan `profil/teknik-komputer-jaringan.html` (ternyata isinya halaman "Kurikulum", judul filenya menyesatkan). Sebaiknya file di `profil/` diganti nama sesuai isinya biar tidak salah paham.
 - **Link internal rusak** di `profil/struktur-organisasi.html`: ada dua link submenu, `struktur-organisasi-kelas.html` dan `struktur-organisasi-sekolah.html`, yang filenya belum dibuat (yang ada cuma `struktur-organisasi.html`).
-- **Video cukup besar**: `images/vidio/vid2.mp4` sekitar 24MB. Total folder `images/` sekitar 33MB — untuk loading lebih cepat, pertimbangkan kompres video/foto atau pakai hosting video eksternal (YouTube/Vimeo, embed saja).
+- **Video cukup besar**: `Vid/Mikasa x Starla.mp4` sekitar 7MB, dan folder `images/` sekitar 17MB total — untuk loading lebih cepat, pertimbangkan kompres foto/video atau pakai hosting eksternal (YouTube/Vimeo, embed saja).
+- **Firebase API key terlihat di kode** (`chat.js`, `stats.js`, `berita-db.js`) — ini wajar untuk Firebase client-side, tapi pastikan **Realtime Database Rules** di Firebase Console dibatasi (misal validasi panjang pesan, rate limit sederhana) supaya tidak disalahgunakan orang luar.
+
+## Update Terbaru
+
+- Link Instagram di seluruh halaman (topbar, footer, kartu sosial) diperbarui ke akun `twelveclass_tkjone`. Link ke postingan Instagram spesifik di widget "Instagram Feed" beranda tetap dibiarkan apa adanya.
+- Footer beranda (`index.html`) dirombak jadi 4 kolom: info sekolah & kontak, Tautan Berguna, Layanan Kami, dan kotak Buletin (form berlangganan masih tampilan statis, belum terhubung ke layanan email sungguhan).
+- Label kategori (badge) di kartu berita kecil pada beranda dihapus — sebelumnya tampil sebagai kotak biru polos karena warna teksnya sama dengan warna latar belakangnya (navy-on-navy), jadi tidak terbaca.
 
 ## Cara Push ke GitHub
 
